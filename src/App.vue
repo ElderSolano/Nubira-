@@ -1,23 +1,20 @@
 <template>
   <div id="app">
     <NavbarComponent /> 
-    <LandingComponent /> 
+    <router-view /> 
   </div>
 </template>
 
 <script>
 import NavbarComponent from './components/Navbar.vue';
-import LandingComponent from './components/LandingPage.vue';
 
 export default {
   name: 'App',
   components: {
     NavbarComponent,
-    LandingComponent
   }
 }
 </script>
-
 
 <style>
 #app {
@@ -26,8 +23,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  background-color: rgb(90, 36, 234);
   margin: 0;
 }
-
 </style>
