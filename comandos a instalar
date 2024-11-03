@@ -1,0 +1,11 @@
+npm i vuex
+npm install chart.js @fortawesome/vue-fontawesome @fortawesome/free-solid-svg-icons @fortawesome/free-brands-svg-icons bootstrap sass-loader --save
+npm install sass --save-dev
+npm install @fortawesome/free-solid-svg-icons --save
+npm install sass --save-dev
+
+
+--en cas de que no de
+npm cache clean --force
+rm -rf node_modules package-lock.json
+npm install

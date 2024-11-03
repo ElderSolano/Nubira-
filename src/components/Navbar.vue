@@ -54,5 +54,6 @@ export default {
 
 .navbar-nav {
   margin-right: 160px; /* Separación desde el borde derecho del navbar */
+  margin-left: 160px;
 }
 </style>
