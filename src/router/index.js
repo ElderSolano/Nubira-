@@ -11,6 +11,8 @@ import Rtl from "@/views/Rtl.vue";
 import SignIn from "@/views/SignIn.vue";
 import SignUp from "@/views/SignUp.vue";
 
+import Mantenimiento from "@/components/Mantenimiento.vue";
+
 
 const routes = [
   {
@@ -69,7 +71,11 @@ const routes = [
     name: "Sign Up",
     component: SignUp,
   },
-
+  {
+    path : "/mantenimiento",
+    component: Mantenimiento,
+    name : 'Mantenimiento'
+  }
 ]
 
 const router = createRouter({

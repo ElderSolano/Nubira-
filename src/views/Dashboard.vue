@@ -97,6 +97,7 @@
         
         <!-- line chart -->
         <!--Tarjeta Mantenimiento-->
+      <router-link :to="{name:'Mantenimiento'}">  
       <div class="col-lg mb-lg-0 mb-4">
         <div class="card">
           <div class="card-body p-3">
@@ -142,6 +143,7 @@
           </div>
         </div>
       </div>
+      </router-link>
       </div>
 
       <div class="col-lg">
