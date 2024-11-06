@@ -10,14 +10,14 @@
               <br />
               <form role="form" @submit.prevent="handleLogin">
                 <div class="input-group input-group-outline my-1">
-                  <label class="form-label">Nombre del Usuario</label>
+                  <label class="form-label">Correo Electronico</label>
                 </div>
                 <div class="input-group input-group-outline mb-4">
                   <input
                     type="text"
                     class="form-control"
                     v-model="email"
-                    placeholder="Ingresa tu nombre"
+                    placeholder="Ingresa tu correo"
                     required
                   />
                 </div>
@@ -52,26 +52,45 @@
   </template>
   
   <script>
-  export default {
-    name: 'LoginComponent',
-    data() {
-      return {
-        email: '',
-        password: '',
-        rememberMe: false,
-        showPassword: false, // Estado para mostrar/ocultar la contraseña
-      };
+export default {
+  name: 'LoginComponent',
+  data() {
+    return {
+      email: '',
+      password: '',
+      showPassword: false,
+    };
+  },
+  methods: {
+    async handleLogin() {
+      try {
+        const response = await fetch('https://3a35-181-115-60-195.ngrok-free.app/api/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: this.email,
+            password: this.password,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          console.log('Login exitoso:', data);
+          localStorage.setItem('authToken', data.token); // Guarda el token en localStorage
+          this.$router.push({ name: 'Welcome' }); // Redirige al componente de bienvenida
+        } else {
+          console.error('Error en el login:', data.message);
+        }
+      } catch (error) {
+        console.error('Error en la solicitud:', error);
+      }
     },
-    methods: {
-      handleLogin() {
-        console.log('Iniciando sesión con:', this.user, this.password,);
-      },
-      togglePasswordVisibility() {
-        this.showPassword = !this.showPassword; // Alternar visibilidad
-      },
-    },
-  };
-  </script>
+  },
+};
+</script>
   
   <style scoped>
   .container-fluid {
