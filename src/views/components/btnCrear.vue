@@ -1,85 +1,56 @@
 <template>
-    <div>
-        <b-button v-b-modal.modal-prevent-closing class="btn-modal">Open Modal</b-button>
-        
-        <div class="mt-3">
-            Submitted Names:
-            <div v-if="submittedNames.length === 0">--</div>
-            <ul v-else class="mb-0 pl-3">
-                <li v-for="name in submittedNames" :key="name">{{ name }} </li>
-            </ul>
-        </div>
 
-        <b-modal
-            id="modal-prevent-closing"
-            ref="modal"
-            title="Submit Your Name"
-            @show="resetModal"
-            @hidden="resetModal"
-            @ok="handleOk"
-        >
-        <form ref="form" @submit.stop.prevent="handleSubmit">
-            <b-form-group
-                label="Name"
-                label-for="name-input"
-                invalid-feedback="Name is required"
-                :state="nameState"
-            >
-            <b-form-input
-                id="name-input"
-                v-model="name"
-                :state="nameState"
-                required
-            ></b-form-input>
-            </b-form-group>
-        </form>
-        </b-modal>
+    <!-- Button trigger modal -->
+<div class="contenedor-btn container-fluid">
+    <div></div>
+    <div></div>
+    <button type="button" class="btn" style="background-color: #6a0dad; color: white;" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Añadir {{  }}
+    </button>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Nuevo {{  }}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
+    <div class="modal-body">
+        <div class="mb-3" v-for="(dato, index) in inputs" :key="index">
+            <label for="formGroupExampleInput" class="form-label">{{ dato }}</label>
+            <input type="text" class="form-control" id="formGroupExampleInput" :placeholder="'Escribe el ' + dato">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
 </template>
+
+<style>
+    .contenedor-btn {
+        display: flex;
+        justify-content: flex-end;
+    }
+    .btn {
+        background-color:  #6a0dad;
+        color: white;
+    }
+</style>
 
 <script>
     export default {
-        data() {
-            return {
-            name: 'BtnCrear',
-            nameState: null,
-            submittedNames: []
-        }
-    },
-    methods: {
-        checkFormValidity() {
-            const valid = this.$refs.form.checkValidity()
-            this.nameState = valid
-            return valid
-        },
-        resetModal() {
-            this.name = ''
-            this.nameState = null
-        },
-        handleOk(bvModalEvent) {
-            // Prevent modal from closing
-            bvModalEvent.preventDefault()
-            // Trigger submit handler
-            this.handleSubmit()
-        },
-        handleSubmit() {
-            // Exit when the form isn't valid
-            if (!this.checkFormValidity()) {
-                return
+        props : {
+            inputs :{
+                type: Array, 
+                required: true
             }
-            // Push the name to submitted names
-            this.submittedNames.push(this.name)
-            // Hide the modal manually
-            this.$nextTick(() => {
-                this.$bvModal.hide('modal-prevent-closing')
-            })
         }
-    }
     }
 </script>
-
-<style>
-    .btn-modal {
-        background-color: blueviolet
-    }
-</style>

@@ -1,5 +1,7 @@
 <template>
-    <btnCrear></btnCrear>
+    <btnCrear
+        :inputs="inputs"
+    ></btnCrear>
     <div class="py-4 container-fluid espaciado col-10" style="margin-left: 250px;">
         <div class="row">
             <div class="col-12">
@@ -32,11 +34,15 @@
 export default {
     name: "Empleados",
     components: {
-    AuthorsTable,
-    btnCrear
-    //ProjectsTable,
-
-},
+        AuthorsTable,
+        btnCrear
+        //ProjectsTable,
+    },
+    data(){
+        return{
+            inputs : ['Dni', 'Nombre', 'Puesto', 'Telefono']
+        }
+    }
 };
 </script>
 
