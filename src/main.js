@@ -4,6 +4,7 @@ import router from './router' // Importa el router
 import '@/assets/css/bootstrap.min.css'
 import '@/assets/js/bootstrap.bundle.min.js'
 
+
 import store from "./store";
 import "./assets/css/nucleo-icons.css";
 import "./assets/css/nucleo-svg.css";

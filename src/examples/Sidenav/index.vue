@@ -11,8 +11,8 @@
         id="iconSidenav"
       ></i>
       <a class="m-0 navbar-brand" href="/">
-        <img :src="logo" class="navbar-brand-img h-100" alt="main_logo" />
-        <span class="ms-1 font-weight-bold">Soft UI Dashboard PRO</span>
+        <img :src="logo" class="navbar-brand-img h-200" alt="main_logo" />
+        <span class="ms-1 font-weight-bold">Nubira E</span>
       </a>
     </div>
     <hr class="mt-0 horizontal dark" />
@@ -21,7 +21,7 @@
 </template>
 <script>
 import SidenavList from "./SidenavList.vue";
-import logo from "@/assets/img/logo-ct.png";
+import logo from "@/assets/images/logo_sin_nombre.png";
 import { mapState } from "vuex";
 
 export default {

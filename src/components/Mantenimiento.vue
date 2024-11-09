@@ -108,7 +108,9 @@
             </div>
         </div>
 
+    
         <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
+            <RouterLink :to="{ name: 'Empleados'}">
             <div class="card">
                 <div class="card-body p-3">
                     <div class="d-flex flex-column h-100">
@@ -126,8 +128,10 @@
                     </div>
                 </div>
             </div>
+        </RouterLink>
         </div>
-
+    
+    
         <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
             <div class="card">
                 <div class="card-body p-3">
@@ -176,6 +180,7 @@
 </template>
 
 <script>
+    
 </script>
 
 <style>

@@ -87,54 +87,9 @@
                   <span class="ms-1">App</span>
                 </a>
               </li>
-              <li class="nav-item">
-                <a
-                  class="px-0 py-1 mb-0 nav-link"
-                  data-bs-toggle="tab"
-                  href="javascript:;"
-                  role="tab"
-                  aria-selected="false"
-                >
-                  <svg
-                    class="text-dark"
-                    width="16px"
-                    height="16px"
-                    viewBox="0 0 40 44"
-                    version="1.1"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                  >
-                    <title>document</title>
-                    <g
-                      stroke="none"
-                      stroke-width="1"
-                      fill="none"
-                      fill-rule="evenodd"
-                    >
-                      <g
-                        transform="translate(-1870.000000, -591.000000)"
-                        fill="#FFFFFF"
-                        fill-rule="nonzero"
-                      >
-                        <g transform="translate(1716.000000, 291.000000)">
-                          <g transform="translate(154.000000, 300.000000)">
-                            <path
-                              class="color-background"
-                              d="M40,40 L36.3636364,40 L36.3636364,3.63636364 L5.45454545,3.63636364 L5.45454545,0 L38.1818182,0 C39.1854545,0 40,0.814545455 40,1.81818182 L40,40 Z"
-                              opacity="0.603585379"
-                            ></path>
-                            <path
-                              class="color-background"
-                              d="M30.9090909,7.27272727 L1.81818182,7.27272727 C0.814545455,7.27272727 0,8.08727273 0,9.09090909 L0,41.8181818 C0,42.8218182 0.814545455,43.6363636 1.81818182,43.6363636 L30.9090909,43.6363636 C31.9127273,43.6363636 32.7272727,42.8218182 32.7272727,41.8181818 L32.7272727,9.09090909 C32.7272727,8.08727273 31.9127273,7.27272727 30.9090909,7.27272727 Z M18.1818182,34.5454545 L7.27272727,34.5454545 L7.27272727,30.9090909 L18.1818182,30.9090909 L18.1818182,34.5454545 Z M25.4545455,27.2727273 L7.27272727,27.2727273 L7.27272727,23.6363636 L25.4545455,23.6363636 L25.4545455,27.2727273 Z M25.4545455,20 L7.27272727,20 L7.27272727,16.3636364 L25.4545455,16.3636364 L25.4545455,20 Z"
-                            ></path>
-                          </g>
-                        </g>
-                      </g>
-                    </g>
-                  </svg>
-                  <span class="ms-1">Messages</span>
-                </a>
-              </li>
+
+             
+
               <li class="nav-item">
                 <a
                   class="px-0 py-1 mb-0 nav-link"
@@ -152,7 +107,7 @@
                     xmlns="http://www.w3.org/2000/svg"
                     xmlns:xlink="http://www.w3.org/1999/xlink"
                   >
-                    <title>settings</title>
+                    <title>Editar Perfil</title>
                     <g
                       stroke="none"
                       stroke-width="1"
@@ -185,7 +140,7 @@
                       </g>
                     </g>
                   </svg>
-                  <span class="ms-1">Settings</span>
+                  <span class="ms-1">Editar Perfil</span>
                 </a>
               </li>
             </ul>
@@ -194,355 +149,52 @@
       </div>
     </div>
   </div>
-  <div class="py-4 container-fluid col-10" style="margin-left: 250px;">
-    <div class="mt-3 row">
-      <div class="col-12 col-md-6 col-xl-4">
-        <div class="card h-100">
-          <div class="p-3 pb-0 card-header">
-            <h6 class="mb-0">Platform Settings</h6>
-          </div>
-          <div class="p-3 card-body">
-            <h6 class="text-xs text-uppercase text-body font-weight-bolder">
-              Account
-            </h6>
-            <ul class="list-group">
-              <li class="px-0 border-0 list-group-item">
-                <soft-switch
-                  id="flexSwitchCheckDefault"
-                  name="email"
-                  class="ps-0 ms-auto"
-                  label-class="mb-0 text-body ms-3 text-truncate w-80"
-                  checked
-                  >Email me when someone follows me</soft-switch
-                >
-              </li>
-              <li class="px-0 border-0 list-group-item">
-                <soft-switch
-                  id="flexSwitchCheckDefault1"
-                  name="Email"
-                  label-class="mb-0 text-body ms-3 text-truncate w-80"
-                  class="ps-0 ms-auto"
-                  >Email me when someone answers on my post</soft-switch
-                >
-              </li>
-
-              <li class="px-0 border-0 list-group-item">
-                <soft-switch
-                  id="flexSwitchCheckDefault2"
-                  name="Email"
-                  label-class="mb-0 text-body ms-3 text-truncate w-80"
-                  class="ps-0 ms-auto"
-                  checked
-                  >Email me when someone mentions me</soft-switch
-                >
-              </li>
-            </ul>
-            <h6
-              class="mt-4 text-xs text-uppercase text-body font-weight-bolder"
-            >
-              Application
-            </h6>
-            <ul class="list-group">
-              <li class="px-0 border-0 list-group-item">
-                <soft-switch
-                  id="flexSwitchCheckDefault3"
-                  name="Project Launch"
-                  class="ps-0 ms-auto"
-                  label-class="mb-0 text-body ms-3 text-truncate w-80"
-                  >New launches and projects</soft-switch
-                >
-              </li>
-              <li class="px-0 border-0 list-group-item">
-                <soft-switch
-                  id="flexSwitchCheckDefault4"
-                  name="Product Update"
-                  class="ps-0 ms-auto"
-                  label-class="mb-0 text-body ms-3 text-truncate w-80"
-                  checked
-                  >Monthly product updates</soft-switch
-                >
-              </li>
-              <li class="px-0 pb-0 border-0 list-group-item">
-                <soft-switch
-                  id="flexSwitchCheckDefault5"
-                  name="Newsletter"
-                  class="ps-0 ms-auto"
-                  label-class="mb-0 text-body ms-3 text-truncate w-80"
-                  >Subscribe to newsletter</soft-switch
-                >
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="mt-4 col-12 col-md-6 col-xl-4 mt-md-0">
-        <profile-info-card
-          title="Profile Information"
-          description="Hi, I’m Alec Thompson, Decisions: If you can’t decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality)."
-          :info="{
-            fullName: 'Alec M. Thompson',
-            mobile: '(44) 123 1234 123',
-            email: 'alecthompson@mail.com',
-            location: 'USA',
-          }"
-          :social="[
-            {
-              link: 'https://www.facebook.com/CreativeTim/',
-              icon: faFacebook,
-            },
-            {
-              link: 'https://twitter.com/creativetim',
-              icon: faTwitter,
-            },
-            {
-              link: 'https://www.instagram.com/creativetimofficial/',
-              icon: faInstagram,
-            },
-          ]"
-          :action="{
-            route: 'javascript:;',
-            tooltip: 'Edit Profile',
-          }"
-        />
-      </div>
-      <div class="mt-4 col-12 col-xl-4 mt-xl-0">
-        <div class="card h-100">
-          <div class="p-3 pb-0 card-header">
-            <h6 class="mb-0">Conversations</h6>
-          </div>
-          <div class="p-3 card-body">
-            <ul class="list-group">
-              <li
-                class="px-0 mb-2 border-0 list-group-item d-flex align-items-center"
-              >
-                <soft-avatar
-                  class="me-3"
-                  :img="sophie"
-                  alt="kal"
-                  border-radius="lg"
-                  shadow="regular"
-                />
-                <div
-                  class="d-flex align-items-start flex-column justify-content-center"
-                >
-                  <h6 class="mb-0 text-sm">Sophie B.</h6>
-                  <p class="mb-0 text-xs">Hi! I need more information..</p>
-                </div>
-                <a
-                  class="mb-0 btn btn-link pe-3 ps-0 ms-auto"
-                  href="javascript:;"
-                  >Reply</a
-                >
-              </li>
-              <li
-                class="px-0 mb-2 border-0 list-group-item d-flex align-items-center"
-              >
-                <soft-avatar
-                  class="me-3"
-                  :img="marie"
-                  alt="kal"
-                  border-radius="lg"
-                  shadow="regular"
-                />
-                <div
-                  class="d-flex align-items-start flex-column justify-content-center"
-                >
-                  <h6 class="mb-0 text-sm">Anne Marie</h6>
-                  <p class="mb-0 text-xs">Awesome work, can you..</p>
-                </div>
-                <a
-                  class="mb-0 btn btn-link pe-3 ps-0 ms-auto"
-                  href="javascript:;"
-                  >Reply</a
-                >
-              </li>
-              <li
-                class="px-0 mb-2 border-0 list-group-item d-flex align-items-center"
-              >
-                <soft-avatar
-                  class="me-3"
-                  :img="ivana"
-                  alt="kal"
-                  border-radius="lg"
-                  shadow="regular"
-                />
-                <div
-                  class="d-flex align-items-start flex-column justify-content-center"
-                >
-                  <h6 class="mb-0 text-sm">Ivanna</h6>
-                  <p class="mb-0 text-xs">About files I can..</p>
-                </div>
-                <a
-                  class="mb-0 btn btn-link pe-3 ps-0 ms-auto"
-                  href="javascript:;"
-                  >Reply</a
-                >
-              </li>
-              <li
-                class="px-0 mb-2 border-0 list-group-item d-flex align-items-center"
-              >
-                <soft-avatar
-                  class="me-3"
-                  :img="peterson"
-                  alt="kal"
-                  border-radius="lg"
-                  shadow="regular"
-                />
-                <div
-                  class="d-flex align-items-start flex-column justify-content-center"
-                >
-                  <h6 class="mb-0 text-sm">Peterson</h6>
-                  <p class="mb-0 text-xs">Have a great afternoon..</p>
-                </div>
-                <a
-                  class="mb-0 btn btn-link pe-3 ps-0 ms-auto"
-                  href="javascript:;"
-                  >Reply</a
-                >
-              </li>
-              <li
-                class="px-0 border-0 list-group-item d-flex align-items-center"
-              >
-                <soft-avatar
-                  class="me-3"
-                  :img="nick"
-                  alt="kal"
-                  border-radius="lg"
-                  shadow="regular"
-                />
-                <div
-                  class="d-flex align-items-start flex-column justify-content-center"
-                >
-                  <h6 class="mb-0 text-sm">Nick Daniel</h6>
-                  <p class="mb-0 text-xs">Hi! I need more information..</p>
-                </div>
-                <a
-                  class="mb-0 btn btn-link pe-3 ps-0 ms-auto"
-                  href="javascript:;"
-                  >Reply</a
-                >
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
+  
+  <div class="profile-card overflow-hidden card card-body blur shadow-blur">
+    <div class="profile-card-header">
+      <h2>Perfil del usuario</h2>
     </div>
-    <div class="mt-4 row">
-      <div class="col-12">
-        <div class="mb-4 card">
-          <div class="p-3 pb-0 card-header">
-            <h6 class="mb-1">Projects</h6>
-            <p class="text-sm">Architects design houses</p>
-          </div>
-          <div class="p-3 card-body">
-            <div class="row">
-              <default-project-card
-                title="Modern"
-                :image="img1"
-                label="Project #2"
-                description="As Uber works through a huge amount of internal
-                management turmoil."
-                :authors="[
-                  {
-                    image: team1,
-                    name: 'Elena Morison',
-                  },
-                  {
-                    image: team2,
-                    name: 'Ryan Milly',
-                  },
-                  {
-                    image: team3,
-                    name: 'Nick Daniel',
-                  },
-                  {
-                    image: team4,
-                    name: 'Peterson',
-                  },
-                ]"
-                :action="{
-                  color: 'success',
-                  label: 'View Project',
-                }"
-              />
-
-              <default-project-card
-                title="Scandinavian"
-                :image="img2"
-                label="Project #1"
-                description="Music is something that every person has his or her own
-                      specific opinion about."
-                :authors="[
-                  {
-                    image: team3,
-                    name: 'Nick Daniel',
-                  },
-                  {
-                    image: team4,
-                    name: 'Peterson',
-                  },
-                  {
-                    image: team1,
-                    name: 'Elena Morison',
-                  },
-                  {
-                    image: team2,
-                    name: 'Ryan Milly',
-                  },
-                ]"
-                :action="{
-                  color: 'success',
-                  label: 'View Project',
-                }"
-              />
-
-              <default-project-card
-                title="Minimalist"
-                :image="img3"
-                label="Project #3"
-                description="Different people have different taste, and various types
-                      of music."
-                :authors="[
-                  {
-                    image: team4,
-                    name: 'Peterson',
-                  },
-                  {
-                    image: team3,
-                    name: 'Nick Daniel',
-                  },
-                  {
-                    image: team1,
-                    name: 'Elena Morison',
-                  },
-                  {
-                    image: team2,
-                    name: 'Ryan Milly',
-                  },
-                ]"
-                :action="{
-                  color: 'success',
-                  label: 'View Project',
-                }"
-              />
-
-              <div class="mb-4 col-xl-3 col-md-6 mb-xl-0">
-                <place-holder-card
-                  :title="{ text: 'New project', variant: 'h5' }"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+    <div class="profile-card-body">
+      <div class="profile-detail">
+        <span class="detail-label">N° Identidad:</span>
+        <span class="detail-value">0801200311111</span>
+      </div>
+      <div class="profile-detail">
+        <span class="detail-label">Estado:</span>
+        <span class="detail-value">Activo</span>
+      </div>
+      <div class="profile-detail">
+        <span class="detail-label">Puesto:</span>
+        <span class="detail-value">RR.HH | Lorem Ipsum</span>
+      </div>
+      <div class="profile-detail">
+        <span class="detail-label">Email:</span>
+        <span class="detail-value">juancachofa@email.com</span>
+      </div>
+      <div class="profile-detail">
+        <span class="detail-label">N° Teléfono:</span>
+        <span class="detail-value">9988-7766</span>
+      </div>
+      <div class="profile-detail">
+        <span class="detail-label">Cumpleaños:</span>
+        <span class="detail-value">08/09/2003</span>
+      </div>
+      <div class="profile-detail">
+        <span class="detail-label">Fecha Ingreso:</span>
+        <span class="detail-value">12/12/2015</span>
+      </div>
+      <div class="profile-detail">
+        <span class="detail-label">RTN:</span>
+        <span class="detail-value">08011960111111</span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import SoftSwitch from "@/components/SoftSwitch.vue";
-import ProfileInfoCard from "./components/ProfileInfoCard.vue";
-import SoftAvatar from "@/components/SoftAvatar.vue";
+//import SoftSwitch from "@/components/SoftSwitch.vue";
+//import ProfileInfoCard from "./components/ProfileInfoCard.vue";
+//import SoftAvatar from "@/components/SoftAvatar.vue";
 import sophie from "@/assets/img/kal-visuals-square.jpg";
 import marie from "@/assets/img/marie.jpg";
 import ivana from "@/assets/img/ivana-square.jpg";
@@ -560,19 +212,19 @@ import {
   faTwitter,
   faInstagram,
 } from "@fortawesome/free-brands-svg-icons";
-import DefaultProjectCard from "./components/DefaultProjectCard.vue";
-import PlaceHolderCard from "@/examples/Cards/PlaceHolderCard.vue";
+//import DefaultProjectCard from "./components/DefaultProjectCard.vue";
+//import PlaceHolderCard from "@/examples/Cards/PlaceHolderCard.vue";
 import setNavPills from "@/assets/js/nav-pills.js";
 import setTooltip from "@/assets/js/tooltip.js";
 
 export default {
   name: "ProfileOverview",
   components: {
-    SoftSwitch,
-    ProfileInfoCard,
-    SoftAvatar,
-    DefaultProjectCard,
-    PlaceHolderCard,
+    //SoftSwitch,
+    //ProfileInfoCard,
+    //SoftAvatar,
+    //DefaultProjectCard,
+    //PlaceHolderCard,
   },
   data() {
     return {
@@ -605,3 +257,41 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.profile-card {
+  max-width: 800px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 20px auto;
+  font-family: Arial, sans-serif;
+}
+
+.profile-card-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.profile-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+}
+
+.profile-detail {
+  display: flex;
+  justify-content: space-between;
+}
+
+.detail-label {
+  font-weight: bold;
+  color: #555;
+}
+
+.detail-value {
+  color: #333;
+}
+</style>

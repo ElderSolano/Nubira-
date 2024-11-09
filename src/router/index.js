@@ -12,6 +12,8 @@ import SignIn from "@/views/SignIn.vue";
 import SignUp from "@/views/SignUp.vue";
 
 import Mantenimiento from "@/components/Mantenimiento.vue";
+import Empleados from '@/components/Empleados.vue';
+import EmpleadoIndividual from '@/components/EmpleadoIndividual.vue';
 
 
 const routes = [
@@ -75,7 +77,18 @@ const routes = [
     path : "/mantenimiento",
     component: Mantenimiento,
     name : 'Mantenimiento'
+  },
+  {
+    path: "/mantenimiento/empleados",
+    component: Empleados,
+    name: 'Empleados'
+  },
+  {
+    path: "/mantenimiento/empleado-individual",
+    component : EmpleadoIndividual,
+    name : "EmpleadoIndividual"
   }
+
 ]
 
 const router = createRouter({
