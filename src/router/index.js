@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import LandingComponent from '@/components/LandingPage.vue'
 import LoginComponent from '@/components/Login.vue'
+import WelcomeComponent from '@/components/PruebaLogin.vue';
 
 import Dashboard from "@/views/Dashboard.vue";
 import Tables from "@/views/Tables.vue";
@@ -26,6 +27,12 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: LoginComponent
+  },
+  {
+    path: '/welcome',
+    name: 'Welcome',
+    component: WelcomeComponent,
+  }
   },
 
   {
