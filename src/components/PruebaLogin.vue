@@ -11,7 +11,7 @@ export default {
   methods: {
     async handleLogout() {
       try {
-        const response = await fetch('https://3a35-181-115-60-195.ngrok-free.app/api/logout', {
+        const response = await fetch('https://eb1d-181-115-60-195.ngrok-free.app/api/logout', {
           method: 'GET', // Cambiado a GET, asegúrate de que sea el método correcto
           headers: {
             'Content-Type': 'application/json',

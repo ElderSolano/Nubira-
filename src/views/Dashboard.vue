@@ -251,6 +251,7 @@
           />
         </timeline-list>
       </div>
+      <button @click="handleLogout" class="btn-logout">Cerrar Sesión</button>
     </div>
 </template>
 
@@ -273,6 +274,37 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 export default {
   name: "dashboard-default",
+  methods: {
+    async handleLogout() {
+      try {
+        const response = await fetch('https://eb1d-181-115-60-195.ngrok-free.app/api/logout', {
+          method: 'GET', // Cambiado a GET, asegúrate de que sea el método correcto
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`, // Usa el token guardado
+          },
+        });
+
+        // Verificamos si la respuesta fue exitosa
+        if (response.ok) {
+          console.log('Cierre de sesión exitoso');
+          localStorage.removeItem('authToken'); // Elimina el token
+          this.$router.push({ name: 'Login' }); // Redirige al login
+        } else {
+          // Si no es exitosa, verificamos el tipo de contenido antes de parsear JSON
+          const contentType = response.headers.get("content-type");
+          if (contentType && contentType.includes("application/json")) {
+            const data = await response.json();
+            console.error('Error al cerrar sesión:', data.message);
+          } else {
+            console.error('Error al cerrar sesión: Respuesta no es JSON');
+          }
+        }
+      } catch (error) {
+        console.error('Error en la solicitud de cierre de sesión:', error);
+      }
+    },
+  },
   data() {
     return {
       iconBackground: "bg-gradient-success",

@@ -64,7 +64,7 @@ export default {
   methods: {
     async handleLogin() {
       try {
-        const response = await fetch('https://3a35-181-115-60-195.ngrok-free.app/api/login', {
+        const response = await fetch('https://eb1d-181-115-60-195.ngrok-free.app/api/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -80,7 +80,7 @@ export default {
         if (response.ok) {
           console.log('Login exitoso:', data);
           localStorage.setItem('authToken', data.token); // Guarda el token en localStorage
-          this.$router.push({ name: 'Welcome' }); // Redirige al componente de bienvenida
+          this.$router.push({ name: 'Dashboard' }); // Redirige al componente de bienvenida
         } else {
           console.error('Error en el login:', data.message);
         }

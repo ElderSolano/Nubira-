@@ -27,22 +27,37 @@
 
 
 <script>
-    import AuthorsTable from "@/views/components/AuthorsTable.vue";
-    //import ProjectsTable from "@/views/components/ProjectsTable.vue";
-    import btnCrear from "@/views/components/btnCrear.vue";
+import axios from "axios"; // Importa axios
+import AuthorsTable from "@/views/components/AuthorsTable.vue";
+import btnCrear from "@/views/components/btnCrear.vue";
 
 export default {
     name: "Empleados",
     components: {
         AuthorsTable,
         btnCrear
-        //ProjectsTable,
     },
     data(){
         return{
-            inputs : ['Dni', 'Nombre', 'Puesto', 'Telefono']
+            inputs : ['Dni', 'Nombre', 'Puesto', 'Telefono'],
+            empleado: { // Datos del empleado a enviar a la API
+                dni: '',
+                nombre: '',
+                puesto: '',
+                telefono: ''
+            }
+        };
+    },
+    methods: {
+        async agregarEmpleado() {
+            try {
+                const response = await axios.post("https://eb1d-181-115-60-195.ngrok-free.app/api/empleados", this.empleado);
+                console.log("Empleado agregado exitosamente:", response.data);
+                // Aquí podrías actualizar la lista de empleados o limpiar el formulario
+            } catch (error) {
+                console.error("Error al agregar empleado:", error);
+            }
         }
     }
 };
 </script>
-
