@@ -32,7 +32,6 @@ const routes = [
     path: '/welcome',
     name: 'Welcome',
     component: WelcomeComponent,
-  }
   },
 
   {
