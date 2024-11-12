@@ -1,254 +1,59 @@
 <template>
   <div class="card mb-4">
     <div class="card-header pb-0">
-      <h6>Lista de empleados</h6>
+      
     </div>
     <div class="card-body px-0 pt-0 pb-2">
       <div class="table-responsive p-0">
         <table class="table align-items-center mb-0">
           <thead>
-            
             <tr>
-              <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >
-                DNI
-              </th>
-              <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
-              >
-                Nombre
-              </th>
-              <th
-                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >
-                Puesto
-              </th>
-              <th
-                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >
-                #Teléfono
-              </th>
-              <th
-                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >
-                Estado
-              </th>
-              <th
-                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >
-                Editar
-              </th>
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">DNI</th>
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nombre</th>
+              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Puesto</th>
+              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">#Teléfono</th>
+              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Estado</th>
+              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Editar</th>
               <th class="text-secondary opacity-7"></th>
             </tr>
-            
           </thead>
           <tbody>
             <tr>
-              
               <td>
-                <p class="text-xs font-weight-bold mb-0">0801-2001-08527</p>
-              </td>
-              <td>
-                <p class="text-xs font-weight-bold mb-0">Elmer Noé Sosa Torres</p>
-              </td>
-              <td>
-                <p class="text-xs font-weight-bold mb-0">Cajero</p>
-              </td>
-              <td>
-                <p class="text-xs font-weight-bold mb-0">9501-1087</p>
-              </td>
-              <td class="align-middle text-center text-sm">
-                <soft-badge color="success" variant="gradient" size="sm"
-                  >Activo</soft-badge
-                >
-              </td>
-              <td class="align-middle">
-                <a
-                  href="javascript:;"
-                  class="text-secondary font-weight-bold text-xs"
-                  data-toggle="tooltip"
-                  data-original-title="Edit user"
-                  >Editar</a
-                >
+                <div class="d-flex px-2 py-1">
+                  <div>
+                    <soft-avatar
+                      :img="img5"
+                      class="me-3"
+                      size="sm"
+                      border-radius="lg"
+                      alt="user5"
+                    />
+                  </div>
+                  <div class="d-flex flex-column justify-content-center">
+                    <h6 class="mb-0 text-sm">0801-2001-08527</h6>
+                  </div>
+                </div>
               </td>
               <td>
-                <router-link :to="{ name: 'EmpleadoIndividual' }" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                  Ver
-                </router-link>
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-                <p class="text-xs font-weight-bold mb-0">0801-2001-08527</p>
+                <p class="text-xs font-weight-bold mb-0">Elmer Noé Sosa</p>
               </td>
               <td>
-                <p class="text-xs font-weight-bold mb-0">Elmer Noé Sosa Torres</p>
-              </td>
-              <td>
-                <p class="text-xs font-weight-bold mb-0">Cajero</p>
+                <p class="text-xs font-weight-bold mb-0">Ing. Sistemas</p>
               </td>
               <td>
                 <p class="text-xs font-weight-bold mb-0">9501-1087</p>
               </td>
               <td class="align-middle text-center text-sm">
-                <soft-badge color="success" variant="gradient" size="sm"
-                  >Activo</soft-badge
+                <soft-badge color="secondary" variant="gradient" size="sm"
+                  >Offline</soft-badge
                 >
               </td>
-              <td class="align-middle">
-                <a
-                  href="javascript:;"
-                  class="text-secondary font-weight-bold text-xs"
-                  data-toggle="tooltip"
-                  data-original-title="Edit user"
-                  >Editar</a
-                >
-              </td>
+                
               <td>
-                <router-link :to="{ name: 'EmpleadoIndividual' }" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                  Ver
-                </router-link>
+                <router-link :to="{name:'EmpleadoIndividual'}"
+                class="align-middle text-center text-sm">Ver</router-link>
               </td>
-            </tr>
-
-            <tr>
-              <td>
-                <p class="text-xs font-weight-bold mb-0">0801-2001-08527</p>
-              </td>
-              <td>
-                <p class="text-xs font-weight-bold mb-0">Elmer Noé Sosa Torres</p>
-              </td>
-              <td>
-                <p class="text-xs font-weight-bold mb-0">Cajero</p>
-              </td>
-              <td>
-                <p class="text-xs font-weight-bold mb-0">9501-1087</p>
-              </td>
-              <td class="align-middle text-center text-sm">
-                <soft-badge color="success" variant="gradient" size="sm"
-                  >Activo</soft-badge
-                >
-              </td>
-              <td class="align-middle">
-                <a
-                  href="javascript:;"
-                  class="text-secondary font-weight-bold text-xs"
-                  data-toggle="tooltip"
-                  data-original-title="Edit user"
-                  >Editar</a
-                >
-              </td>
-              <td>
-                <router-link :to="{ name: 'EmpleadoIndividual' }" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                  Ver
-                </router-link>
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-                <p class="text-xs font-weight-bold mb-0">0801-2001-08527</p>
-              </td>
-              <td>
-                <p class="text-xs font-weight-bold mb-0">Elmer Noé Sosa Torres</p>
-              </td>
-              <td>
-                <p class="text-xs font-weight-bold mb-0">Cajero</p>
-              </td>
-              <td>
-                <p class="text-xs font-weight-bold mb-0">9501-1087</p>
-              </td>
-              <td class="align-middle text-center text-sm">
-                <soft-badge color="success" variant="gradient" size="sm"
-                  >Activo</soft-badge
-                >
-              </td>
-              <td class="align-middle">
-                <a
-                  href="javascript:;"
-                  class="text-secondary font-weight-bold text-xs"
-                  data-toggle="tooltip"
-                  data-original-title="Edit user"
-                  >Editar</a
-                >
-              </td>
-              <td>
-                <router-link :to="{ name: 'EmpleadoIndividual' }" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                  Ver
-                </router-link>
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-                <p class="text-xs font-weight-bold mb-0">0801-2001-08527</p>
-              </td>
-              <td>
-                <p class="text-xs font-weight-bold mb-0">Elmer Noé Sosa Torres</p>
-              </td>
-              <td>
-                <p class="text-xs font-weight-bold mb-0">Cajero</p>
-              </td>
-              <td>
-                <p class="text-xs font-weight-bold mb-0">9501-1087</p>
-              </td>
-              <td class="align-middle text-center text-sm">
-                <soft-badge color="success" variant="gradient" size="sm"
-                  >Activo</soft-badge
-                >
-              </td>
-              <td class="align-middle">
-                <a
-                  href="javascript:;"
-                  class="text-secondary font-weight-bold text-xs"
-                  data-toggle="tooltip"
-                  data-original-title="Edit user"
-                  >Editar</a
-                >
-              </td>
-              <td>
-                <router-link :to="{ name: 'EmpleadoIndividual' }" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                  Ver
-                </router-link>
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-                <p class="text-xs font-weight-bold mb-0">0801-2001-08527</p>
-              </td>
-              <td>
-                <p class="text-xs font-weight-bold mb-0">Elmer Noé Sosa Torres</p>
-              </td>
-              <td>
-                <p class="text-xs font-weight-bold mb-0">Cajero</p>
-              </td>
-              <td>
-                <p class="text-xs font-weight-bold mb-0">9501-1087</p>
-              </td>
-              <td class="align-middle text-center text-sm">
-                <soft-badge color="success" variant="gradient" size="sm"
-                  >Activo</soft-badge
-                >
-              </td>
-              <td class="align-middle">
-                <a
-                  href="javascript:;"
-                  class="text-secondary font-weight-bold text-xs"
-                  data-toggle="tooltip"
-                  data-original-title="Edit user"
-                  >Editar</a
-                >
-              </td>
-              
-              <td>
-                <router-link :to="{ name: 'EmpleadoIndividual' }" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                  Ver
-                </router-link>
-              </td>
-              
             </tr>
           </tbody>
         </table>
@@ -258,30 +63,34 @@
 </template>
 
 <script>
-//import SoftAvatar from "@/components/SoftAvatar.vue";
+import axios from "axios";
 import SoftBadge from "@/components/SoftBadge.vue";
-import img1 from "../../assets/img/team-2.jpg";
-import img2 from "../../assets/img/team-3.jpg";
-import img3 from "../../assets/img/team-4.jpg";
-import img4 from "../../assets/img/team-3.jpg";
-import img5 from "../../assets/img/team-2.jpg";
-import img6 from "../../assets/img/team-4.jpg";
+
 
 export default {
   name: "authors-table",
+  components: {
+    SoftBadge,
+    
+  },
   data() {
     return {
-      img1,
-      img2,
-      img3,
-      img4,
-      img5,
-      img6,
+      empleados: [], // Lista para almacenar los empleados
     };
   },
-  components: {
-    //SoftAvatar,
-    SoftBadge
+  methods: {
+    async obtenerEmpleados() {
+      try {
+        const response = await axios.get("https://012c-181-115-60-195.ngrok-free.app/api/empleados");
+        this.empleados = response.data;
+        console.log(this.empleados)
+      } catch (error) {
+        console.error("Error al obtener empleados:", error);
+      }
+    },
+  },
+  created() {
+    this.obtenerEmpleados();
   },
 };
 </script>
