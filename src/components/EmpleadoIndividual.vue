@@ -14,8 +14,8 @@
           </div>
           <div class="col-auto my-auto">
             <div class="h-100">
-              <h5 class="mb-1">Alec Thompson</h5>
-              <p class="mb-0 text-sm font-weight-bold">CEO / Co-Founder</p>
+              <h5 class="mb-1"> {{ employeeDetails["Primer Nombre"] }} {{ employeeDetails["Primer Apellido"] }} </h5>
+              <p class="mb-0 text-sm font-weight-bold"> {{ employeeDetails["Puesto"] }} </p>
             </div>
           </div>
           <div
@@ -77,7 +77,7 @@
           </g>
         </svg>
       </a>
-      <EditarEmpleado class="align-middle text-center text-sm"></EditarEmpleado>
+      <button class="btn-editar-empleado" data-bs-toggle="modal" data-bs-target="#editarEmpleado">Editar Empleado</button>
     </li>
     
     <div class="profile-card overflow-hidden card card-body blur shadow-blur">
@@ -85,70 +85,53 @@
     <h2>Perfil del empleado</h2>
   </div>
   <div class="profile-card-body">
-    <div class="profile-detail">
-      <span class="detail-label">DNI:</span>
-      <span class="detail-value">0801200311111</span>
+        <div v-for="(value, key) in employeeDetails" :key="key" class="profile-detail">
+          <span class="detail-label"> {{ key }} </span>
+          <span class="detail-value"> {{ value }} </span>
+        </div>
+      </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="editarEmpleado" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Registro de empleado {{ employeeDetails["Primer Nombre"] }}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
-    <div class="profile-detail">
-      <span class="detail-label">Primer Nombre:</span>
-      <span class="detail-value">Juan</span>
-    </div>
-    <div class="profile-detail">
-      <span class="detail-label">Segundo Nombre:</span>
-      <span class="detail-value">Carlos</span>
-    </div>
-    <div class="profile-detail">
-      <span class="detail-label">Primer Apellido:</span>
-      <span class="detail-value">Pérez</span>
-    </div>
-    <div class="profile-detail">
-      <span class="detail-label">Segundo Apellido:</span>
-      <span class="detail-value">Martínez</span>
-    </div>
-    <div class="profile-detail">
-      <span class="detail-label">Puesto:</span>
-      <span class="detail-value">RR.HH</span>
-    </div>
-    <div class="profile-detail">
-      <span class="detail-label">Dirección:</span>
-      <span class="detail-value">Av. Central 123</span>
-    </div>
-    <div class="profile-detail">
-      <span class="detail-label">Correo:</span>
-      <span class="detail-value">juancachofa@email.com</span>
-    </div>
-    <div class="profile-detail">
-      <span class="detail-label">Estado:</span>
-      <span class="detail-value">Activo</span>
-    </div>
-    <div class="profile-detail">
-      <span class="detail-label">Teléfono:</span>
-      <span class="detail-value">9988-7766</span>
-    </div>
-    <div class="profile-detail">
-      <span class="detail-label">Fecha de Nacimiento:</span>
-      <span class="detail-value">2003-09-08</span>
-    </div>
-    <div class="profile-detail">
-      <span class="detail-label">Fecha de Ingreso:</span>
-      <span class="detail-value">2015-12-12</span>
-    </div>
-    <div class="profile-detail">
-      <span class="detail-label">RTN:</span>
-      <span class="detail-value">08011960111111</span>
+    <div class="modal-body">
+      <form @submit.prevent="">
+        <div class="mb-3" v-for="(value, key) in employeeDetails" :key="key">
+          <label for="formGroupExampleInput" class="form-label">{{  key }}</label>
+          <input v-if="key !== Puesto && key !== Estado" 
+          type="text" 
+          class="form-control" 
+          id="formGroupExampleInput" 
+          v-model="employeeDetails[key]"
+          :placeholder="'Escribe el ' + key">
+          <select v-else class="form-select" :id="key" v-model="employeeDetails[key]">
+            <option v-for="option in options[key]" :key="option.value" :value="option.value">{{ option.text }}</option>
+          </select>
+        </div>
+        
+      </form>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary">Guardar</button>
+      </div>
     </div>
   </div>
 </div>
 
-
-  
 </template>
   
-  <script>
+<script>
   //import SoftSwitch from "@/components/SoftSwitch.vue";
   //import ProfileInfoCard from "./components/ProfileInfoCard.vue";
   //import SoftAvatar from "@/components/SoftAvatar.vue";
-  import EditarEmpleado from "./EditarEmpleado.vue";
   import sophie from "@/assets/img/kal-visuals-square.jpg";
   import marie from "@/assets/img/marie.jpg";
   import ivana from "@/assets/img/ivana-square.jpg";
@@ -170,16 +153,11 @@
   //import PlaceHolderCard from "@/examples/Cards/PlaceHolderCard.vue";
   import setNavPills from "@/assets/js/nav-pills.js";
   import setTooltip from "@/assets/js/tooltip.js";
-  
+
   export default {
     name: "EmpleadoIndividual",
     components: {
-      //SoftSwitch,
-      //ProfileInfoCard,
-      //SoftAvatar,
-      //DefaultProjectCard,
-      //PlaceHolderCard,
-      EditarEmpleado
+      
     },
     data() {
       return {
@@ -199,6 +177,32 @@
         faFacebook,
         faTwitter,
         faInstagram,
+        employeeDetails :{
+        "DNI": "0801200311111",
+        "Primer Nombre": "Juan",
+        "Segundo Nombre": "Carlos",
+        "Primer Apellido": "Pérez",
+        "Segundo Apellido": "Martínez",
+        "Puesto": "RR.HH",
+        "Dirección": "Av. Central 123",
+        "Correo": "juancachofa@email.com",
+        "Estado": "Activo",
+        "Teléfono": "9988-7766",
+        "Fecha de Nacimiento": "2003-09-08",
+        "Fecha de Ingreso": "2015-12-12",
+        "RTN": "08011960111111",
+    },
+    options: {
+        Puesto: [
+          { value: "RR.HH", text: "RR.HH" },
+          { value: "Ventas", text: "Ventas" },
+          { value: "Desarrollo", text: "Desarrollo" },
+        ],
+        Estado: [
+          { value: "Activo", text: "Activo" },
+          { value: "Inactivo", text: "Inactivo" },
+        ],
+      },
       }
     },
   
@@ -210,8 +214,9 @@
     beforeUnmount() {
       this.$store.state.isAbsolute = false;
     },
+    
   };
-  </script>
+</script>
   
   <style scoped>
 .profile-card {
@@ -248,5 +253,13 @@
 
 .detail-value {
   color: #333;
+}
+
+.btn-editar-empleado {
+  background-color: #6a0dad;
+  border: none;
+  padding: 7px;
+  color: white;
+  border-radius: 5px
 }
 </style>
