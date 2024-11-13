@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import LandingComponent from '@/components/LandingPage.vue'
 import LoginComponent from '@/components/Login.vue'
 import WelcomeComponent from '@/components/PruebaLogin.vue';
 
@@ -15,13 +14,14 @@ import SignUp from "@/views/SignUp.vue";
 import Mantenimiento from "@/components/Mantenimiento.vue";
 import Empleados from '@/components/Empleados.vue';
 import EmpleadoIndividual from '@/components/EmpleadoIndividual.vue';
+import Categorias from '@/components/Categorias.vue';
+import Productos from '@/components/Productos.vue';
 
 
 const routes = [
   {
     path: '/',
     name: 'Landing',
-    component: LandingComponent
   },
   {
     path: '/login',
@@ -93,6 +93,16 @@ const routes = [
     path: "/mantenimiento/empleado-individual",
     component : EmpleadoIndividual,
     name : "EmpleadoIndividual"
+  },
+  {
+    path: '/categorias',
+    name: 'Categorias',
+    component: Categorias
+  },
+  {
+    path: '/productos',
+    name: 'Productos',
+    component: Productos
   }
 
 ]

@@ -1,77 +1,76 @@
 <template>
   <div id="app">
-    <!---<NavbarComponent /> --> 
-    <main
-      class="main-content position-relative max-height-vh-100 h-100 border-radius-lg"
-      :style="this.$store.state.isRTL ? 'overflow-x: hidden' : ''"
-    >
-      <!-- nav -->
-      <navbar
-        :class="[navClasses]"
-        :textWhite="this.$store.state.isAbsolute ? 'text-white opacity-8' : ''"
+    <!-- Navbar (Solo para Inicio y Login) -->
+    <main class="main-content position-relative max-height-vh-100 h-100">
+      <!-- Muestra NavbarComponent solo en la ruta raíz (Inicio) y Login -->
+      <navbar-component
+        v-if="isInicioRoute || isLoginRoute"
         :minNav="navbarMinimize"
-        v-if="this.$store.state.showNavbar"
       />
-      
-      <configurator
-        :toggle="toggleConfigurator"
-        :class="[
-          this.$store.state.showConfig ? 'show' : '',
-          this.$store.state.hideConfigButton ? 'd-none' : '',
-        ]"
+
+      <!-- Muestra el Navbar global (default) para otras vistas -->
+      <navbar
+        v-if="!isInicioRoute && !isLoginRoute"
+        :minNav="navbarMinimize"
       />
     </main>
-    
-    <router-view /> 
-    <sidenav
-    :custom_class="this.$store.state.mcolor"
-    :class="[
-      this.$store.state.isTransparent,
-      this.$store.state.isRTL ? 'fixed-end' : 'fixed-start',
-    ]"
-    v-if="this.$store.state.showSidenav"
-    />
 
+    <!-- Landing Page solo en la ruta raíz (Inicio) -->
+    <landing-component v-if="isInicioRoute" />
+
+    <router-view />
+
+    <!-- Sidebar, solo en Dashboard y Mantenimiento -->
+    <sidenav
+      v-if="isDashboardRoute || isMantenimientoRoute"
+      :custom_class="this.$store.state.mcolor"
+    />
   </div>
-  <app-footer v-show="this.$store.state.showFooter" />
 </template>
 
-<script>
-//import NavbarComponent from './components/Navbar.vue';
 
+<script>
 import Sidenav from "./examples/Sidenav";
-import Configurator from "@/examples/Configurator.vue";
 import Navbar from "@/examples/Navbars/Navbar.vue";
-import AppFooter from "@/examples/Footer.vue";
+import NavbarComponent from "@/components/Navbar.vue"; // Importamos el navbar específico
+import LandingComponent from "@/components/LandingPage.vue"; // Importamos el componente de la landing page
 import { mapMutations } from "vuex";
 
 export default {
   name: 'App',
   components: {
-    //NavbarComponent,
     Sidenav,
-    Configurator,
     Navbar,
-    AppFooter,
-  }, methods: {
-    ...mapMutations(["toggleConfigurator", "navbarMinimize"]),
+    NavbarComponent,  // Registrar el Navbar específico
+    LandingComponent,  // Registrar el componente de la landing page
   },
-  computed: {
-    navClasses() {
-      return {
-        "position-sticky blur shadow-blur mt-4 left-auto top-1 z-index-sticky": this
-          .$store.state.isNavFixed,
-        "position-absolute px-4 mx-0 w-100 z-index-2": this.$store.state
-          .isAbsolute,
-        "px-0 mx-4 mt-4": !this.$store.state.isAbsolute,
-      };
-    },
+  data() {
+    return {
+      // Checamos si la ruta actual es la raíz (inicio), Login, Dashboard o Mantenimiento
+      isInicioRoute: this.$route.path === '/',  // Ruta raíz
+      isLoginRoute: this.$route.name === 'Login',
+      isDashboardRoute: this.$route.name === 'Dashboard',
+      isMantenimientoRoute: this.$route.name === 'Mantenimiento',
+    };
+  },
+  methods: {
+    ...mapMutations(["toggleConfigurator", "navbarMinimize"]),
   },
   beforeMount() {
     this.$store.state.isTransparent = "bg-transparent";
   },
-}
+  watch: {
+    '$route'(to) {
+      // Verifica la ruta cuando se cambie y actualiza las condiciones
+      this.isInicioRoute = to.path === '/'; // Ruta raíz
+      this.isLoginRoute = to.name === 'Login';  // Ajusta el nombre según sea necesario
+      this.isDashboardRoute = to.name === 'Dashboard';
+      this.isMantenimientoRoute = to.name === 'Mantenimiento';
+    },
+  },
+};
 </script>
+
 
 <style>
 #app {
@@ -82,25 +81,5 @@ export default {
   color: #2c3e50;
   margin: 0;
 }
-
-.main-content {
-  flex: 1; /* Toma el espacio restante */
-  overflow-y: auto;
-  padding-left: 250px; /* Espacio para el Sidenav */
-}
-
-.app-container {
-  display: flex;
-  height: 100vh;
-  overflow: hidden;
-}
-
-Sidenav {
-  width: 250px; /* Ancho del Sidenav */
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  z-index: 1000;
-}
 </style>
+

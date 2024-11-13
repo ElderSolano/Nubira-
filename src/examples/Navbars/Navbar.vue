@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="shadow-none navbar navbar-main navbar-expand-lg border-radius-xl"
+    class="shadow-none navbar navbar-main navbar-expand-lg "
     v-bind="$attrs"
     id="navbarBlur"
     data-scroll="true"

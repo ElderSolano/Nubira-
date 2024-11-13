@@ -2,6 +2,7 @@
   <!--Aqui se encuentran todas las tarjetas-->
   <div id="dashboard-principal"  class="py-4 container-fluid col-9">
     <div class="row mt-3">
+      
 
     </div>
     <div class="row mt-3" id="Tarjetas-1">
@@ -250,8 +251,8 @@
             date-time="15 DEC"
           />
         </timeline-list>
+        <button @click="handleLogout" class="btn-logout">Cerrar Sesión</button>
       </div>
-      <button @click="handleLogout" class="btn-logout">Cerrar Sesión</button>
     </div>
 </template>
 

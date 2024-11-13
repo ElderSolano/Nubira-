@@ -1,9 +1,9 @@
 <template>
   <aside
-    class="my-3 overflow-auto border-0 sidenav navbar navbar-vertical navbar-expand-xs border-radius-xl"
-    :class="isRTL ? 'me-3 rotate-caret' : 'ms-3'"
-    id="sidenav-main"
-  >
+  class="my-3 overflow-auto border-0 sidenav navbar-vertical navbar-expand-xs border-radius-xl ms-3"
+  id="sidenav-main"
+>
+
     <div class="sidenav-header">
       <i
         class="top-0 p-3 cursor-pointer fas fa-times text-secondary opacity-5 position-absolute end-0 d-none d-xl-none"
@@ -19,6 +19,7 @@
     <sidenav-list :cardBg="customClass" />
   </aside>
 </template>
+
 <script>
 import SidenavList from "./SidenavList.vue";
 import logo from "@/assets/images/logo_sin_nombre.png";
@@ -45,3 +46,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+/* Estilo adicional para evitar que se sobreponga al contenido */
+body {
+  margin-left: 250px; /* Ajusta este valor según el ancho de tu sidenav */
+}
+</style>

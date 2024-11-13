@@ -49,11 +49,11 @@ export default {
 }
 
 .nav-item {
-  margin-left: 15px; /* Separación entre los elementos */
+  margin-left: 80px; /* Separación entre los elementos */
 }
 
 .navbar-nav {
-  margin-right: 160px; /* Separación desde el borde derecho del navbar */
+  margin-right: 100px; /* Separación desde el borde derecho del navbar */
   margin-left: 160px;
 }
 </style>
