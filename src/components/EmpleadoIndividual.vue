@@ -151,9 +151,10 @@
   } from "@fortawesome/free-brands-svg-icons";
   //import DefaultProjectCard from "@/views/components/DefaultProjectCard.vue";
   //import PlaceHolderCard from "@/examples/Cards/PlaceHolderCard.vue";
-  import setNavPills from "@/assets/js/nav-pills.js";
-  import setTooltip from "@/assets/js/tooltip.js";
+  //import setNavPills from "@/assets/js/nav-pills.js";
+  //import setTooltip from "@/assets/js/tooltip.js";
 
+  import axios from "axios";
   export default {
     name: "EmpleadoIndividual",
     components: {
@@ -177,21 +178,7 @@
         faFacebook,
         faTwitter,
         faInstagram,
-        employeeDetails :{
-        "DNI": "0801200311111",
-        "Primer Nombre": "Juan",
-        "Segundo Nombre": "Carlos",
-        "Primer Apellido": "Pérez",
-        "Segundo Apellido": "Martínez",
-        "Puesto": "RR.HH",
-        "Dirección": "Av. Central 123",
-        "Correo": "juancachofa@email.com",
-        "Estado": "Activo",
-        "Teléfono": "9988-7766",
-        "Fecha de Nacimiento": "2003-09-08",
-        "Fecha de Ingreso": "2015-12-12",
-        "RTN": "08011960111111",
-    },
+        employeeDetails: [],
     options: {
         Puesto: [
           { value: "RR.HH", text: "RR.HH" },
@@ -206,15 +193,26 @@
       }
     },
   
-    mounted() {
-      this.$store.state.isAbsolute = true;
-      setNavPills();
-      setTooltip(this.$store.state.bootstrap);
+    methods: {
+    async fetchEmployeeDetails() {
+      try {
+        const response = await axios.get(
+          "https://b13e-181-115-60-115.ngrok-free.app/api/empleados"
+        );
+        // Supongamos que la API devuelve un array de empleados, tomamos el primero para mostrar:
+        if (response.data && response.data.length > 0) {
+          this.employeeDetails = response.data[0];
+        } else {
+          console.warn("No se encontraron empleados.");
+        }
+      } catch (error) {
+        console.error("Error al obtener los empleados:", error);
+      }
     },
-    beforeUnmount() {
-      this.$store.state.isAbsolute = false;
-    },
-    
+  },
+  mounted() {
+    this.fetchEmployeeDetails();
+  },
   };
 </script>
   

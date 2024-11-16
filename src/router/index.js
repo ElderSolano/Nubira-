@@ -15,7 +15,9 @@ import SignUp from "@/views/SignUp.vue";
 import Mantenimiento from "@/components/Mantenimiento.vue";
 import Empleados from '@/components/Empleados.vue';
 import EmpleadoIndividual from '@/components/EmpleadoIndividual.vue';
-
+import Inventario from '@/components/Inventario.vue';
+import Ventas from '@/components/Ventas.vue';
+import Factura from '@/components/Factura.vue';
 
 const routes = [
   {
@@ -93,6 +95,21 @@ const routes = [
     path: "/mantenimiento/empleado-individual",
     component : EmpleadoIndividual,
     name : "EmpleadoIndividual"
+  },
+  {
+    path: "/dashboard/inventario",
+    component : Inventario,
+    name : "Inventario",
+  },
+  {
+    path: "/dashboard/ventas",
+    component : Ventas,
+    name : "Ventas",
+  },
+  {
+    path: "/dashboard/ventas/factura",
+    component : Factura,
+    name : "Factura",
   }
 
 ]

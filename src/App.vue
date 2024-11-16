@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="min-vh-100">
     <!---<NavbarComponent /> --> 
     <main
       class="main-content position-relative max-height-vh-100 h-100 border-radius-lg"
@@ -81,12 +81,19 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin: 0;
+
+  /**Clases extras añadidas */
+
 }
 
 .main-content {
   flex: 1; /* Toma el espacio restante */
   overflow-y: auto;
   padding-left: 250px; /* Espacio para el Sidenav */
+
+  /**Clases extras */
+  flex: 1; /* Ocupa todo el espacio restante */
+  overflow-y: auto;
 }
 
 .app-container {
@@ -103,4 +110,33 @@ Sidenav {
   height: 100%;
   z-index: 1000;
 }
+
+/* Footer */
+app-footer {
+  background-color: #f8f9fa; /* Color del footer */
+  padding: 1rem;
+  text-align: center;
+}
 </style>
+
+
+/* Contenedor principal como columna flexible */
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Asegura que ocupe toda la altura del viewport */
+}
+
+/* El main toma el espacio disponible */
+.main-content {
+  flex: 1; /* Ocupa todo el espacio restante */
+  overflow-y: auto;
+}
+
+/* Footer */
+app-footer {
+  background-color: #f8f9fa; /* Color del footer */
+  padding: 1rem;
+  text-align: center;
+}
+

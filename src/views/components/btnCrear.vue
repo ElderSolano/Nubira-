@@ -1,13 +1,11 @@
 <template>
 
     <!-- Button trigger modal -->
-<div class="contenedor-btn container-fluid">
-    <div></div>
-    <div></div>
+
     <button type="button" class="btn" style="background-color: #6a0dad; color: white;" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Añadir {{  }}
     </button>
-</div>
+
 
 
 <!-- Modal -->
@@ -92,8 +90,7 @@
 
 <style>
     .contenedor-btn {
-        display: flex;
-        justify-content: flex-end;
+        
     }
     .btn {
         background-color:  #6a0dad;
