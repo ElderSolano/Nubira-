@@ -68,7 +68,7 @@ export default {
     },
     async handleLogin() {
       try {
-        const response = await fetch('https://eb1d-181-115-60-195.ngrok-free.app/api/login', {
+        const response = await fetch('http://localhost:8000/api/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
