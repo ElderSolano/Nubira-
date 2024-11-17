@@ -1,84 +1,86 @@
 <template>
-  <div class="container mt-4">
-    <!-- Botón de Crear Categoría alineado a la derecha -->
-    <div class="d-flex justify-content-end mb-4">
-      <button class="btn btn-primary" @click="nuevaCategoria" data-bs-toggle="modal" data-bs-target="#editarCategoriaModal">
-        Crear Categoría
-      </button>
-    </div>
+  <div class="container-fluid espaciado col-10" style="margin-left: 250px;">
+    <h2 class="text-center">Categorías</h2>
 
-    <!-- Card con la tabla, alineada a la derecha -->
-    <div class="card mb-4 ms-auto" style="max-width: 80%;"> <!-- Se ajusta el tamaño para no ocupar toda la pantalla -->
-      <div class="card-header pb-0">
-        <h6>Lista de Categorías</h6>
-      </div>
-      <div class="card-body px-0 pt-0 pb-2">
-        <div class="table-responsive p-0">
-          <table class="table align-items-center mb-0">
-            <thead>
-              <tr>
-                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nombre</th>
-                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Descripción</th>
-                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Editar</th>
-                <th class="text-secondary opacity-7"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="categoria in categorias" :key="categoria.id">
-                <td>
-                  <p class="text-xs font-weight-bold mb-0">{{ categoria.nombre }}</p>
-                </td>
-                <td>
-                  <p class="text-xs font-weight-bold mb-0">{{ categoria.descripcion }}</p>
-                </td>
-                <td class="align-middle text-center">
-                  <button 
-                    @click="editarCategoria(categoria)" 
-                    class="text-secondary font-weight-bold text-xs btn btn-link" 
-                    data-bs-toggle="modal" 
-                    data-bs-target="#editarCategoriaModal">
-                    Editar
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
+    <!-- Botón para crear una nueva categoría -->
+    <button @click="nuevaCategoria" class="btn btn-success btn-sm mb-3">
+      <i class="fas fa-plus"></i> <!-- Ícono de agregar -->
+    </button>
 
-  <!-- Modal de Edición de Categoría -->
-  <div class="modal fade" id="editarCategoriaModal" tabindex="-1" aria-labelledby="editarCategoriaModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="editarCategoriaModalLabel">{{ categoriaSeleccionada.id ? 'Editar' : 'Crear' }} Categoría</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="mb-3">
-            <label for="nombreCategoria" class="form-label">Nombre</label>
-            <input 
-              type="text" 
-              class="form-control" 
-              id="nombreCategoria" 
-              v-model="categoriaSeleccionada.nombre" 
-              placeholder="Nombre de la categoría">
+    <!-- Tabla de categorías -->
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="categoria in categorias" :key="categoria.id">
+          <td>{{ categoria.id }}</td>
+          <td>{{ categoria.nombre_categoria }}</td>
+          <td>{{ categoria.descripcion_categoria }}</td>
+          <td>
+            <!-- Botón para editar una categoría -->
+            <button @click="editarCategoria(categoria)" class="btn btn-warning btn-sm">
+              <i class="fas fa-edit"></i> <!-- Ícono de editar -->
+            </button>
+
+            <!-- Botón para eliminar una categoría -->
+            <button @click="confirmarEliminacion(categoria.id)" class="btn btn-danger btn-sm ml-2">
+              <i class="fas fa-trash"></i> <!-- Ícono de eliminar -->
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Modal de creación/edición de categoría -->
+    <div v-if="mostrarModal" class="modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">{{ categoriaSeleccionada ? 'Editar Categoría' : 'Crear Nueva Categoría' }}</h5>
+            <button type="button" class="close" @click="cerrarModal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
           </div>
-          <div class="mb-3">
-            <label for="descripcionCategoria" class="form-label">Descripción</label>
-            <input 
-              type="text" 
-              class="form-control" 
-              id="descripcionCategoria" 
-              v-model="categoriaSeleccionada.descripcion" 
-              placeholder="Descripción de la categoría">
+          <div class="modal-body">
+            <form @submit.prevent="guardarEdicion">
+              <div class="form-group">
+                <label for="nombre_categoria">Nombre de la categoría</label>
+                <input type="text" class="form-control" id="nombre_categoria" v-model="categoriaSeleccionada.nombre_categoria" required>
+              </div>
+              <div class="form-group">
+                <label for="descripcion_categoria">Descripción</label>
+                <input type="text" class="form-control" id="descripcion_categoria" v-model="categoriaSeleccionada.descripcion_categoria" required>
+              </div>
+              <button type="submit" class="btn btn-primary">Guardar</button>
+            </form>
           </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-          <button type="button" class="btn btn-primary" @click="guardarEdicion">{{ categoriaSeleccionada.id ? 'Guardar cambios' : 'Crear categoría' }}</button>
+      </div>
+    </div>
+
+    <!-- Modal de confirmación para eliminar categoría -->
+    <div v-if="mostrarConfirmacion" class="modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Confirmar Eliminación</h5>
+            <button type="button" class="close" @click="cerrarConfirmacion" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>¿Estás seguro de que deseas eliminar esta categoría?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" @click="cerrarConfirmacion">Cancelar</button>
+            <button type="button" class="btn btn-danger" @click="eliminarCategoriaConfirmada">Aceptar</button>
+          </div>
         </div>
       </div>
     </div>
@@ -86,97 +88,134 @@
 </template>
 
 <script>
-import axios from 'axios';
-import { Modal } from 'bootstrap';
+import axios from "axios";
 
 export default {
-  name: "CategoriasTable",
+  name: "Categorias",
   data() {
     return {
-      categorias: [], // Lista de categorías obtenidas de la API
-      categoriaSeleccionada: {
-        id: null,
-        nombre: '',
-        descripcion: ''
-      },
-      apiUrl: 'https://api.ejemplo.com/categorias', // Reemplázalo por la URL de tu API
-      categoriasDeEjemplo: [
-        { id: 1, nombre: 'Electrónica', descripcion: 'Dispositivos electrónicos como teléfonos, computadoras, etc.' },
-        { id: 2, nombre: 'Ropa', descripcion: 'Prendas de vestir para todos los gustos.' },
-        { id: 3, nombre: 'Hogar', descripcion: 'Artículos para el hogar y la cocina.' }
-      ] // Datos de ejemplo
+      categorias: [], // Almacena las categorías
+      categoriaSeleccionada: null, // Almacena la categoría seleccionada para edición
+      mostrarModal: false, // Controla la visibilidad del modal de edición
+      mostrarConfirmacion: false, // Controla la visibilidad del modal de confirmación
+      categoriaAEliminar: null, // Almacena la categoría que se va a eliminar
+      apiUrl: "http://127.0.0.1:8000/api/categoria", // URL de la API
+      usuarioLogueado: 1 // ID del usuario logueado
     };
   },
   mounted() {
-    this.obtenerCategorias(); // Obtener las categorías cuando el componente se monta
+    this.obtenerCategorias(); // Llama la función para obtener categorías al montar el componente
   },
   methods: {
-    // Obtener categorías desde la API
+    // Obtener las categorías desde la API
     async obtenerCategorias() {
       try {
         const response = await axios.get(this.apiUrl);
-        if (response.data && response.data.length > 0) {
-          this.categorias = response.data; // Suponiendo que la API devuelve un arreglo de categorías
-        } else {
-          this.categorias = this.categoriasDeEjemplo; // Asigna los datos de ejemplo si la respuesta está vacía
-        }
+        this.categorias = response.data; // Asigna la respuesta a la variable categorias
       } catch (error) {
-        console.error('Error al obtener las categorías:', error);
-        this.categorias = this.categoriasDeEjemplo; // Usa los datos de ejemplo si hay un error
+        console.error("Error al obtener categorías:", error);
       }
     },
+
+    // Mostrar el modal para crear una nueva categoría
     nuevaCategoria() {
-      // Resetea los campos para crear una nueva categoría
-      this.categoriaSeleccionada = {
-        id: null,
-        nombre: '',
-        descripcion: ''
+      this.categoriaSeleccionada = { 
+        nombre_categoria: '', 
+        descripcion_categoria: '', 
+        created_by: this.usuarioLogueado, // Asigna el id del usuario logueado
+        updated_by: null, 
+        deleted_by: null
       };
+      this.mostrarModal = true; // Mostrar el modal
     },
+
+    // Mostrar el modal para editar una categoría
     editarCategoria(categoria) {
-      // Establece la categoría seleccionada para el modal de edición
-      this.categoriaSeleccionada = { ...categoria };
+      this.categoriaSeleccionada = { 
+        ...categoria, 
+        updated_by: this.usuarioLogueado // Asigna el id del usuario logueado
+      };
+      this.mostrarModal = true; // Mostrar el modal
     },
-    // Guardar nueva o editar categoría
+
+    // Guardar la nueva categoría o actualizar una existente
     async guardarEdicion() {
-      if (this.categoriaSeleccionada.id) {
-        // Actualizar categoría (editar)
-        try {
-          const response = await axios.put(
-            `${this.apiUrl}/${this.categoriaSeleccionada.id}`,
-            this.categoriaSeleccionada
-          );
-          console.log('Categoría actualizada:', response.data);
-          this.obtenerCategorias(); // Actualiza la lista después de la edición
-        } catch (error) {
-          console.error('Error al actualizar la categoría:', error);
+      try {
+        if (this.categoriaSeleccionada.id) {
+          // Si la categoría tiene un ID, se está editando
+          await axios.put(`${this.apiUrl}/${this.categoriaSeleccionada.id}`, this.categoriaSeleccionada);
+          console.log("Categoría actualizada exitosamente");
+        } else {
+          // Si no tiene un ID, es una nueva categoría
+          await axios.post(this.apiUrl, this.categoriaSeleccionada);
+          console.log("Categoría creada exitosamente");
         }
-      } else {
-        // Crear nueva categoría
-        try {
-          const response = await axios.post(this.apiUrl, this.categoriaSeleccionada);
-          console.log('Categoría creada:', response.data);
-          this.obtenerCategorias(); // Actualiza la lista después de crear
-        } catch (error) {
-          console.error('Error al crear la categoría:', error);
-        }
+        this.obtenerCategorias(); // Actualizar la lista de categorías después de editar o crear
+        this.cerrarModal(); // Cerrar el modal
+      } catch (error) {
+        console.error("Error al guardar la categoría:", error);
       }
+    },
 
-      // Resetear la categoría seleccionada después de guardar
-      this.categoriaSeleccionada = { id: null, nombre: '', descripcion: '' };
+    // Confirmar la eliminación de la categoría
+    confirmarEliminacion(id) {
+      this.categoriaAEliminar = id; // Almacenar el id de la categoría a eliminar
+      this.mostrarConfirmacion = true; // Mostrar el modal de confirmación
+    },
 
-      // Cerrar el modal
-      const modal = Modal.getInstance(document.getElementById('editarCategoriaModal'));
-      modal.hide();
+    // Eliminar la categoría confirmada
+    async eliminarCategoriaConfirmada() {
+      try {
+        await axios.delete(`${this.apiUrl}/${this.categoriaAEliminar}`);
+        console.log("Categoría eliminada exitosamente");
+        this.obtenerCategorias(); // Actualizar la lista de categorías
+        this.cerrarConfirmacion(); // Cerrar el modal de confirmación
+      } catch (error) {
+        console.error("Error al eliminar la categoría:", error);
+      }
+    },
+
+    // Cerrar el modal de confirmación
+    cerrarConfirmacion() {
+      this.mostrarConfirmacion = false;
+      this.categoriaAEliminar = null;
+    },
+
+    // Cerrar el modal de creación/edición
+    cerrarModal() {
+      this.mostrarModal = false;
+      this.categoriaSeleccionada = null;
     }
   }
 };
 </script>
 
 <style scoped>
-/* Ajusta el estilo para que la tabla y los botones no choquen con otros componentes */
-.card {
-  margin-left: auto;
-  margin-right: auto;
+.modal {
+  display: block;
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.modal-dialog {
+  margin-top: 100px;
+}
+
+.modal-content {
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+button i {
+  font-size: 16px;
 }
 </style>
+
+
+
