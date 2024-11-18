@@ -16,6 +16,7 @@ import Empleados from '@/components/Empleados.vue';
 import EmpleadoIndividual from '@/components/EmpleadoIndividual.vue';
 import Categorias from '@/components/Categorias.vue';
 import Productos from '@/components/Productos.vue';
+import Proveedores from '@/components/Proveedores.vue'
 
 
 const routes = [
@@ -103,8 +104,12 @@ const routes = [
     path: '/productos',
     name: 'Productos',
     component: Productos
+  },
+  {
+    path: '/proveedores',
+    name: 'Proveedores',
+    component: Proveedores
   }
-
 ]
 
 const router = createRouter({

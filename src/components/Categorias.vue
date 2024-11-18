@@ -2,11 +2,12 @@
   <div class="container-fluid espaciado col-10" style="margin-left: 250px;">
     <h2 class="text-center">Categorías</h2>
 
-    <!-- Botón para crear una nueva categoría -->
-    <button @click="nuevaCategoria" class="btn btn-success btn-sm mb-3">
-      <i class="fas fa-plus"></i> <!-- Ícono de agregar -->
-    </button>
-
+    <div class="d-flex justify-content-end mb-4">
+      <button @click="nuevaCategoria" class="btn btn-primary mb-3">
+      Crear Producto 
+      </button>
+    </div>
+    
     <!-- Tabla de categorías -->
     <table class="table">
       <thead>
