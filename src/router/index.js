@@ -18,6 +18,7 @@ import EmpleadoIndividual from '@/components/EmpleadoIndividual.vue';
 import Inventario from '@/components/Inventario.vue';
 import Ventas from '@/components/Ventas.vue';
 import Factura from '@/components/Factura.vue';
+import Estadisticas from '@/components/estadisiticas/Estadisticas.vue';
 
 const routes = [
   {
@@ -110,6 +111,11 @@ const routes = [
     path: "/dashboard/ventas/factura",
     component : Factura,
     name : "Factura",
+  },
+  {
+    path: "/dashboard/estadisticas",
+    component : Estadisticas,
+    name : "Estadisticas",
   }
 
 ]
