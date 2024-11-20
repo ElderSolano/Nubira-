@@ -55,6 +55,7 @@
           <div class="card-body p-3">
             <div class="row">
               <div class="col-lg-6">
+                <router-link :to="{name:'Inventario'}">
                 <div class="d-flex flex-column h-100">
                   <p class="mb-1 pt-2 text-bold">Inventario</p>
                   <h5 class="font-weight-bolder">Administración</h5>
@@ -72,6 +73,7 @@
                     ></i>
                   </a>
                 </div>
+                </router-link>
               </div>
               <div class="col-lg-5 ms-auto text-center mt-5 mt-lg-0">
                 <div class=" border-radius-lg h-100">

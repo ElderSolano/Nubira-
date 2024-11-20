@@ -1,7 +1,8 @@
 <template>
     <btnCrear
-        :inputs="inputs"
+        
     ></btnCrear>
+    <h6>Lista de empleados</h6>
     <div class="py-4 container-fluid espaciado col-10" style="margin-left: 250px;">
         <div class="row">
             
@@ -49,6 +50,7 @@
 
 <script>
 import axios from "axios"; // Importa axios
+//import AuthorsTable from "@/views/components/AuthorsTable.vue";
 import btnCrear from "@/views/components/btnCrear.vue";
 
 export default {
@@ -64,7 +66,8 @@ export default {
                 dni: '',
                 nombre: '',
                 puesto: '',
-                telefono: ''
+                telefono: '',
+                
             }
         };
     },
@@ -93,6 +96,7 @@ export default {
             }
         }
     }
+    
 };
 </script>
 

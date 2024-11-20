@@ -2,14 +2,14 @@
 
     <!-- Button trigger modal -->
 
-    <button type="button" class="btn" style="background-color: #6a0dad; color: white;" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Añadir {{  }}
-    </button>
-
+    <p class="editar"
+     data-bs-toggle="modal" data-bs-target="#editarEmpleado">
+        Editar {{  }}
+    </p>
 
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="editarEmpleado" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -90,16 +90,18 @@
 
 <style>
     .contenedor-btn {
-        
+        display: flex;
+        justify-content: flex-end;
     }
-    .btn {
-        background-color:  #6a0dad;
-        color: white;
+    .editar {
+        cursor: pointer;
     }
 </style>
 
 <script>
+
     export default {
+        name : "EditarEmpleado",
         props : {
             inputs :{
                 type: Array, 

@@ -18,6 +18,10 @@ import Categorias from '@/components/Categorias.vue';
 import Productos from '@/components/Productos.vue';
 import Proveedores from '@/components/Proveedores.vue'
 
+import Inventario from '@/components/Inventario.vue';
+import Ventas from '@/components/Ventas.vue';
+import Factura from '@/components/Factura.vue';
+import Estadisticas from '@/components/estadisiticas/Estadisticas.vue';
 
 const routes = [
   {
@@ -35,11 +39,6 @@ const routes = [
     component: WelcomeComponent,
   },
 
-  {
-    path: "/",
-    name: "/",
-    redirect: "/dashboard",
-  },
   {
     path: "/dashboard",
     name: "Dashboard",
@@ -109,6 +108,26 @@ const routes = [
     path: '/proveedores',
     name: 'Proveedores',
     component: Proveedores
+  },
+  { 
+    path: "/dashboard/inventario",
+    component : Inventario,
+    name : "Inventario",
+  },
+  {
+    path: "/dashboard/ventas",
+    component : Ventas,
+    name : "Ventas",
+  },
+  {
+    path: "/dashboard/ventas/factura",
+    component : Factura,
+    name : "Factura",
+  },
+  {
+    path: "/dashboard/estadisticas",
+    component : Estadisticas,
+    name : "Estadisticas",
   }
 ]
 
