@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" style="color:white">
     <!-- Main layout -->
     <main class="main-content position-relative max-height-vh-100 h-100">
       <!-- NavbarComponent solo para Inicio y Login -->
@@ -15,10 +15,7 @@
       />
 
       <!-- Sidebar solo en Dashboard y Mantenimiento -->
-      <sidenav
-        v-if="isDashboardRoute || isMantenimientoRoute"
-        :custom_class="this.$store.state.mcolor"
-      />
+      
 
       <!-- Landing Page solo en la ruta raíz (Inicio) -->
       <landing-component v-if="isInicioRoute" />
@@ -30,7 +27,7 @@
 </template>
 
 <script>
-import Sidenav from "./examples/Sidenav";
+//import Sidenav from "./examples/Sidenav";
 import Navbar from "@/examples/Navbars/Navbar.vue";
 import NavbarComponent from "@/components/Navbar.vue"; // Navbar para Login/Inicio
 import LandingComponent from "@/components/LandingPage.vue"; // Página de Inicio
@@ -39,7 +36,7 @@ import { mapMutations } from "vuex";
 export default {
   name: 'App',
   components: {
-    Sidenav,
+    //Sidenav,
     Navbar,
     NavbarComponent,
     LandingComponent,

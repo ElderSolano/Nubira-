@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import LoginComponent from '@/components/Login.vue'
 import WelcomeComponent from '@/components/PruebaLogin.vue';
 
-import Dashboard from "@/views/Dashboard.vue";
+import Dashboard from '@/views/Dashboard.vue';
 import Tables from "@/views/Tables.vue";
 import Billing from "@/views/Billing.vue";
 import VirtualReality from "@/views/VirtualReality.vue";
@@ -11,7 +11,7 @@ import Rtl from "@/views/Rtl.vue";
 import SignIn from "@/views/SignIn.vue";
 import SignUp from "@/views/SignUp.vue";
 
-import Mantenimiento from "@/components/Mantenimiento.vue";
+import Mantenimiento from '@/components/Mantenimiento.vue';
 import Empleados from '@/components/Empleados.vue';
 import EmpleadoIndividual from '@/components/EmpleadoIndividual.vue';
 import Categorias from '@/components/Categorias.vue';
@@ -22,11 +22,18 @@ import Inventario from '@/components/Inventario.vue';
 import Ventas from '@/components/Ventas.vue';
 import Factura from '@/components/Factura.vue';
 import Estadisticas from '@/components/estadisiticas/Estadisticas.vue';
+import LandingPage from '@/components/LandingPage.vue';
 
 const routes = [
   {
+    path: '/ventas',
+    name: 'ventas',
+    component: Ventas
+  },
+  {
     path: '/',
     name: 'Landing',
+    component: LandingPage
   },
   {
     path: '/login',
@@ -123,6 +130,7 @@ const routes = [
     path: "/dashboard/ventas/factura",
     component : Factura,
     name : "Factura",
+    props: true
   },
   {
     path: "/dashboard/estadisticas",
