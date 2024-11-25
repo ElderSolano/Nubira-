@@ -154,7 +154,7 @@ export default {
       if (this.searchQuery.trim() !== "") {
         try {
           const response = await axios.get(
-            `http://127.0.0.1:8001/api/productos/${this.searchQuery}`
+            `http://127.0.0.1:8000/api/productos/${this.searchQuery}`
           );
           const data = response.data.data;
 
@@ -213,7 +213,7 @@ export default {
         };
 
         try {
-          const response = await axios.post("http://127.0.0.1:8001/api/ventas", data);
+          const response = await axios.post("http://127.0.0.1:8000/api/ventas", data);
           console.log("Venta registrada exitosamente:", response.data);
 
           this.productos = [];
