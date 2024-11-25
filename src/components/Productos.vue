@@ -102,7 +102,7 @@ export default {
   methods: {
     async obtenerProductos() {
       try {
-        const response = await fetch('http://localhost:8000/api/productos');
+        const response = await fetch('http://localhost:8001/api/productos');
         if (!response.ok) {
           throw new Error('Error al obtener los productos');
         }
@@ -114,7 +114,7 @@ export default {
     },
     async obtenerCategorias() {
       try {
-        const response = await fetch('http://localhost:8000/api/categoria');
+        const response = await fetch('http://localhost:8001/api/categoria');
         if (!response.ok) {
           throw new Error('Error al obtener categorías');
         }
@@ -153,7 +153,7 @@ export default {
           id_proveedor: this.productoSeleccionado.id_proveedor,
         };
 
-        const response = await fetch('http://localhost:8000/api/productos', {
+        const response = await fetch('http://localhost:8001/api/productos', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

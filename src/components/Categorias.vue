@@ -100,7 +100,7 @@ export default {
       mostrarModal: false, // Controla la visibilidad del modal de edición
       mostrarConfirmacion: false, // Controla la visibilidad del modal de confirmación
       categoriaAEliminar: null, // Almacena la categoría que se va a eliminar
-      apiUrl: "http://127.0.0.1:8000/api/categoria", // URL de la API
+      apiUrl: "http://127.0.0.1:8001/api/categoria", // URL de la API
       usuarioLogueado: 1 // ID del usuario logueado
     };
   },

@@ -50,15 +50,15 @@
     </div>
 
     <div class="venta-summary">
-    <div class="summary-item">
-      <div class="label">ISV</div>
-      <div class="value">15%</div>
-    </div>
-    <div class="summary-item">
-      <div class="label">SubTotal</div>
-      <div class="value">{{ formatCurrency(subtotal) }}</div>
-    </div>
-    <div>
+      <div class="summary-item">
+        <div class="label">ISV</div>
+        <div class="value">15%</div>
+      </div>
+      <div class="summary-item">
+        <div class="label">SubTotal</div>
+        <div class="value">{{ formatCurrency(subtotal) }}</div>
+      </div>
+      <div>
         <strong>Descuento Total (%):</strong>
         <input
           type="number"
@@ -69,12 +69,12 @@
           style="width: 80px; text-align: center"
         />
       </div>
-    <div class="summary-item total-item">
-      <div class="label">Total</div>
-      <div class="value">{{ formatCurrency(total) }}</div>
+      <div class="summary-item total-item">
+        <div class="label">Total</div>
+        <div class="value">{{ formatCurrency(total) }}</div>
+      </div>
+      <button @click="pagar" class="btn">Pagar</button>
     </div>
-    <button @click="pagar" class="btn">Pagar</button>
-  </div>
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -87,20 +87,15 @@
           <div class="modal-body">
             <div class="mb-3">
               <label for="searchInput" class="form-label">Buscar producto por código o nombre</label>
-              <input type="text" v-model="searchQuery" @input="buscarProducto" class="form-control" id="searchInput"
-                placeholder="Escribe el código o nombre" />
+              <input
+                type="text"
+                v-model="searchQuery"
+                @input="buscarProducto"
+                class="form-control"
+                id="searchInput"
+                placeholder="Escribe el código o nombre"
+              />
             </div>
-
-            <!-- Resultado de la búsqueda
-            <div v-if="productoEncontrado" class="border p-3 mt-3" style="color:black">
-              <p><strong>Código:</strong> {{ productoEncontrado.codigo }}</p>
-              <p><strong>Nombre:</strong> {{ productoEncontrado.nombre }}</p>
-              <p><strong>Stock:</strong> {{ productoEncontrado.stock }}</p>
-              <p><strong>Precio:</strong> {{ formatCurrency(productoEncontrado.precio) }}</p>
-              <button @click="añadirProducto" class="btn btn-primary" data-bs-dismiss="modal">
-                Añadir Producto
-              </button>
-            </div> -->
 
             <div v-if="productoEncontrado" class="border p-3 mt-3"
               style="color:black; display: flex; justify-content: space-around; flex-direction: column; overflow-y: scroll; max-height: 300px;">
@@ -112,40 +107,23 @@
                   Añadir
                 </button>
               </div>
-              <hr>
-              
-              
-              
+              <hr />
             </div>
-            <!-- Mensaje si no hay resultados -->
-            <!-- Mensaje si no hay resultados -->
             <div v-else-if="searchQuery && !productoEncontrado" class="mt-3 text-danger">
               <p>No se encontró ningún producto.</p>
-            </div>
-          </div>
-
-          <!-- Subtotal, Impuesto y Total en el Modal -->
-          <div class="modal-footer bg-light">
-            <div class="row w-100">
-              <div class="col text-end">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-
   </div>
 </template>
 
 <script>
-
 import axios from "axios";
 
 export default {
-  name: 'VentaComponent',
+  name: "VentaComponent",
   data() {
     return {
       productos: [], // Lista de productos en la tabla
@@ -176,11 +154,10 @@ export default {
       if (this.searchQuery.trim() !== "") {
         try {
           const response = await axios.get(
-            `http://127.0.0.1:8000/api/productos/${this.searchQuery}`
+            `http://127.0.0.1:8001/api/productos/${this.searchQuery}`
           );
           const data = response.data.data;
 
-          // Asignar datos procesados del producto
           this.productoEncontrado = {
             id: data.id,
             nombre_producto: data.nombre_producto,
@@ -220,8 +197,7 @@ export default {
         this.productoEncontrado = null;
       }
     },
-    methods: {
-      async pagar() {
+    async pagar() {
       const productosConCantidad = this.productos.filter((producto) => producto.cantidad > 0);
 
       if (productosConCantidad.length > 0) {
@@ -237,7 +213,7 @@ export default {
         };
 
         try {
-          const response = await axios.post("http://127.0.0.1:8000/api/ventas", data);
+          const response = await axios.post("http://127.0.0.1:8001/api/ventas", data);
           console.log("Venta registrada exitosamente:", response.data);
 
           this.productos = [];
@@ -251,9 +227,6 @@ export default {
         alert("Por favor, agrega productos a la venta antes de continuar.");
       }
     },
-    }
-    ,
-
     formatCurrency(value) {
       if (isNaN(value) || value === null || value === undefined) {
         return "$0.00";
@@ -262,7 +235,7 @@ export default {
     },
   },
   mounted() {
-    this.updateTime(); // Actualiza la hora inmediatamente al cargar
+    this.updateTime();
     setInterval(this.updateTime, 1000); // Actualiza la hora cada segundo
   },
   watch: {
@@ -279,15 +252,14 @@ export default {
 </script>
 
 <style scoped>
+/* Estilos originales */
 .venta-container {
   padding: 20px;
   color: black;
 }
-
 .venta-table {
   margin-bottom: 20px;
 }
-
 .venta-summary {
   display: flex;
   justify-content: space-between;
@@ -299,7 +271,6 @@ export default {
   border-radius: 8px;
   font-family: "Arial", sans-serif;
 }
-
 .summary-item {
   display: flex;
   flex-direction: column;
@@ -310,28 +281,24 @@ export default {
   margin-right: 10px;
   background-color: #f9eaea;
 }
-
 .total-item {
   background-color: #f5e4e4;
   border: 1px solid #d4baba;
   font-weight: bold;
 }
-
 .label {
   font-size: 14px;
   color: #b66a6a;
   font-weight: bold;
   margin-bottom: 5px;
 }
-
 .value {
   font-size: 16px;
   color: #9a5c5c;
 }
-
 .btn {
   padding: 10px 20px;
-  background-color: #b66a6a;
+  background-color: #6a0dad;
   color: white;
   border: none;
   border-radius: 6px;
@@ -340,77 +307,12 @@ export default {
   font-weight: bold;
   transition: all 0.3s;
 }
-
 .btn:hover {
   background-color: #9a5c5c;
 }
-
-button {
-  margin: 0 5px;
-}
-
 input {
   text-align: center;
 }
-
-.btn {
-  background-color: #5a24ea;
-  color: white;
-}
-
-.btn-add {
-  background-color: #0cf114;
-  border: none;
-  border-radius: 3px;
-  color: white;
-}
-
-.btn-remove {
-  background-color: #f00;
-  border: none;
-  border-radius: 3px;
-  color: white;
-}
-
-.input-busqueda-modal {
-  width: 100%;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #f5f5f5;
-  padding: 10px 20px;
-  border-bottom: 1px solid #ddd;
-}
-
-.title {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.info {
-  display: flex;
-  gap: 20px;
-  margin-bottom: 10px
-}
-
-.time {
-  font-size: 18px;
-  font-weight: 500;
-  color: #555;
-}
-
-.user {
-  font-size: 16px;
-  color: #777;
-}
-
 .table {
   width: 100%;
   border-collapse: collapse;
@@ -423,62 +325,28 @@ input {
   box-shadow: 0 2px 5px rgba(51, 50, 50, 0.1);
   color: white !important;
 }
-
 .table thead {
   background-color: #dc3545;
   color: white !important;
 }
-
 .table th {
   padding: 15px;
   text-transform: uppercase;
   font-weight: bold;
 }
-
-.table tbody tr {
-  transition: background-color 0.3s;
-}
-
-.table tbody tr:nth-child(even) {
-  background-color: #f1f1f1;
-  /* Rayas para alternar */
-}
-
-.table tbody tr:hover {
-  background-color: #d9ecff;
-  /* Resaltar fila al pasar el ratón */
-}
-
 .table td {
   padding: 15px;
   border-bottom: 1px solid #ddd;
 }
-
 input[type="number"] {
   width: 60px;
   padding: 5px;
   border: 1px solid #ddd;
   border-radius: 5px;
-  text-align: center;
-  font-size: 14px;
 }
-
-input[type="number"]:focus {
-  outline: none;
-  border-color: #292b2d;
-  /* Color de foco */
-  box-shadow: 0 0 3px rgba(0, 123, 255, 0.5);
-  color: white;
-}
-
-.table td:last-child {
-  font-weight: bold;
-  color: #dc3545;
-  /* Verde para totales */
-}
-
 .p-table {
   color: white;
-  margin: 0!important;
+  margin: 0 !important;
 }
 </style>
+

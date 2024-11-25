@@ -78,7 +78,7 @@ export default {
         // Función para obtener empleados desde la API
         async obtenerEmpleados() {
             try {
-                const response = await axios.get("http://127.0.0.1:8000/api/empleados");
+                const response = await axios.get("http://127.0.0.1:8001/api/empleados");
                 this.empleados = response.data; // Asigna la respuesta a la variable empleados
             } catch (error) {
                 console.error("Error al obtener empleados:", error);
@@ -88,7 +88,7 @@ export default {
         // Función para agregar un nuevo empleado (si es necesario)
         async agregarEmpleado() {
             try {
-                const response = await axios.post("http://127.0.0.1:8000/api/empleados", this.empleado);
+                const response = await axios.post("http://127.0.0.1:8001/api/empleados", this.empleado);
                 console.log("Empleado agregado exitosamente:", response.data);
                 this.obtenerEmpleados(); // Actualiza la lista de empleados después de agregar uno
             } catch (error) {

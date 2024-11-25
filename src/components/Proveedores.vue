@@ -135,7 +135,7 @@
         mostrarModal: false, // Controla la visibilidad del modal de edición
         mostrarConfirmacion: false, // Controla la visibilidad del modal de confirmación
         proveedorAEliminar: null, // Almacena el proveedor que se va a eliminar
-        apiUrl: "http://127.0.0.1:8000/api/proveedores", // URL de la API
+        apiUrl: "http://127.0.0.1:8001/api/proveedores", // URL de la API
       };
     },
     mounted() {

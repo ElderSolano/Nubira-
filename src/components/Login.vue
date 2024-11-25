@@ -68,7 +68,7 @@ export default {
     },
     async handleLogin() {
       try {
-        const response = await fetch('http://localhost:8000/api/login', {
+        const response = await fetch('http://localhost:8001/api/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

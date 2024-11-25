@@ -213,4 +213,3 @@ button:hover {
 </style>
 
 
-<!-- hasta aqui es el codigo correcto -->
