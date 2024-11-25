@@ -1,3 +1,6 @@
+<!-- dede aqui es el codigo correcto -->
+
+
 <template>
   <div class="factura-container">
     <div class="header">
@@ -9,87 +12,143 @@
         <p><strong>Teléfono:</strong> xxxxxxxx</p>
       </div>
       <div class="factura-info">
-        <p><strong>Factura Original</strong></p>
-        <p>NO.: xxx-xxx-xx-xxxxxxxx</p>
-        <p><strong>Fecha:</strong> {{ new Date().toLocaleDateString() }}</p>
-        <p><strong>Empleado:</strong> María Gutierritos</p>
+        <p><strong>Historial de Ventas</strong></p>
+        <p>Fecha: {{ new Date().toLocaleDateString() }}</p>
       </div>
     </div>
 
-    <div class="cliente-info">
-      <p><strong>Nombre:</strong> Cliente Final</p>
-      <p><strong>RTN:</strong> RTN cliente</p>
-    </div>
-
-    <div class="productos">
+    <div class="ventas">
       <table>
         <thead>
           <tr>
-            <th>Producto</th>
-            <th>Precio</th>
-            <th>Cantidad</th>
+            <th>ID Venta</th>
+            <th>Fecha</th>
+            <th>Empleado</th>
+            <th>Subtotal</th>
+            <th>ISV</th>
+            <th>Descuento</th>
             <th>Total</th>
+            <th>Detalles</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="producto in productos" :key="producto.nombre">
-            <td>{{ producto.nombre }}</td>
-            <td>L. {{ producto.precio }}</td>
-            <td>{{ producto.cantidad }}</td>
-            <td>L. {{ producto.total }}</td>
+          <tr v-for="venta in ventas" :key="venta.id">
+            <td>{{ venta.id }}</td>
+            <td>{{ venta.fecha_venta }}</td>
+            <td>{{ venta.id_empleado || 'Sin Asignar' }}</td>
+            <td>L. {{ venta.subtotal }}</td>
+            <td>L. {{ venta.isv }}</td>
+            <td>L. {{ venta.descuento }}</td>
+            <td>L. {{ venta.total }}</td>
+            <td>
+              <button
+                @click="verDetalles(venta)"
+                class="btn-detalles"
+                data-bs-toggle="modal"
+                data-bs-target="#modalDetalles"
+              >
+                Ver Detalles
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <div class="totales">
-      <p>Subtotal: L. {{ subtotal }}</p>
-      <p>15% ISV: L. {{ impuesto }}</p>
-      <p>Total a Pagar: L. {{ total }}</p>
-    </div>
-
-    <div class="footer-factura">
-      <button class="btn-aceptar-factura" @click="procesarFactura">Aceptar</button>
+    
+    <div
+      class="modal fade"
+      id="modalDetalles"
+      tabindex="-1"
+      aria-labelledby="modalDetallesLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalDetallesLabel">Detalles de la Venta</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <h6><strong>ID Venta:</strong> {{ detalleActual.id }}</h6>
+            <h6><strong>Fecha:</strong> {{ detalleActual.fecha_venta }}</h6>
+            <h6>
+              <strong>Empleado:</strong> {{ detalleActual.id_empleado || 'Sin Asignar' }}
+            </h6>
+            <h6><strong>Subtotal:</strong> L. {{ detalleActual.subtotal }}</h6>
+            <h6><strong>ISV:</strong> L. {{ detalleActual.isv }}</h6>
+            <h6><strong>Descuento:</strong> L. {{ detalleActual.descuento }}</h6>
+            <h6><strong>Total:</strong> L. {{ detalleActual.total }}</h6>
+            <hr />
+            <h6>Productos Vendidos</h6>
+            <table>
+              <thead>
+                <tr>
+                  <th>Producto</th>
+                  <th>Cantidad</th>
+                  <th>Precio Unitario</th>
+                  <th>Subtotal</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="detalle in detalleActual.detalles" :key="detalle.producto">
+                  <td>{{ detalle.producto }}</td>
+                  <td>{{ detalle.cantidad }}</td>
+                  <td>L. {{ detalle.precio_unitario }}</td>
+                  <td>L. {{ detalle.subtotal }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cerrar
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-  name: "Factura",
-  props: {
-    productos: {
-      type: Array,
-      required: true,
-    },
+  name: "VentasHistorial",
+  data() {
+    return {
+      ventas: [], // Lista de ventas
+      detalleActual: {}, // Detalles de la venta seleccionada
+    };
   },
-  computed: {
-    subtotal() {
-      return this.productos.reduce((sum, prod) => sum + prod.total, 0);
-    },
-    impuesto() {
-      return (this.subtotal * 0.15).toFixed(2);
-    },
-    total() {
-      return (parseFloat(this.subtotal) + parseFloat(this.impuesto)).toFixed(2);
-    },
-  },
-  watch: {
-    productos: {
-      handler(newValue) {
-        console.log('Productos en factura:', newValue);
-      },
-      immediate: true,
-    }
+  created() {
+    this.obtenerVentas();
   },
   methods: {
-    procesarFactura() {
-      alert("Factura procesada con éxito!");
+    async obtenerVentas() {
+      try {
+        const response = await axios.get("http://127.0.0.1:8001/api/ventas");
+        this.ventas = response.data;
+      } catch (error) {
+        console.error("Error al obtener ventas:", error);
+      }
+    },
+    verDetalles(venta) {
+      this.detalleActual = venta; // Asignar los detalles de la venta seleccionada
     },
   },
 };
 </script>
-
 
 <style scoped>
 .factura-container {
@@ -107,70 +166,51 @@ export default {
   justify-content: space-evenly;
 }
 
-.info, .factura-info {
+.info,
+.factura-info {
   width: 48%;
 }
 
-.info, .cliente-info {
-    display: flex;
-  flex-direction: column;
-  align-items: flex-start
-}
-
-.busqueda {
-    display: flex;
-    column-gap: 15px;
-}
-
-.factura-info {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-}
-
-.productos table {
+.ventas table,
+.detalles table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
 }
 
-.productos table th, .productos table td {
+.ventas table th,
+.ventas table td,
+.detalles table th,
+.detalles table td {
   border: 1px solid #ccc;
   padding: 8px;
   text-align: left;
 }
 
-.totales {
-  text-align: right;
-  margin-top: 20px;
-}
-
 button {
   background-color: #6200ee;
   color: white;
-  padding: 10px;
+  padding: 5px;
   border: none;
   cursor: pointer;
+  border-radius: 3px;
 }
+
 button:hover {
   background-color: #3700b3;
 }
 
-.input-factura {
-    width: 32%;
-    border-radius: 5px;
-    border: none;
-    border: 1px solid rgb(50, 50, 50);
+.modal-body table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-.footer-factura {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-}
-
-.btn-aceptar-factura {
-    border-radius: 5px;
-    color: white;
+.modal-body table th,
+.modal-body table td {
+  border: 1px solid #ccc;
+  padding: 8px;
 }
 </style>
+
+
+<!-- hasta aqui es el codigo correcto -->

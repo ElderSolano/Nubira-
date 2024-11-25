@@ -58,6 +58,17 @@
       <div class="label">SubTotal</div>
       <div class="value">{{ formatCurrency(subtotal) }}</div>
     </div>
+    <div>
+        <strong>Descuento Total (%):</strong>
+        <input
+          type="number"
+          v-model="descuentoGlobal"
+          min="0"
+          max="100"
+          placeholder="0"
+          style="width: 80px; text-align: center"
+        />
+      </div>
     <div class="summary-item total-item">
       <div class="label">Total</div>
       <div class="value">{{ formatCurrency(total) }}</div>
@@ -95,7 +106,8 @@
               style="color:black; display: flex; justify-content: space-around; flex-direction: column; overflow-y: scroll; max-height: 300px;">
               <div style="width: 100%; display: flex; justify-content: space-around; align-items: center; margin-bottom: 3px;">
                 <p style="margin: 0!important;"><strong>{{ productoEncontrado.codigo }}</strong> </p>
-                <p style="margin: 0!important;"><strong>Nombre:</strong> {{ productoEncontrado.nombre }}</p>
+                <p style="margin: 0!important;"> {{ productoEncontrado.nombre_producto }}</p>
+                <p style="margin: 0!important;">{{ formatCurrency(productoEncontrado.precio_venta) }}</p>
                 <button @click="añadirProducto" class="btn btn-primary" data-bs-dismiss="modal">
                   Añadir
                 </button>
@@ -106,7 +118,8 @@
               
             </div>
             <!-- Mensaje si no hay resultados -->
-            <div v-else class="mt-3 text-danger">
+            <!-- Mensaje si no hay resultados -->
+            <div v-else-if="searchQuery && !productoEncontrado" class="mt-3 text-danger">
               <p>No se encontró ningún producto.</p>
             </div>
           </div>
@@ -128,23 +141,17 @@
 </template>
 
 <script>
+
+import axios from "axios";
+
 export default {
   name: 'VentaComponent',
   data() {
     return {
-      productos: [
-        { nombre: 'Producto 1', codigo: 'P001', stock: 10, cantidad: 0, precio: 50, total: 0 },
-        { nombre: 'Producto 2', codigo: 'P002', stock: 5, cantidad: 0, precio: 80, total: 0 },
-        { nombre: 'Producto 3', codigo: 'P003', stock: 8, cantidad: 0, precio: 30, total: 0 },
-      ],
-      catalogo: [
-        { nombre: 'Producto 4', codigo: 'P004', stock: 15, precio: 40 },
-        { nombre: 'Producto 5', codigo: 'P005', stock: 20, precio: 70 },
-      ],
-      searchQuery: '',
-      productoEncontrado: null,
-      currentTime: '', // Para almacenar la hora en formato string
-      userName: 'Juan Pérez' // Ejemplo de usuario activo
+      productos: [], // Lista de productos en la tabla
+      searchQuery: "", // Entrada del campo de búsqueda
+      productoEncontrado: null, // Producto devuelto por la API
+      descuentoGlobal: 0, // Descuento total sobre el subtotal
     };
   },
   computed: {
@@ -152,10 +159,12 @@ export default {
       return this.productos.reduce((total, producto) => total + producto.total, 0);
     },
     impuesto() {
-      return this.subtotal * 0.15; // Ahora se calcula únicamente sobre el subtotal
+      const subtotalConDescuento = this.subtotal * (1 - this.descuentoGlobal / 100);
+      return subtotalConDescuento * 0.15; // Impuesto del 15%
     },
     total() {
-      return this.subtotal + this.impuesto; // Total es la suma del subtotal + impuesto
+      const subtotalConDescuento = this.subtotal * (1 - this.descuentoGlobal / 100);
+      return subtotalConDescuento + this.impuesto;
     },
   },
   methods: {
@@ -163,59 +172,93 @@ export default {
       const now = new Date();
       this.currentTime = now.toLocaleTimeString(); // Formato: HH:MM:SS AM/PM
     },
-    buscarProducto() {
-      if (this.searchQuery.trim() !== '') {
-        this.productoEncontrado = this.catalogo.find(
-          producto =>
-            producto.codigo.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-            producto.nombre.toLowerCase().includes(this.searchQuery.toLowerCase())
-        );
+    async buscarProducto() {
+      if (this.searchQuery.trim() !== "") {
+        try {
+          const response = await axios.get(
+            `http://127.0.0.1:8000/api/productos/${this.searchQuery}`
+          );
+          const data = response.data.data;
+
+          // Asignar datos procesados del producto
+          this.productoEncontrado = {
+            id: data.id,
+            nombre_producto: data.nombre_producto,
+            codigo: data.codigo,
+            stock: parseInt(data.stock, 10) || 0,
+            precio_venta: parseFloat(data.precio_venta) || 0,
+          };
+        } catch (error) {
+          console.error("Error al buscar el producto:", error);
+          this.productoEncontrado = null;
+        }
       } else {
-        this.productoEncontrado = null; // Limpia el resultado si no hay búsqueda
+        this.productoEncontrado = null;
       }
     },
     añadirProducto() {
       if (this.productoEncontrado) {
-        // Verifica que el producto no esté ya en la tabla
         const existe = this.productos.some(
-          producto => producto.codigo === this.productoEncontrado.codigo
+          (producto) => producto.codigo === this.productoEncontrado.codigo
         );
 
         if (!existe) {
-          const productoNuevo = {
-            ...this.productoEncontrado,
+          this.productos.push({
+            id: this.productoEncontrado.id,
+            nombre: this.productoEncontrado.nombre_producto,
+            codigo: this.productoEncontrado.codigo,
+            stock: this.productoEncontrado.stock,
             cantidad: 0,
+            precio: this.productoEncontrado.precio_venta,
             total: 0,
-          };
-          this.productos.push(productoNuevo);
+          });
         } else {
-          alert('El producto ya está en la tabla');
+          alert("El producto ya está en la tabla.");
         }
 
-        // Limpia la búsqueda y el resultado
+        this.searchQuery = "";
         this.productoEncontrado = null;
-        this.searchQuery = '';
       }
     },
     methods: {
-      pagar() {
-        console.log("Hola")
-        // Filtrar productos con cantidad mayor a 0
-        const productosConCantidad = this.productos.filter(producto => producto.cantidad > 0);
-        console.log(this.productos)
-        // Verificar que hay productos con cantidad seleccionada
-        if (productosConCantidad.length > 0) {
-          // Usar router para pasar productos a la factura
-          this.$router.push({ name: 'Factura', params: { productos: productosConCantidad } });
-        } else {
-          alert('Por favor, agrega productos a la venta antes de continuar.');
+      async pagar() {
+      const productosConCantidad = this.productos.filter((producto) => producto.cantidad > 0);
+
+      if (productosConCantidad.length > 0) {
+        const data = {
+          productos: productosConCantidad.map((producto) => ({
+            id_producto: producto.id,
+            cantidad: producto.cantidad,
+          })),
+          subtotal: parseFloat(this.subtotal.toFixed(2)),
+          isv: parseFloat(this.impuesto.toFixed(2)),
+          descuento: parseFloat((this.subtotal * (this.descuentoGlobal / 100)).toFixed(2)),
+          total: parseFloat(this.total.toFixed(2)),
+        };
+
+        try {
+          const response = await axios.post("http://127.0.0.1:8000/api/ventas", data);
+          console.log("Venta registrada exitosamente:", response.data);
+
+          this.productos = [];
+          this.descuentoGlobal = 0;
+          alert("Venta registrada exitosamente.");
+        } catch (error) {
+          console.error("Error al registrar la venta:", error.response?.data || error.message);
+          alert("Ocurrió un error al registrar la venta.");
         }
-      },
+      } else {
+        alert("Por favor, agrega productos a la venta antes de continuar.");
+      }
+    },
     }
     ,
 
     formatCurrency(value) {
-      return `$${value.toFixed(2)}`;
+      if (isNaN(value) || value === null || value === undefined) {
+        return "$0.00";
+      }
+      return `$${parseFloat(value).toFixed(2)}`;
     },
   },
   mounted() {
@@ -225,7 +268,7 @@ export default {
   watch: {
     productos: {
       handler() {
-        this.productos.forEach(producto => {
+        this.productos.forEach((producto) => {
           producto.total = producto.cantidad * producto.precio;
         });
       },
