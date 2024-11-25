@@ -23,6 +23,7 @@ import Ventas from '@/components/Ventas.vue';
 import Factura from '@/components/Factura.vue';
 import Estadisticas from '@/components/estadisiticas/Estadisticas.vue';
 import LandingPage from '@/components/LandingPage.vue';
+import FichasInventario from '@/components/FichasInventario.vue';
 
 const routes = [
   {
@@ -136,6 +137,11 @@ const routes = [
     path: "/dashboard/estadisticas",
     component : Estadisticas,
     name : "Estadisticas",
+  },
+  {
+    path: "/mantenimiento/fichasinventario",
+    component : FichasInventario,
+    name : "FichasInventario",
   }
 ]
 
