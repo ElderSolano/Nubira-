@@ -222,3 +222,34 @@ export default {
   },
 };
 </script>
+<style scoped>
+/* Estilos generales del navbar */
+.navbar {
+  background: white;
+  color: black;
+  box-shadow: 3px 0 5px rgba(0, 0, 0, 0.5); /* Para dar una sombra */
+  border: 1px solid rgba(0, 0, 0, 0.2); /* Contorno sutil */
+}
+
+
+.navbar-nav .nav-link {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  color: white;
+  text-decoration: none;
+  transition: background 0.3s ease, color 0.3s ease;
+  margin: 1.8rem 0;
+}
+
+.navbar-nav .nav-link:hover {
+  background: rgb(245, 47, 0); /* Cambio de color al pasar el ratón */
+  color: white;
+  border-radius: 4px;
+}
+
+.navbar .navbar-toggler {
+  color: white;
+}
+</style>
