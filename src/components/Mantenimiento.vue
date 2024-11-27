@@ -85,16 +85,7 @@ export default {
           description: "Gestiona los permisos de acceso para diferentes usuarios en el sistema.",
           image: require("../assets/images/configuracion.png"),
         },
-        {
-          title: "Fichas de inventario",
-          description: "Administra las fichas de inventario de tus productos y controla su stock",
-          image: require("../assets/images/Ficha inventario.jpg")
-        },
-        {
-          title: "Fichas de productos",
-          description: "Administra las fichas tus productos y controla su stock",
-          image: require("../assets/images/Ficha producto.jpg")
-        }
+        
       ],
     };
   },

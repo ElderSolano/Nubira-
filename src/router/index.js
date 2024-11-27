@@ -1,8 +1,8 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import LoginComponent from '@/components/Login.vue'
-import WelcomeComponent from '@/components/PruebaLogin.vue';
+import { createRouter, createWebHistory } from "vue-router";
+import LoginComponent from "@/components/Login.vue";
+import WelcomeComponent from "@/components/PruebaLogin.vue";
 
-import Dashboard from '@/views/Dashboard.vue';
+import Dashboard from "@/views/Dashboard.vue";
 import Tables from "@/views/Tables.vue";
 import Billing from "@/views/Billing.vue";
 import VirtualReality from "@/views/VirtualReality.vue";
@@ -11,39 +11,41 @@ import Rtl from "@/views/Rtl.vue";
 import SignIn from "@/views/SignIn.vue";
 import SignUp from "@/views/SignUp.vue";
 
-import Mantenimiento from '@/components/Mantenimiento.vue';
-import Empleados from '@/components/Empleados.vue';
-import EmpleadoIndividual from '@/components/EmpleadoIndividual.vue';
-import Categorias from '@/components/Categorias.vue';
-import Productos from '@/components/Productos.vue';
-import Proveedores from '@/components/Proveedores.vue'
+import Mantenimiento from "@/components/Mantenimiento.vue";
+import Empleados from "@/components/Empleados.vue";
+import EmpleadoIndividual from "@/components/EmpleadoIndividual.vue";
+import Categorias from "@/components/Categorias.vue";
+import Productos from "@/components/Productos.vue";
+import Proveedores from "@/components/Proveedores.vue";
 
-import Inventario from '@/components/Inventario.vue';
-import Ventas from '@/components/Ventas.vue';
-import Factura from '@/components/Factura.vue';
-import Estadisticas from '@/components/estadisiticas/Estadisticas.vue';
-import LandingPage from '@/components/LandingPage.vue';
-import FichasInventario from '@/components/FichasInventario.vue';
+import Inventario from "@/components/Inventario.vue";
+import Ventas from "@/components/Ventas.vue";
+import Factura from "@/components/Factura.vue";
+import Estadisticas from "@/components/estadisiticas/Estadisticas.vue";
+import LandingPage from "@/components/LandingPage.vue";
+import FichasInventario from "@/components/FichasInventario.vue";
+import FichasProductos from "@/components/FichasProductos.vue";
+import InventarioDisponible from "@/components/InventarioDisponible.vue";
 
 const routes = [
   {
-    path: '/ventas',
-    name: 'ventas',
-    component: Ventas
+    path: "/ventas",
+    name: "ventas",
+    component: Ventas,
   },
   {
-    path: '/',
-    name: 'Landing',
-    component: LandingPage
+    path: "/",
+    name: "Landing",
+    component: LandingPage,
   },
   {
-    path: '/login',
-    name: 'Login',
-    component: LoginComponent
+    path: "/login",
+    name: "Login",
+    component: LoginComponent,
   },
   {
-    path: '/welcome',
-    name: 'Welcome',
+    path: "/welcome",
+    name: "Welcome",
     component: WelcomeComponent,
   },
 
@@ -88,66 +90,77 @@ const routes = [
     component: SignUp,
   },
   {
-    path : "/mantenimiento",
+    path: "/mantenimiento",
     component: Mantenimiento,
-    name : 'Mantenimiento'
+    name: "Mantenimiento",
   },
   {
     path: "/mantenimiento/empleados",
     component: Empleados,
-    name: 'Empleados'
+    name: "Empleados",
   },
   {
     path: "/mantenimiento/empleado-individual",
-    component : EmpleadoIndividual,
-    name : "EmpleadoIndividual"
+    component: EmpleadoIndividual,
+    name: "EmpleadoIndividual",
   },
   {
-    path: '/categorias',
-    name: 'Categorias',
-    component: Categorias
+    path: "/categorias",
+    name: "Categorias",
+    component: Categorias,
   },
   {
-    path: '/productos',
-    name: 'Productos',
-    component: Productos
+    path: "/productos",
+    name: "Productos",
+    component: Productos,
   },
   {
-    path: '/proveedores',
-    name: 'Proveedores',
-    component: Proveedores
+    path: "/proveedores",
+    name: "Proveedores",
+    component: Proveedores,
   },
-  { 
+  {
     path: "/dashboard/inventario",
-    component : Inventario,
-    name : "Inventario",
+    component: Inventario,
+    name: "Inventario",
   },
   {
     path: "/dashboard/ventas",
-    component : Ventas,
-    name : "Ventas",
+    component: Ventas,
+    name: "Ventas",
   },
   {
     path: "/dashboard/ventas/factura",
-    component : Factura,
-    name : "Factura",
-    props: true
+    component: Factura,
+    name: "Factura",
+    props: true,
   },
   {
     path: "/dashboard/estadisticas",
-    component : Estadisticas,
-    name : "Estadisticas",
+    component: Estadisticas,
+    name: "Estadisticas",
   },
   {
-    path: "/mantenimiento/fichasinventario",
-    component : FichasInventario,
-    name : "FichasInventario",
-  }
-]
+    path: "/mantenimiento/inventario/fichasinventario",
+    component: FichasInventario,
+    name: "FichasInventario",
+  },
+  {
+    path: "/mantenimiento/inventario/fichasProductos",
+    component: FichasProductos,
+    name: "FichasProductos",
+    props: true
+  },
+  {
+    path: "/mantenimiento/inventario/inventario-disponible",
+    component: InventarioDisponible,
+    name: "InventarioDisponible"
+  },
+];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;

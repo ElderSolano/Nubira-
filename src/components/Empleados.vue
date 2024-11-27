@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid espaciado col-10" style="margin-left: 250px;">
+    <div class="container-fluid espaciado col-12">
       <h2 class="text-center">Empleados</h2>
   
       <div class="d-flex justify-content-end mb-4">

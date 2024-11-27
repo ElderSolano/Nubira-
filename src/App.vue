@@ -68,6 +68,11 @@ export default {
 </script>
 
 <style scoped>
+
+body{
+  font-family: 'Nunito', sans-serif;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

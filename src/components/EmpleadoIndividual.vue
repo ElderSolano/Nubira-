@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid col-10" style="margin-left: 250px; margin-top: 150px;">
+    <div class="container-fluid col-10" style="margin-top: 150px;">
 
       <div class="mx-4 overflow-hidden card card-body blur shadow-blur mt-n6">
         <div class="row gx-4">
