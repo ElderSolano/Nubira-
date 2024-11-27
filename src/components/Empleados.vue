@@ -12,29 +12,23 @@
       <table class="table">
         <thead>
           <tr>
-            <th>ID</th>
             <th>DNI</th>
             <th>Nombre</th>
             <th>Puesto</th>
             <th>Estado</th>
             <th>Teléfono</th>
-            <th>Email</th>
             <th>Fecha de Ingreso</th>
-            <th>Usuario</th>
             <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="empleado in empleados" :key="empleado.id">
-            <td>{{ empleado.id }}</td>
             <td>{{ empleado.dni_empleado }}</td>
             <td>{{ empleado.primer_nombre }} {{ empleado.segundo_nombre }} {{ empleado.primer_apellido }} {{ empleado.segundo_apellido }}</td>
             <td>{{ empleado.puesto }}</td>
             <td>{{ empleado.estado ? 'Activo' : 'Inactivo' }}</td>
             <td>{{ empleado.telefono }}</td>
-            <td>{{ empleado.email }}</td>
             <td>{{ empleado.fecha_ingreso }}</td>
-            <td>{{ empleado.usuario }}</td>
             <td>
               <!-- Botón para editar un empleado -->
               <button @click="editarEmpleado(empleado)" class="btn btn-warning btn-sm">
@@ -147,8 +141,8 @@
         empleadoSeleccionado: null, // Empleado seleccionado para edición o creación
         mostrarModal: false, // Controla la visibilidad del modal
         empleadoAEliminar: null, // ID del empleado que se eliminará
-        apiUrl: "http://127.0.0.1:8001/api/empleados", // API de empleados
-        apiPuestosUrl: "http://127.0.0.1:8001/api/puestos", // API de puestos
+        apiUrl: "http://127.0.0.1:8000/api/empleados", // API de empleados
+        apiPuestosUrl: "http://127.0.0.1:8000/api/puestos", // API de puestos
       };
     },
     mounted() {
