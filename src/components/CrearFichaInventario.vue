@@ -1,6 +1,6 @@
 <template>
     <div class="modal-body">
-        <form @submit.prevent="crearFicha">
+        <form @submit.prevent="">
             <!-- Selección del Proveedor -->
             <div class="mb-3">
                 <label for="proveedor" class="form-label">Proveedor</label>
@@ -34,7 +34,7 @@
             </div>
 
             <!-- Fecha del Pedido (Fecha Actual por Defecto) -->
-            !-- Fecha del Pedido (Fecha Actual por Defecto) -->
+
             <div class="mb-3">
                 <label for="fechaPedido" class="form-label">Fecha de Pedido</label>
                 <input type="date" class="form-control" id="fechaPedido" v-model="ficha.fechaPedido" :min="fechaActual"
@@ -59,7 +59,9 @@
                     <button type="button" class="btn btn-secondary me-2">Regresar</button>
                 </router-link>
                 <router-link :to="{ path: '/crear-ficha-producto', query: { idProveedor: ficha.id_proveedor } }">
-                    <button type="submit" class="btn btn-primary">Crear Ficha</button>
+                    <button type="submit" class="btn btn-primary" :disabled="!camposCompletos">
+                        Crear Ficha
+                    </button>
                 </router-link>
             </div>
         </form>
@@ -67,18 +69,12 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 
 export default {
     name: 'CrearFichaInventario',
-    props: {
-        cerrarModal: {
-            type: Function,
-            required: true,
-        },
-    },
-    setup(props) {
+    setup() {
         // Estado de la ficha
         const ficha = ref({
             id_proveedor: null,
@@ -110,22 +106,24 @@ export default {
             obtenerProveedores();
         });
 
-        // Función para crear la ficha
-        const crearFicha = async () => {
-            console.log('Ficha creada:', ficha.value);
-            props.cerrarModal(); // Cierra el modal al crear la ficha
 
-            // Emitir evento de que la ficha fue creada
-            if (props.fichaCreada) {
-                props.fichaCreada();
-            }
-        };
+
+        // Computed para validar si todos los campos requeridos están llenos
+        const camposCompletos = computed(() => {
+            return (
+                ficha.value.id_proveedor &&
+                ficha.value.tipoMovimiento &&
+                ficha.value.estado &&
+                ficha.value.fechaPedido &&
+                ficha.value.fechaEsperada
+            );
+        });
 
         return {
             ficha,
             proveedores,
             fechaActual,
-            crearFicha,
+            camposCompletos
         };
     },
 };
