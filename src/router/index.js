@@ -26,6 +26,8 @@ import LandingPage from "@/components/LandingPage.vue";
 import FichasInventario from "@/components/FichasInventario.vue";
 import FichasProductos from "@/components/FichasProductos.vue";
 import InventarioDisponible from "@/components/InventarioDisponible.vue";
+import Perfil from "@/components/Perfil.vue"
+import Empresa from "@/components/Empresa.vue"
 import CrearFichaInventario from "@/components/CrearFichaInventario.vue";
 import CrearFichaProducto from "@/components/CrearFichaProducto.vue";
 
@@ -157,6 +159,16 @@ const routes = [
     path: "/mantenimiento/inventario/inventario-disponible",
     component: InventarioDisponible,
     name: "InventarioDisponible"
+  },
+  {
+    path: "/mantenimiento/perfil",
+    component: Perfil,
+    name: "Perfil"
+  },
+  {
+    path: "/mantenimiento/empresa",
+    component: Empresa,
+    name: "Empresa"
   },
   {
     path: '/crear-ficha',

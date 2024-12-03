@@ -44,12 +44,13 @@ export default {
           title: "Mi Info",
           description: "Accede a tu perfil personal para gestionar tus datos y configuraciones.",
           image: require("../assets/images/acceso.png"),
-          route: "Profile",
+          route: "Perfil",
         },
         {
           title: "Mi Empresa",
           description: "Gestiona los datos de tu empresa y controla todos los aspectos relevantes.",
           image: require("../assets/images/mercado.png"),
+          route: "Empresa",
         },
         {
           title: "Categorías",
