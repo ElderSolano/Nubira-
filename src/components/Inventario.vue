@@ -8,7 +8,7 @@
         <div class="row">
             <div v-for="card in cards" :key="card.title"
                 class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex align-items-stretch">
-                <router-link v-if="card.route" :to="{ name: card.route }" class="card-link">
+                <router-link v-if="card.route" :to="card.route" class="card-link">
                     <div class="card card-hover">
                         <div class="card-img-container">
                             <img class="card-img" :src="card.image" :alt="card.title" />
@@ -20,7 +20,7 @@
                         </div>
                     </div>
                 </router-link>
-                <div v-else class="card card-hover">
+            <div v-else class="card card-hover">
                     <div class="card-img-container">
                         <img class="card-img" :src="card.image" :alt="card.title" />
                     </div>
@@ -128,19 +128,19 @@ export default {
                     title: "Fichas de inventario",
                     description: "Administra las fichas de inventario de tus productos y controla su stock",
                     image: require("../assets/images/Ficha inventario.jpg"),
-                    route: "FichasInventario",
+                    route: "/mantenimiento/inventario/fichasinventario",
                 },
                 {
                     title: "Fichas de productos",
                     description: "Administra las fichas tus productos y controla su stock",
                     image: require("../assets/images/Ficha producto.jpg"),
-                    route: "FichasProductos"
+                    route: "/fichasProductos/:id"
                 },
                 {
                     title: "Inventario Disponible",
                     description: "Visualiza y añade los productos que estarán disponibles para vender en tu mercadito",
                     image: require("../assets/images/Inventario_disponible.jpg"),
-                    route: "InventarioDisponible"
+                    route: "/InventarioDisponible"
                 }
             ]
         }

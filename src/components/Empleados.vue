@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid espaciado col-12">
+    <div class="container-fluid espaciado col-12" style="padding:0;">
       <h2 class="text-center">Empleados</h2>
   
       <div class="d-flex justify-content-end mb-4">
@@ -29,14 +29,14 @@
             <td>{{ empleado.estado ? 'Activo' : 'Inactivo' }}</td>
             <td>{{ empleado.telefono }}</td>
             <td>{{ empleado.fecha_ingreso }}</td>
-            <td>
+            <td class="fila-botones">
               <!-- Botón para editar un empleado -->
-              <button @click="editarEmpleado(empleado)" class="btn btn-warning btn-sm">
+              <button @click="editarEmpleado(empleado)" class="btn-acciones btn-warning">
                 <i class="fas fa-edit"></i>
               </button>
   
               <!-- Botón para eliminar un empleado -->
-              <button @click="confirmarEliminacion(empleado.id)" class="btn btn-danger btn-sm ml-2">
+              <button @click="confirmarEliminacion(empleado.id)" class="btn-acciones btn-danger">
                 <i class="fas fa-trash"></i>
               </button>
             </td>
@@ -242,6 +242,19 @@
     background-color: #fff;
     border-radius: 5px;
     padding: 20px;
+  }
+
+  .btn-acciones {
+    border: none;
+    border-radius: 3px;
+    width: 30px;
+    height: auto;
+  }
+
+  .fila-botones {
+    display: flex;
+    justify-content: center;
+    column-gap: 4px;
   }
   </style>
   

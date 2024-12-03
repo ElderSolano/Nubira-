@@ -26,6 +26,8 @@ import LandingPage from "@/components/LandingPage.vue";
 import FichasInventario from "@/components/FichasInventario.vue";
 import FichasProductos from "@/components/FichasProductos.vue";
 import InventarioDisponible from "@/components/InventarioDisponible.vue";
+import CrearFichaInventario from "@/components/CrearFichaInventario.vue";
+import CrearFichaProducto from "@/components/CrearFichaProducto.vue";
 
 const routes = [
   {
@@ -120,7 +122,7 @@ const routes = [
     component: Proveedores,
   },
   {
-    path: "/dashboard/inventario",
+    path: "/inventario",
     component: Inventario,
     name: "Inventario",
   },
@@ -146,16 +148,27 @@ const routes = [
     name: "FichasInventario",
   },
   {
-    path: "/mantenimiento/inventario/fichasProductos",
+    path: "/fichasProductos/:id",
     component: FichasProductos,
     name: "FichasProductos",
-    props: true
+ //   props: true,
   },
   {
     path: "/mantenimiento/inventario/inventario-disponible",
     component: InventarioDisponible,
     name: "InventarioDisponible"
   },
+  {
+    path: '/crear-ficha',
+    name: 'CrearFichaInventario',
+    component: CrearFichaInventario
+  },
+  {
+    path: '/crear-ficha-producto',
+    name: 'CrearFichaProducto',
+    component: CrearFichaProducto,
+    props: route => ({ idProveedor: route.query.idProveedor })
+  }
 ];
 
 const router = createRouter({

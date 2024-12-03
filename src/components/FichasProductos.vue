@@ -1,86 +1,107 @@
 <template>
-    <p>Fichas productos</p>
-    <MDBTabs v-model="activeTabId1">
-        <!-- Tabs navs -->
-        <MDBTabNav tabsClasses="mb-3">
-            <MDBTabItem tabId="ex1-1" href="ex1-1">Fichas pendientes</MDBTabItem>
-            <MDBTabItem tabId="ex1-2" href="ex1-2">Fichas recibidas</MDBTabItem>
-            <MDBTabItem tabId="ex1-3" href="ex1-3">Fichas procesadas</MDBTabItem>
-        </MDBTabNav>
-        <!-- Tabs navs -->
-        <!-- Tabs content -->
-        <MDBTabContent>
-            <MDBTabPane tabId="ex1-1">
-                <MDBCard text="center tarjetas">
-                    <MDBCardBody>
-                        <MDBCardTitle>Producto: Coca Cola</MDBCardTitle>
-                        <MDBCardText>
-                            <p>Cantidad pedida: 20</p>
-                            <p>Precio compra: L. 570</p>
-                            <p>Lote: L123</p>
-                            <p>Total a pagar: L. 1000</p>
-                            <p>Estado actual: <button>Pendiente</button></p>
-                        </MDBCardText>
-                        <MDBBtn tag="a" href="#!" color="primary">Cambiar estado</MDBBtn>
-                    </MDBCardBody>
-                    <MDBCardFooter class="text-muted">Fecha pedido: 3 junio 2024</MDBCardFooter>
-                </MDBCard>
-            </MDBTabPane>
-            <MDBTabPane tabId="ex1-2">Content #2</MDBTabPane>
-            <MDBTabPane tabId="ex1-3">Content #3</MDBTabPane>
-        </MDBTabContent>
-        <!-- Tabs content -->
-    </MDBTabs>
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Ficha Inventario</th>
+                    <th>Nombre producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio compra</th>
+                    <th>Total a pagar</th>
+                    <th>Lote</th>
+                    <th>Fecha vencimiento</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(producto, index) in productos" :key="index">
+                    <td>{{ producto.id }}</td>
+                    <td>{{ producto.producto_id }}</td>
+                    <td> {{ producto.cantidad }} </td>
+                    <td> L. {{ producto.precio_compra }} </td>
+                    <td> L. {{ producto.cantidad * producto.precio_compra }} </td>
+                    <td> {{ producto.lote }} </td>
+                    <td> {{ producto.fecha_vencimiento }} </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </template>
 
 <script>
+import { ref } from 'vue'
+import { useRoute } from 'vue-router';
 
-import {
-    MDBTabs,
-    MDBTabNav,
-    MDBTabContent,
-    MDBTabItem,
-    MDBTabPane,
-} from 'mdb-vue-ui-kit';
-
-import { MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBBtn } from "mdb-vue-ui-kit";
-
-import { ref } from 'vue';
+import axios from 'axios';
 
 export default {
     name: "FichasProductos",
-    components: {
-        MDBTabs,
-        MDBTabNav,
-        MDBTabContent,
-        MDBTabItem,
-        MDBTabPane,
-        MDBCard,
-        MDBCardBody,
-        MDBCardTitle,
-        MDBCardText,
-        MDBBtn
-    },
-    setup() {
-        const activeTabId1 = ref('ex1-1');
-
+    props: ['id'],  // Recibimos el "id" de la URL
+    data() {
         return {
-            activeTabId1,
+            productos: [],  // Lista de productos
+            message: '',  // Mensaje de la respuesta del backend
+            fichaId: this.id  // Guardamos el id de la ficha de inventario
         };
     },
+    methods: {
+        async fetchProductos() {
+            
+            const router = useRoute()
+            const PRODUCTO_ID = ref(router.params.id)
+
+            try {
+                const response = await axios.get(`http://localhost:8000/api/ficha-producto-inventario/${PRODUCTO_ID.value}`);
+                if (response.data.codigoResultado === 1) {
+                    this.productos = response.data.data;  // Asignamos los productos
+                    this.message = response.data.message;  // Asignamos el mensaje
+                } else {
+                    this.message = 'No se encontraron productos para esta ficha de inventario.';
+                }
+            } catch (error) {
+                console.error("Error al obtener productos:", error);
+                this.message = 'Hubo un error al cargar los productos.';
+            }
+        }
+    },
+    mounted() {
+        this.fetchProductos();  // Llamamos a la función al montar el componente
+    }
 };
 </script>
 
 <style scoped>
-
-.tarjetas {
-    width: 25em;
-    box-shadow: 0 20px 27px 0 rgb(0 0 0 / 15%);;
+.productos-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
-.container-fichas-productos {}
+.producto-card {
+    width: 200px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-* {
+.producto-card h5 {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.producto-card p {
+    font-size: 1rem;
+    color: #555;
+}
+
+.message {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: green;
+    margin-bottom: 20px;
+}
+
+*{
     color: black;
 }
 </style>
