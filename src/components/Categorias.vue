@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid espaciado col-10" style="margin-left: 250px;">
+  <div class="container-fluid espaciado col-10">
     <h2 class="text-center">Categorías</h2>
 
     <div class="d-flex justify-content-end mb-4">

@@ -68,6 +68,7 @@ export default {
           title: "Usuarios",
           description: "Administra la lista de usuarios, crea los usuarios y sus roles dentro del sistema.",
           image: require("../assets/images/usuario.png"),
+          route: "Usuarios",
         },
         {
           title: "Empleados",

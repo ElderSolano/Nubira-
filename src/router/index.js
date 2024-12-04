@@ -30,6 +30,7 @@ import Perfil from "@/components/Perfil.vue"
 import Empresa from "@/components/Empresa.vue"
 import CrearFichaInventario from "@/components/CrearFichaInventario.vue";
 import CrearFichaProducto from "@/components/CrearFichaProducto.vue";
+import Usuarios from "@/components/Usuarios.vue";
 
 const routes = [
   {
@@ -180,6 +181,11 @@ const routes = [
     name: 'CrearFichaProducto',
     component: CrearFichaProducto,
     props: route => ({ idProveedor: route.query.idProveedor })
+  },
+  {
+    path: '/usuarios',
+    name: 'Usuarios',
+    component: Usuarios,
   }
 ];
 
