@@ -70,11 +70,11 @@ export default {
 <style scoped>
 
 body{
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Nunito' !important;
 }
 
 #app {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Nunito'!important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
