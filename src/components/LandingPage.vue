@@ -57,6 +57,7 @@
           <div class="card-body">
             <h5 class="card-title">Plan Básico</h5>
             <p class="card-text">L 600/mes</p>
+            <img src="@/assets/images/prueba-de-abdominales.png" alt="Basico">
             <ul>
               <li>Gestión de inventarios</li>
               <li>Registro de ventas</li>
@@ -71,6 +72,7 @@
           <div class="card-body">
             <h5 class="card-title">Plan Intermedio</h5>
             <p class="card-text">L 900/mes</p>
+            <img src="@/assets/images/multitarea.png" alt="Intermedio">
             <ul>
               <li>Todo en el Plan Básico</li>
               <li>Control de empleados</li>
@@ -86,6 +88,7 @@
           <div class="card-body">
             <h5 class="card-title">Plan Avanzado</h5>
             <p class="card-text">L 1,500/mes</p>
+            <img src="@/assets/images/seo.png" alt="Avanzado">
             <ul>
               <li>Todo en el Plan Intermedio</li>
               <li>Soporte técnico prioritario</li>
@@ -294,10 +297,19 @@ body {
   box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.1), -5px -5px 10px rgba(255, 255, 255, 0.7); 
   transition: transform 0.3s, box-shadow 0.3s;
   padding: 20px;
+  border: 4px solid rgb(70, 20, 200);
 }
 .plan-card:hover {
   transform: translateY(-10px); 
   box-shadow: 12px 12px 24px rgba(0, 0, 0, 0.2), -8px -8px 16px rgba(255, 255, 255, 0.8); 
+}
+
+.plan-card img {
+  width: 100%; /* Ajusta la imagen al ancho del contenedor */
+  max-width: 150px; /* Define un ancho máximo para evitar que sean demasiado grandes */
+  height: auto; /* Mantiene las proporciones de la imagen */
+  margin: 10px auto; /* Centra la imagen dentro de la tarjeta */
+  display: block; /* Asegura que la imagen esté centrada */
 }
 
 .plan-card .card-title {

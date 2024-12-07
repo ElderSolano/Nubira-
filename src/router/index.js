@@ -135,7 +135,7 @@ const routes = [
     name: "Ventas",
   },
   {
-    path: "/dashboard/ventas/factura",
+    path: "/factura",
     component: Factura,
     name: "Factura",
     props: true,

@@ -1,215 +1,250 @@
-<!-- dede aqui es el codigo correcto -->
-
-
 <template>
   <div class="factura-container">
-    <div class="header">
-      <div class="info">
-        <p><strong>RTN Mercadito:</strong> xxxxxxxxxxxx</p>
-        <p><strong>Casa Matriz:</strong> xxxxxxxxxxxxxxxxxxxxxx</p>
-        <p><strong>Dirección:</strong> Francisco Morazan, Tegucigalpa, Col. Yo no vivo aquí</p>
-        <p><strong>Correo:</strong> xxxxx@xxxx.com</p>
-        <p><strong>Teléfono:</strong> xxxxxxxx</p>
-      </div>
-      <div class="factura-info">
-        <p><strong>Historial de Ventas</strong></p>
-        <p>Fecha: {{ new Date().toLocaleDateString() }}</p>
-      </div>
+    <div class="factura" ref="facturaRef">
+      <!-- Encabezado -->
+      <header>
+        <h1>NubiraƎ</h1>
+        <p>RTN: 0801-1234-5678</p>
+        <p>Ubicación: Tegucigalpa, Honduras</p>
+        <p>Teléfono: +504 9876-5432</p>
+        <p>Email: soporte@nubirae.com</p>
+      </header>
+      <hr />
+
+      <!-- Información de la factura -->
+      <section class="factura-info">
+        <p><strong>Fecha y hora:</strong> {{ fechaHora }}</p>
+        <p><strong>Número de factura:</strong> {{ numeroFactura }}</p>
+        <p><strong>Rango de numeración:</strong> {{ rangoNumeracion }}</p>
+        <p><strong>CAI:</strong> {{ cai }}</p>
+        <p><strong>Cliente:</strong> {{ cliente }}</p>
+        <p><strong>RTN del cliente:</strong> {{ rtnCliente }}</p>
+      </section>
+      <hr />
+
+      <!-- Detalle de factura -->
+      <section class="detalle-factura">
+        <h3>Detalle de la factura</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Cantidad</th>
+              <th>Precio Unitario</th>
+              <th>Subtotal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(producto, index) in productos" :key="index">
+              <td>{{ producto.nombre }}</td>
+              <td>{{ producto.cantidad }}</td>
+              <td>L {{ producto.precioUnitario.toFixed(2) }}</td>
+              <td>L {{ (producto.cantidad * producto.precioUnitario).toFixed(2) }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <hr />
+
+      <!-- Totales -->
+      <section class="totales">
+        <p><strong>Total:</strong> L {{ total.toFixed(2) }}</p>
+        <p><strong>ISV (15%):</strong> L {{ isv.toFixed(2) }}</p>
+        <p><strong>Efectivo recibido:</strong> L {{ efectivoRecibido.toFixed(2) }}</p>
+        <p><strong>Cambio:</strong> L {{ cambio.toFixed(2) }}</p>
+      </section>
+      <hr />
+
+      <!-- Pie de página -->
+      <footer>
+        <p>¡Gracias por tu compra!</p>
+      </footer>
     </div>
 
-    <div class="ventas">
-      <table>
-        <thead>
-          <tr>
-            <th>ID Venta</th>
-            <th>Fecha</th>
-            <th>Empleado</th>
-            <th>Subtotal</th>
-            <th>ISV</th>
-            <th>Descuento</th>
-            <th>Total</th>
-            <th>Detalles</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="venta in ventas" :key="venta.id">
-            <td>{{ venta.id }}</td>
-            <td>{{ venta.fecha_venta }}</td>
-            <td>{{ venta.id_empleado || 'Sin Asignar' }}</td>
-            <td>L. {{ venta.subtotal }}</td>
-            <td>L. {{ venta.isv }}</td>
-            <td>L. {{ venta.descuento }}</td>
-            <td>L. {{ venta.total }}</td>
-            <td>
-              <button
-                @click="verDetalles(venta)"
-                class="btn-detalles"
-                data-bs-toggle="modal"
-                data-bs-target="#modalDetalles"
-              >
-                Ver Detalles
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    
-    <div
-      class="modal fade"
-      id="modalDetalles"
-      tabindex="-1"
-      aria-labelledby="modalDetallesLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modalDetallesLabel">Detalles de la Venta</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <h6><strong>ID Venta:</strong> {{ detalleActual.id }}</h6>
-            <h6><strong>Fecha:</strong> {{ detalleActual.fecha_venta }}</h6>
-            <h6>
-              <strong>Empleado:</strong> {{ detalleActual.id_empleado || 'Sin Asignar' }}
-            </h6>
-            <h6><strong>Subtotal:</strong> L. {{ detalleActual.subtotal }}</h6>
-            <h6><strong>ISV:</strong> L. {{ detalleActual.isv }}</h6>
-            <h6><strong>Descuento:</strong> L. {{ detalleActual.descuento }}</h6>
-            <h6><strong>Total:</strong> L. {{ detalleActual.total }}</h6>
-            <hr />
-            <h6>Productos Vendidos</h6>
-            <table>
-              <thead>
-                <tr>
-                  <th>Producto</th>
-                  <th>Cantidad</th>
-                  <th>Precio Unitario</th>
-                  <th>Subtotal</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="detalle in detalleActual.detalles" :key="detalle.producto">
-                  <td>{{ detalle.producto }}</td>
-                  <td>{{ detalle.cantidad }}</td>
-                  <td>L. {{ detalle.precio_unitario }}</td>
-                  <td>L. {{ detalle.subtotal }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Cerrar
-            </button>
-          </div>
-        </div>
-      </div>
+    <!-- Botones para imprimir y guardar -->
+    <div class="actions">
+      <button @click="imprimirFactura" class="btn-imprimir">Imprimir Factura</button>
+      <button @click="guardarFactura" class="btn-guardar">Guardar Factura</button>
     </div>
   </div>
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
-  name: "VentasHistorial",
+  name: "Factura",
   data() {
     return {
-      ventas: [], // Lista de ventas
-      detalleActual: {}, // Detalles de la venta seleccionada
+      fechaHora: new Date().toLocaleString(),
+      numeroFactura: "001-001-000001",
+      rangoNumeracion: "001-001-000001 a 001-001-999999",
+      cai: "123456-CAI-78910",
+      cliente: "Juan Pérez",
+      rtnCliente: "0801-9876-5432",
+      efectivoRecibido: 500.0,
+      productos: [
+        { nombre: "Producto A", cantidad: 2, precioUnitario: 150.0 },
+        { nombre: "Producto B", cantidad: 1, precioUnitario: 200.0 },
+        { nombre: "Producto C", cantidad: 3, precioUnitario: 100.0 },
+      ],
     };
   },
-  created() {
-    this.obtenerVentas();
+  computed: {
+    total() {
+      return this.productos.reduce(
+        (sum, producto) => sum + producto.cantidad * producto.precioUnitario,
+        0
+      );
+    },
+    isv() {
+      return this.total * 0.15; // ISV del 15%
+    },
+    cambio() {
+      return this.efectivoRecibido - (this.total + this.isv);
+    },
   },
   methods: {
-    async obtenerVentas() {
-      try {
-        const response = await axios.get("http://127.0.0.1:8001/api/ventas");
-        this.ventas = response.data;
-      } catch (error) {
-        console.error("Error al obtener ventas:", error);
-      }
+    imprimirFactura() {
+      const printContent = this.$refs.facturaRef;
+      const printWindow = window.open("", "_blank");
+      printWindow.document.write("<html><head><title>Factura</title><style>body{ margin:0; }</style></head><body>");
+      printWindow.document.write(printContent.outerHTML);
+      printWindow.document.write("</body></html>");
+      printWindow.document.close();
+      printWindow.print();
     },
-    verDetalles(venta) {
-      this.detalleActual = venta; // Asignar los detalles de la venta seleccionada
+    guardarFactura() {
+      const content = this.$refs.facturaRef.outerHTML; // Extraer el contenido de la factura
+      const blob = new Blob([content], { type: "text/html" }); // Crear un archivo HTML
+      const url = URL.createObjectURL(blob);
+
+      // Crear un enlace para descargar el archivo
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `Factura_${this.numeroFactura}.html`; // Nombre del archivo
+      link.click();
+
+      // Liberar el objeto URL
+      URL.revokeObjectURL(url);
     },
   },
 };
 </script>
 
 <style scoped>
+/* Mantengo tus estilos originales */
 .factura-container {
-  font-family: Arial, sans-serif;
-  margin: 20px;
-  border: 1px solid #ccc;
-  padding: 10px;
+  padding: 20px;
+  font-family: "Nunito", sans-serif;
   max-width: 800px;
-  margin-left: 250px;
-  color: black;
+  margin: 0 auto;
 }
 
-.header {
-  display: flex;
-  justify-content: space-evenly;
+.factura {
+  border: 1px solid #ccc;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.info,
-.factura-info {
-  width: 48%;
+header h1 {
+  text-align: center;
+  margin: 0;
+  font-size: 24px;
+  color: #5a24ea;
 }
 
-.ventas table,
-.detalles table {
+header p {
+  text-align: center;
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.factura-info p,
+.totales p {
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+.detalle-factura h3 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
 }
 
-.ventas table th,
-.ventas table td,
-.detalles table th,
-.detalles table td {
+table th,
+table td {
   border: 1px solid #ccc;
   padding: 8px;
   text-align: left;
+  font-size: 14px;
 }
 
-button {
-  background-color: #6200ee;
+table th {
+  background-color: #5a24ea;
   color: white;
-  padding: 5px;
-  border: none;
+}
+
+footer p {
+  text-align: center;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.btn-imprimir,
+.btn-guardar {
+  display: inline-block;
+  margin: 20px 10px;
+  padding: 10px 20px;
+  font-size: 16px;
   cursor: pointer;
-  border-radius: 3px;
+  border: none;
+  border-radius: 5px;
 }
 
-button:hover {
-  background-color: #3700b3;
+.btn-imprimir {
+  background-color: #5a24ea;
+  color: white;
 }
 
-.modal-body table {
-  width: 100%;
-  border-collapse: collapse;
+.btn-imprimir:hover {
+  background-color: #4820c7;
 }
 
-.modal-body table th,
-.modal-body table td {
-  border: 1px solid #ccc;
-  padding: 8px;
+.btn-guardar {
+  background-color: #4caf50;
+  color: white;
+}
+
+.btn-guardar:hover {
+  background-color: #45a049;
+}
+
+/* Estilos específicos para impresión */
+@media print {
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  .factura-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .factura {
+    width: 300px; 
+    padding: 10px;
+    margin: 0 auto;
+    box-shadow: none;
+    border: none;
+  }
+  .btn-imprimir,
+  .btn-guardar {
+    display: none; 
+  }
 }
 </style>
-
-
