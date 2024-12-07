@@ -53,10 +53,10 @@ import { ref, onMounted } from "vue";
 
 export default {
     name: "CrearFichaProducto",
-    props: ["idProveedor"],
+    props: ["idProveedor", "id_ficha_creada"],
     setup(props) {
         const ficha = ref({
-            ficha_inventario_id: "",
+            ficha_inventario_id: props.id_ficha_creada,
             productos: [],
         });
 

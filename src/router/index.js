@@ -180,7 +180,7 @@ const routes = [
     path: '/crear-ficha-producto',
     name: 'CrearFichaProducto',
     component: CrearFichaProducto,
-    props: route => ({ idProveedor: route.query.idProveedor })
+    props: route => ({ idProveedor: route.query.idProveedor , id_ficha_creada: route.query.id_ficha_creada})
   },
   {
     path: '/usuarios',
