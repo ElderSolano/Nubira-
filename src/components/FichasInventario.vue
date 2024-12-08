@@ -9,7 +9,6 @@
         <!-- Tabs navs -->
         <MDBTabNav tabsClasses="mb-3">
             <MDBTabItem tabId="ex1-1" href="ex1-1">Fichas pendientes</MDBTabItem>
-            <MDBTabItem tabId="ex1-2" href="ex1-2">Fichas recibidas</MDBTabItem>
             <MDBTabItem tabId="ex1-3" href="ex1-3">Fichas procesadas</MDBTabItem>
         </MDBTabNav>
         <!-- Tabs navs -->
@@ -29,9 +28,12 @@
                                 <p><strong>Comentarios:</strong> {{ ficha.comentarios }}</p>
                                 <p><strong>Estado actual:</strong> <span class="estado pendiente">{{ ficha.estado
                                         }}</span></p>
+                                <p><strong>Fecha en que se cambió el estado:</strong> <span>{{ ficha.fecha_cambio_estado
+                                    ? ficha.fecha_cambio_estado : 'Aún no se cambia el estado' }}</span></p>
                             </MDBCardText>
                             <button color="primary" class="boton-estado" data-bs-toggle="modal"
-                                data-bs-target="#estadoModal" @click="fichaSeleccionada = ficha.id">
+                                :data-bs-target="ficha.tipo_movimiento === 'devolucion' ? '#confirmacionDevolucionModal' : '#estadoModal'"
+                                @click="fichaSeleccionada = ficha.id">
                                 Cambiar estado
                             </button>
                         </MDBCardBody>
@@ -41,27 +43,6 @@
                                     productos</button>
                             </MDBCardFooter>
                         </MDBCardFooter>
-                    </MDBCard>
-                </div>
-            </MDBTabPane>
-            <MDBTabPane tabId="ex1-2">
-                <div class="tarjeta-container">
-                    <MDBCard v-for="ficha in fichas.filter(f => f.estado === 'recibido')" :key="ficha.id" text="center"
-                        class="tarjeta">
-                        <MDBCardBody>
-                            <MDBCardTitle class="tarjeta-titulo">Proveedor: {{ ficha.proveedor.nombre_proveedor }}
-                            </MDBCardTitle>
-                            <MDBCardText>
-                                <p><strong>Tipo de movimiento:</strong> {{ ficha.tipo_movimiento }}</p>
-                                <p><strong>Fecha de pedido:</strong> {{ ficha.fecha_pedido }}</p>
-                                <p><strong>Fecha de recepción:</strong> {{ ficha.fecha_recepcion }}</p>
-                                <p><strong>Comentarios:</strong> {{ ficha.comentarios }}</p>
-                                <p><strong>Estado actual:</strong> <span class="estado estado-recibida">Recibida</span>
-                                </p>
-                            </MDBCardText>
-                            <MDBBtn tag="a" href="#!" color="primary" class="boton-estado">Cambiar estado</MDBBtn>
-                        </MDBCardBody>
-
                     </MDBCard>
                 </div>
             </MDBTabPane>
@@ -81,7 +62,6 @@
                                 <p><strong>Estado actual:</strong> <span
                                         class="estado estado-procesada">Procesada</span></p>
                             </MDBCardText>
-                            <MDBBtn tag="a" href="#!" color="primary" class="boton-estado">Cambiar estado</MDBBtn>
                         </MDBCardBody>
                         <MDBCardFooter class="text-muted">
                             <button class="boton-estilizado" @click="goToFichasProductos(ficha.id)">Ver
@@ -94,8 +74,9 @@
         <!-- Tabs content -->
     </MDBTabs>
 
-    <!-- Modal -->
-    <div class="modal fade" id="estadoModal" tabindex="-1" aria-labelledby="estadoModalLabel" aria-hidden="true">
+    <!-- Modal para pedidos-->
+    <div class="modal fade" id="estadoModal" tabindex="-1" aria-labelledby="estadoModalLabel" aria-hidden="true"
+        ref="estadoModal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -156,6 +137,25 @@
             </div>
         </div>
     </div>
+
+    <!--modal para devolver productos-->
+    <!-- Modal de confirmación de devolución -->
+    <div class="modal fade" id="confirmacionDevolucionModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmación de Devolución</h5>
+                </div>
+                <div class="modal-body">
+                    <p>¿Estás seguro que deseas devolver los productos de esta ficha?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button class="btn btn-primary" @click="procesarDevolucion(fichaSeleccionada)">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -172,7 +172,6 @@ import {
     MDBCardBody,
     MDBCardTitle,
     MDBCardText,
-    MDBBtn,
     MDBCardFooter,
 } from "mdb-vue-ui-kit";
 
@@ -192,12 +191,10 @@ export default {
         MDBCardBody,
         MDBCardTitle,
         MDBCardText,
-        MDBBtn,
         MDBCardFooter,
         CrearFichaInventario
     },
     setup() {
-
         const fichaSeleccionada = ref(null); // Cambio aquí
         const activeTabId1 = ref("ex1-1");
         const fichas = ref([]);
@@ -228,14 +225,15 @@ export default {
 
         // Función para guardar cambios en el estado de una ficha
         const guardarCambios = async (id) => {
+            console.log('Aqui');
             console.log("Form value", form.value)
             console.log("El id es: ", id)
-            console.log("Cambiando estado para la ficha con id:", fichaSeleccionada);
+            console.log("Cambiando estado para la ficha con id:", fichaSeleccionada.value);
 
 
             console.log("Form value segunda vez", form.value)
             try {
-                const url = `http://localhost:8000/api/ficha-inventario-procesado/${id}`;
+                const url = `http://localhost:${process.env.VUE_APP_PUERTO}/api/ficha-inventario-procesado/${id}`;
                 const response = await axios.put(url, form.value);
                 console.log(response)
                 if (response.status === 200) {
@@ -244,11 +242,26 @@ export default {
                 } else {
                     alert("Hubo un problema al actualizar el estado");
                 }
+
             } catch (error) {
                 console.error("Error en la petición:", error);
                 alert("Ocurrió un error al guardar los cambios");
             }
         };
+
+        const procesarDevolucion = async (id) => {
+            console.log(id);
+            try {
+                const url = `http://localhost:${process.env.VUE_APP_PUERTO}/api/ficha-inventario-procesar-devolucion/${id}`
+
+                const response = await axios.put(url);
+                alert(response.data.message);
+                fetchFichas();
+            } catch (error) {
+                alert("Ocurrió un error: ", error);
+                console.log(error);
+            }
+        }
 
         // Llamar a fetchFichas al montar el componente
         onMounted(() => {
@@ -262,6 +275,7 @@ export default {
             form,
             goToFichasProductos,
             guardarCambios,
+            procesarDevolucion
         };
     },
 };

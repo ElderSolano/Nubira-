@@ -109,14 +109,24 @@ export default {
         const manejarCreacionFicha = async () => {
             await crearFichaDeInventario();
 
-            if(id_ficha_creada.value){
-                router.push({
-                    path: '/crear-ficha-producto',
-                    query: {
-                        idProveedor: ficha.value.id_proveedor,
-                        id_ficha_creada: id_ficha_creada.value
-                    }
-                })
+            if (id_ficha_creada.value) {
+                if (ficha.value.tipoMovimiento == 'devolucion') {
+                    router.push({
+                        path: '/crear-ficha-producto-devolucion',
+                        query:{
+                            idProveedor: ficha.value.id_proveedor,
+                            id_ficha_creada: id_ficha_creada.value
+                        }
+                    })
+                } else {
+                    router.push({
+                        path: '/crear-ficha-producto',
+                        query: {
+                            idProveedor: ficha.value.id_proveedor,
+                            id_ficha_creada: id_ficha_creada.value
+                        }
+                    })
+                }
             }
         }
 

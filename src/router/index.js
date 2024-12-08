@@ -32,6 +32,8 @@ import CrearFichaInventario from "@/components/CrearFichaInventario.vue";
 import CrearFichaProducto from "@/components/CrearFichaProducto.vue";
 import Usuarios from "@/components/Usuarios.vue";
 
+import CrearFichaProductoDevolucion from "@/components/CrearFichaProductoDevolucion.vue";
+
 const routes = [
   {
     path: "/ventas",
@@ -180,6 +182,12 @@ const routes = [
     path: '/crear-ficha-producto',
     name: 'CrearFichaProducto',
     component: CrearFichaProducto,
+    props: route => ({ idProveedor: route.query.idProveedor , id_ficha_creada: route.query.id_ficha_creada})
+  },
+  {
+    path: '/crear-ficha-producto-devolucion',
+    name: 'CrearFichaProductoDevolucion',
+    component: CrearFichaProductoDevolucion,
     props: route => ({ idProveedor: route.query.idProveedor , id_ficha_creada: route.query.id_ficha_creada})
   },
   {
