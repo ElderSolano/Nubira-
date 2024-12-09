@@ -63,72 +63,131 @@
 
     <!-- Botones para imprimir y guardar -->
     <div class="actions">
-      <button @click="imprimirFactura" class="btn-imprimir">Imprimir Factura</button>
-      <button @click="guardarFactura" class="btn-guardar">Guardar Factura</button>
+      <button @click="imprimirFactura(facturaRef)" class="btn-imprimir">Imprimir Factura</button>
+      <button @click="guardarFactura(facturaRef)" class="btn-guardar">Guardar Factura</button>
     </div>
   </div>
 </template>
 
+
 <script>
+import { ref, computed } from "vue";
+import { useRoute } from 'vue-router';
 export default {
   name: "Factura",
-  data() {
-    return {
-      fechaHora: new Date().toLocaleString(),
-      numeroFactura: "001-001-000001",
-      rangoNumeracion: "001-001-000001 a 001-001-999999",
-      cai: "123456-CAI-78910",
-      cliente: "Juan Pérez",
-      rtnCliente: "0801-9876-5432",
-      efectivoRecibido: 500.0,
-      productos: [
-        { nombre: "Producto A", cantidad: 2, precioUnitario: 150.0 },
-        { nombre: "Producto B", cantidad: 1, precioUnitario: 200.0 },
-        { nombre: "Producto C", cantidad: 3, precioUnitario: 100.0 },
-      ],
-    };
-  },
-  computed: {
-    total() {
-      return this.productos.reduce(
+  setup() {
+    const route = useRoute();
+
+    // Asegúrate de que `data` esté disponible en `query`
+    const data = JSON.parse(route.query.data);  // Aquí se analiza correctamente la cadena JSON
+    /**
+     * la información se ve así:
+     * {
+     * productos: Array(1), 
+     * subtotal: 250, 
+     * isv: 37.5, 
+     * descuento: 0, 
+     * total: 287.5}
+        descuento: 0
+        isv: 37.5
+        productos: Array(1)0
+        : 
+        cantidad: 1
+        id_producto: 2
+        nombre: "COCa Cola 2 Litros"
+        precio: 250
+        [[Prototype]]
+        : 
+        Object
+        length
+        : 
+        1
+        [[Prototype]]
+        : 
+        Array(0)
+        subtotal: 250
+        total: 287.5
+     */
+    console.log(data);
+
+    const fechaHora = ref(new Date().toLocaleString());
+    const numeroFactura = ref("001-001-000001");
+    const rangoNumeracion = ref("001-001-000001 a 001-001-999999");
+    const cai = ref("123456-CAI-78910");
+    const cliente = ref("Juan Pérez");
+    const rtnCliente = ref("0801-9876-5432");
+    const efectivoRecibido = ref(data.efectivo);
+
+    const productos = ref(data.productos)
+
+    //const productos = ref([
+    //  { nombre: "Producto A", cantidad: 2, precioUnitario: 150.0 },
+    //  { nombre: "Producto B", cantidad: 1, precioUnitario: 200.0 },
+    //  { nombre: "Producto C", cantidad: 3, precioUnitario: 100.0 },
+    //]);
+
+    // Computed properties
+    const total = computed(() =>
+      productos.value.reduce(
         (sum, producto) => sum + producto.cantidad * producto.precioUnitario,
         0
-      );
-    },
-    isv() {
-      return this.total * 0.15; // ISV del 15%
-    },
-    cambio() {
-      return this.efectivoRecibido - (this.total + this.isv);
-    },
-  },
-  methods: {
-    imprimirFactura() {
-      const printContent = this.$refs.facturaRef;
+      )
+    );
+
+    const isv = computed(() => total.value * 0.15); // ISV del 15%
+    const cambio = computed(() => efectivoRecibido.value - (total.value + isv.value));
+
+    // Métodos
+    const imprimirFactura = (facturaRef) => {
+      const printContent = facturaRef.value;
       const printWindow = window.open("", "_blank");
-      printWindow.document.write("<html><head><title>Factura</title><style>body{ margin:0; }</style></head><body>");
+      printWindow.document.write(
+        "<html><head><title>Factura</title><style>body{ margin:0; }</style></head><body>"
+      );
       printWindow.document.write(printContent.outerHTML);
       printWindow.document.write("</body></html>");
       printWindow.document.close();
       printWindow.print();
-    },
-    guardarFactura() {
-      const content = this.$refs.facturaRef.outerHTML; // Extraer el contenido de la factura
+    };
+
+    const guardarFactura = (facturaRef) => {
+      const content = facturaRef.value.outerHTML; // Extraer el contenido de la factura
       const blob = new Blob([content], { type: "text/html" }); // Crear un archivo HTML
       const url = URL.createObjectURL(blob);
 
       // Crear un enlace para descargar el archivo
       const link = document.createElement("a");
       link.href = url;
-      link.download = `Factura_${this.numeroFactura}.html`; // Nombre del archivo
+      link.download = `Factura_${numeroFactura.value}.html`; // Nombre del archivo
       link.click();
 
       // Liberar el objeto URL
       URL.revokeObjectURL(url);
-    },
+    };
+
+    // Referencia para el contenido de la factura
+    const facturaRef = ref(null);
+
+    return {
+      fechaHora,
+      numeroFactura,
+      rangoNumeracion,
+      cai,
+      cliente,
+      rtnCliente,
+      efectivoRecibido,
+      productos,
+      total,
+      isv,
+      cambio,
+      imprimirFactura,
+      guardarFactura,
+      facturaRef,
+    };
   },
 };
 </script>
+
 
 <style scoped>
 /* Mantengo tus estilos originales */
@@ -230,21 +289,24 @@ footer p {
     margin: 0;
     padding: 0;
   }
+
   .factura-container {
     display: flex;
     justify-content: center;
     align-items: center;
   }
+
   .factura {
-    width: 300px; 
+    width: 300px;
     padding: 10px;
     margin: 0 auto;
     box-shadow: none;
     border: none;
   }
+
   .btn-imprimir,
   .btn-guardar {
-    display: none; 
+    display: none;
   }
 }
 </style>

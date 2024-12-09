@@ -142,7 +142,6 @@ const routes = [
     path: "/factura",
     component: Factura,
     name: "Factura",
-    props: true,
   },
   {
     path: "/dashboard/estadisticas",
