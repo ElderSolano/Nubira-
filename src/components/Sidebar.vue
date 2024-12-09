@@ -54,7 +54,7 @@
       } catch (error) {
         console.error('Error en la solicitud de cierre de sesión:', error);
       }
-      },
+    },
     },
   };
   </script>
