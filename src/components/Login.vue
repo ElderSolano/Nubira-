@@ -83,7 +83,7 @@ export default {
 
         if (response.ok) {
           console.log('Login exitoso:', data);
-          localStorage.setItem('authToken', data.token); // Guarda el token en localStorage
+          localStorage.setItem('authToken', data.access_token); // Guarda el token en localStorage
           this.$router.push({ name: 'Dashboard' }); // Redirige al componente de bienvenida
         } else {
           console.error('Error en el login:', data.message);

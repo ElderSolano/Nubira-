@@ -86,6 +86,7 @@ export default {
           title: "Permisos",
           description: "Gestiona los permisos de acceso para diferentes usuarios en el sistema.",
           image: require("../assets/images/configuracion.png"),
+          route: "Permisos",
         },
         
       ],

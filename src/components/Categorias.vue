@@ -111,10 +111,22 @@ export default {
     // Obtener las categorías desde la API
     async obtenerCategorias() {
       try {
-        const response = await axios.get(this.apiUrl);
+        const token = localStorage.getItem('authToken'); // Obtén el token del localStorage
+
+        if (!token) {
+          throw new Error("No hay token de autenticación disponible.");
+        }
+
+        const response = await axios.get(this.apiUrl, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Pasa el token en las cabeceras
+          },
+        });
+
         this.categorias = response.data; // Asigna la respuesta a la variable categorias
       } catch (error) {
         console.error("Error al obtener categorías:", error);
+        alert("No se pudieron cargar las categorías. Verifica tu sesión.");
       }
     },
 
@@ -142,13 +154,31 @@ export default {
     // Guardar la nueva categoría o actualizar una existente
     async guardarEdicion() {
       try {
+        const token = localStorage.getItem('authToken'); // Obtén el token del localStorage
+
+        if (!token) {
+          throw new Error("No hay token de autenticación disponible.");
+        }
+
         if (this.categoriaSeleccionada.id) {
           // Si la categoría tiene un ID, se está editando
-          await axios.put(`${this.apiUrl}/${this.categoriaSeleccionada.id}`, this.categoriaSeleccionada);
+          await axios.put(
+            `${this.apiUrl}/${this.categoriaSeleccionada.id}`,
+            this.categoriaSeleccionada,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`, // Pasa el token
+              },
+            }
+          );
           console.log("Categoría actualizada exitosamente");
         } else {
           // Si no tiene un ID, es una nueva categoría
-          await axios.post(this.apiUrl, this.categoriaSeleccionada);
+          await axios.post(this.apiUrl, this.categoriaSeleccionada, {
+            headers: {
+              Authorization: `Bearer ${token}`, // Pasa el token
+            },
+          });
           console.log("Categoría creada exitosamente");
         }
         this.obtenerCategorias(); // Actualizar la lista de categorías después de editar o crear
@@ -167,7 +197,17 @@ export default {
     // Eliminar la categoría confirmada
     async eliminarCategoriaConfirmada() {
       try {
-        await axios.delete(`${this.apiUrl}/${this.categoriaAEliminar}`);
+        const token = localStorage.getItem('authToken'); // Obtén el token del localStorage
+
+        if (!token) {
+          throw new Error("No hay token de autenticación disponible.");
+        }
+
+        await axios.delete(`${this.apiUrl}/${this.categoriaAEliminar}`, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Pasa el token
+          },
+        });
         console.log("Categoría eliminada exitosamente");
         this.obtenerCategorias(); // Actualizar la lista de categorías
         this.cerrarConfirmacion(); // Cerrar el modal de confirmación
@@ -191,32 +231,6 @@ export default {
 };
 </script>
 
-<style scoped>
-.modal {
-  display: block;
-  background: rgba(0, 0, 0, 0.5);
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-}
-
-.modal-dialog {
-  margin-top: 100px;
-}
-
-.modal-content {
-  background-color: #fff;
-  border-radius: 5px;
-  padding: 20px;
-}
-
-button i {
-  font-size: 16px;
-}
-</style>
 
 
 

@@ -141,8 +141,8 @@
         empleadoSeleccionado: null, // Empleado seleccionado para edición o creación
         mostrarModal: false, // Controla la visibilidad del modal
         empleadoAEliminar: null, // ID del empleado que se eliminará
-        apiUrl: "http://127.0.0.1:8000/api/empleados", // API de empleados
-        apiPuestosUrl: "http://127.0.0.1:8000/api/puestos", // API de puestos
+        apiUrl: "http://127.0.0.1:8001/api/empleados", // API de empleados
+        apiPuestosUrl: "http://127.0.0.1:8001/api/puestos", // API de puestos
       };
     },
     mounted() {

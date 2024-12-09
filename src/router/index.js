@@ -34,6 +34,8 @@ import Usuarios from "@/components/Usuarios.vue";
 
 import CrearFichaProductoDevolucion from "@/components/CrearFichaProductoDevolucion.vue";
 
+import Permisos from "@/components/Permisos.vue";
+
 const routes = [
   {
     path: "/ventas",
@@ -195,11 +197,19 @@ const routes = [
     name: 'Usuarios',
     component: Usuarios,
   }
+  ,
+  {
+    path: '/permisos',
+    name: 'Permisos',
+    component: Permisos,
+  }
 ];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
+
+
 
 export default router;
