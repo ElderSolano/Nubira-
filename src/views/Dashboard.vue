@@ -1,7 +1,7 @@
 <template>
   <div id="dashboard-principal" class="col-9">
     <div class="row mt-3" id="Tarjetas-1">
-      <!-- Tarjeta Gastos del mes -->
+      <!-- Tarjeta Ventas -->
       <div class="col-lg mb-lg-0 mb-4">
         <div class="card tarjeta-uniforme">
           <div class="card-body p-3">
@@ -9,9 +9,9 @@
               <div class="col-lg-6">
                 <div class="d-flex flex-column h-100">
                   <p class="mb-1 pt-2 text-bold">Reportes de ventas</p>
-                  <h5 class="font-weight-bolder">En su totalidad</h5>
+                  <h5 class="font-weight-bolder"></h5>
                   <p class="mb-5">
-                    En esta sección, podrás llevar un control detallado de tus gastos mensuales.
+                    Ver todo el registro de las ventas de tu mercadito.
                   </p>
                   <a
                     class="text-body text-sm font-weight-bold mb-0 icon-move-right mt-auto"
@@ -123,9 +123,9 @@
               <div class="col-lg-6">
                 <div class="d-flex flex-column h-100">
                   <p class="mb-1 pt-2 text-bold">Reportes</p>
-                  <h5 class="font-weight-bolder">Análisis</h5>
+                  <h5 class="font-weight-bolder">Estadisticas</h5>
                   <p class="mb-5">
-                    Reportes detallados para analizar el rendimiento y hacer un seguimiento de las métricas clave de tu negocio.
+                    Estadisticas para ver las métricas de tu negocio.
                   </p>
                   <a
                     class="text-body text-sm font-weight-bold mb-0 icon-move-right mt-auto"
