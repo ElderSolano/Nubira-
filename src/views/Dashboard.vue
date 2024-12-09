@@ -121,23 +121,25 @@
           <div class="card-body p-3">
             <div class="row align-items-center">
               <div class="col-lg-6">
-                <div class="d-flex flex-column h-100">
-                  <p class="mb-1 pt-2 text-bold">Reportes</p>
-                  <h5 class="font-weight-bolder">Estadisticas</h5>
-                  <p class="mb-5">
-                    Estadisticas para ver las métricas de tu negocio.
-                  </p>
-                  <a
-                    class="text-body text-sm font-weight-bold mb-0 icon-move-right mt-auto"
-                    href="javascript:;"
-                  >
-                    Vamos
-                    <i
-                      class="fas fa-arrow-right text-sm ms-1"
-                      aria-hidden="true"
-                    ></i>
-                  </a>
-                </div>
+                <router-link :to="{ name: 'Estadisticas' }">
+                  <div class="d-flex flex-column h-100">
+                    <p class="mb-1 pt-2 text-bold">Reportes</p>
+                    <h5 class="font-weight-bolder">Estadisticas</h5>
+                    <p class="mb-5">
+                      Estadisticas para ver las métricas de tu negocio.
+                    </p>
+                    <a
+                      class="text-body text-sm font-weight-bold mb-0 icon-move-right mt-auto"
+                      href="javascript:;"
+                    >
+                      Vamos
+                      <i
+                        class="fas fa-arrow-right text-sm ms-1"
+                        aria-hidden="true"
+                      ></i>
+                    </a>
+                  </div>
+                </router-link>
               </div>
               <div class="col-lg-6 text-center">
                 <img
