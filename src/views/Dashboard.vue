@@ -160,7 +160,7 @@ export default {
   methods: {
     async handleLogout() {
       try {
-        const response = await fetch('https://eb1d-181-115-60-195.ngrok-free.app/api/logout', {
+        const response = await fetch('http://127.0.0.1:8001/api/logout', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

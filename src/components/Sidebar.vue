@@ -18,17 +18,42 @@
           <img src="@/assets/images/boy.png" alt="Perfil" class="profile-img" />
           <p class="profile-name">Mi Perfil</p>
         </div>
-        <button @click="logout" class="logout-btn">Cerrar Sesión</button>
+        <button @click="handleLogout" class="logout-btn">Cerrar Sesión</button>
       </div>
     </div>
   </template>
   
   <script>
+
   export default {
     name: "Sidebar",
     methods: {
-      logout() {
-        console.log("Cerrar sesión");
+      async handleLogout() {
+      try {
+        const response = await fetch('http://127.0.0.1:8001/api/logout', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+          },
+        });
+
+        if (response.ok) {
+          console.log('Cierre de sesión exitoso');
+          localStorage.removeItem('authToken');
+          this.$router.push({ name: 'Login' });
+        } else {
+          const contentType = response.headers.get('content-type');
+          if (contentType && contentType.includes('application/json')) {
+            const data = await response.json();
+            console.error('Error al cerrar sesión:', data.message);
+          } else {
+            console.error('Error al cerrar sesión: Respuesta no es JSON');
+          }
+        }
+      } catch (error) {
+        console.error('Error en la solicitud de cierre de sesión:', error);
+      }
       },
     },
   };
