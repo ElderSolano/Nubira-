@@ -8,8 +8,8 @@
             <div class="row align-items-center">
               <div class="col-lg-6">
                 <div class="d-flex flex-column h-100">
-                  <p class="mb-1 pt-2 text-bold">Gastos del mes</p>
-                  <h5 class="font-weight-bolder">Finanzas</h5>
+                  <p class="mb-1 pt-2 text-bold">Reportes de ventas</p>
+                  <h5 class="font-weight-bolder">En su totalidad</h5>
                   <p class="mb-5">
                     En esta sección, podrás llevar un control detallado de tus gastos mensuales.
                   </p>
@@ -212,5 +212,9 @@ export default {
   margin-left: 100px; /* Ajusta este valor al ancho de tu Sidenav */
   transition: margin-left 0.3s;
   row-gap: 20px;
+}
+
+*{
+  font-family: 'Nunito' !important;
 }
 </style>
