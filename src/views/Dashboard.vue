@@ -5,34 +5,36 @@
       <div class="col-lg mb-lg-0 mb-4">
         <div class="card tarjeta-uniforme">
           <div class="card-body p-3">
-            <div class="row align-items-center">
-              <div class="col-lg-6">
-                <div class="d-flex flex-column h-100">
-                  <p class="mb-1 pt-2 text-bold">Reportes de ventas</p>
-                  <h5 class="font-weight-bolder"></h5>
-                  <p class="mb-5">
-                    Ver todo el registro de las ventas de tu mercadito.
-                  </p>
-                  <a
-                    class="text-body text-sm font-weight-bold mb-0 icon-move-right mt-auto"
-                    href="javascript:;"
-                  >
-                    Vamos
-                    <i
-                      class="fas fa-arrow-right text-sm ms-1"
-                      aria-hidden="true"
-                    ></i>
-                  </a>
+            <router-link :to="{name: 'ReportesVentas'}" >
+              <div class="row align-items-center">
+                <div class="col-lg-6">
+                  <div class="d-flex flex-column h-100">
+                    <p class="mb-1 pt-2 text-bold">Reportes de ventas</p>
+                    <h5 class="font-weight-bolder"></h5>
+                    <p class="mb-5">
+                      Ver todo el registro de las ventas de tu mercadito.
+                    </p>
+                    <a
+                      class="text-body text-sm font-weight-bold mb-0 icon-move-right mt-auto"
+                      href="javascript:;"
+                    >
+                      Vamos
+                      <i
+                        class="fas fa-arrow-right text-sm ms-1"
+                        aria-hidden="true"
+                      ></i>
+                    </a>
+                  </div>
+                </div>
+                <div class="col-lg-6 text-center">
+                  <img
+                    class="imagen-uniforme"
+                    src="../assets/images/Finanzas.jpg"
+                    alt="Finanzas"
+                  />
                 </div>
               </div>
-              <div class="col-lg-6 text-center">
-                <img
-                  class="imagen-uniforme"
-                  src="../assets/images/Finanzas.jpg"
-                  alt="Finanzas"
-                />
-              </div>
-            </div>
+            </router-link>
           </div>
         </div>
       </div>

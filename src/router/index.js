@@ -33,7 +33,7 @@ import CrearFichaProducto from "@/components/CrearFichaProducto.vue";
 import Usuarios from "@/components/Usuarios.vue";
 
 import CrearFichaProductoDevolucion from "@/components/CrearFichaProductoDevolucion.vue";
-
+import ReportesVentas from "@/components/ReportesVentas.vue";
 import Permisos from "@/components/Permisos.vue";
 
 const routes = [
@@ -201,6 +201,11 @@ const routes = [
     path: '/permisos',
     name: 'Permisos',
     component: Permisos,
+  },
+  {
+    path: '/Reportes-ventas',
+    name: 'ReportesVentas',
+    component: ReportesVentas
   }
 ];
 
