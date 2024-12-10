@@ -251,9 +251,9 @@ export default {
 
     const formatCurrency = (value) => {
       if (isNaN(value) || value === null || value === undefined) {
-        return "$0.00";
+        return "L. 0.00";
       }
-      return `$${parseFloat(value).toFixed(2)}`;
+      return `L. ${parseFloat(value).toFixed(2)}`;
     };
 
     // Watchers

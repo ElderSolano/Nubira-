@@ -71,7 +71,7 @@ export default {
       console.log(process.env.VUE_APP_PUERTO)
       try {
         
-        const response = await fetch(`http://localhost:8000/api/login`, {
+        const response = await fetch(`http://localhost:8001/api/login`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -87,6 +87,7 @@ export default {
         if (response.ok) {
           console.log('Login exitoso:', data);
           localStorage.setItem('authToken', data.access_token); // Guarda el token en localStorage
+          localStorage.setItem('user', JSON.stringify(data.user)); // Guarda el usuario en localStorage
           this.$router.push({ name: 'Dashboard' }); // Redirige al componente de bienvenida
         } else {
           console.error('Error en el login:', data.message);

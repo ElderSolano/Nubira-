@@ -1,38 +1,84 @@
 <template>
-    <div class="sidebar">
-      <div class="sidebar-logo">
-        <img src="@/assets/images/Version monocromatica 2.png" alt="Logo" class="logo" />
-      </div>
-  
-      <nav class="sidebar-nav">
-        <ul>
-          <li><router-link to="/dashboard" class="nav-link">Inicio</router-link></li>
-          <li><router-link to="/mantenimiento" class="nav-link">Mantenimiento</router-link></li>
-          <li><router-link to="/ventas" class="nav-link">Ventas</router-link></li>
-          <li><router-link to="/inventario" class="nav-link">Inventario</router-link></li>
-        </ul>
-      </nav>
-  
-      <div class="sidebar-footer">
-        <div class="profile">
-          <img src="@/assets/images/boy.png" alt="Perfil" class="profile-img" />
-          <p class="profile-name">Mi Perfil</p>
-        </div>
-        <button @click="logout" class="logout-btn">Cerrar Sesión</button>
-      </div>
+  <div class="sidebar">
+    <div class="sidebar-logo">
+      <img src="@/assets/images/Version monocromatica 2.png" alt="Logo" class="logo" />
     </div>
-  </template>
-  
-  <script>
-  export default {
-    name: "Sidebar",
-    methods: {
-      logout() {
-        console.log("Cerrar sesión");
-      },
+
+    <nav class="sidebar-nav">
+      <ul>
+        <li><router-link to="/dashboard" class="nav-link">Inicio</router-link></li>
+        <li><router-link to="/mantenimiento" class="nav-link">Mantenimiento</router-link></li>
+        <li><router-link to="/ventas" class="nav-link">Ventas</router-link></li>
+        <li><router-link to="/inventario" class="nav-link">Inventario</router-link></li>
+      </ul>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="profile">
+        <img src="@/assets/images/boy.png" alt="Perfil" class="profile-img" />
+        <p class="profile-name">{{ user.name }}</p>
+      </div>
+      <button @click="handleLogout" class="logout-btn">Cerrar Sesión</button>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Sidebar",
+  data() {
+    return {
+      user: {}, // Inicializamos como un objeto vacío
+    };
+  },
+  methods: {
+    async handleLogout() {
+      try {
+        const response = await fetch('http://127.0.0.1:8001/api/logout', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+          },
+        });
+
+        if (response.ok) {
+          console.log('Cierre de sesión exitoso');
+          localStorage.removeItem('authToken');
+          this.$router.push({ name: 'Login' });
+        } else {
+          const contentType = response.headers.get('content-type');
+          if (contentType && contentType.includes('application/json')) {
+            const data = await response.json();
+            console.error('Error al cerrar sesión:', data.message);
+          } else {
+            console.error('Error al cerrar sesión: Respuesta no es JSON');
+          }
+        }
+      } catch (error) {
+        console.error('Error en la solicitud de cierre de sesión:', error);
+      }
     },
-  };
-  </script>
+  },
+  mounted() {
+    // Obtener el usuario desde localStorage
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      try {
+        const parsedUser = JSON.parse(storedUser); // Convertimos la cadena almacenada en un objeto
+        this.user = {
+          name: parsedUser.name, // Asignamos solo la propiedad "name"
+        };
+      } catch (error) {
+        console.error('Error al parsear el usuario desde localStorage:', error);
+      }
+    }
+  },
+};
+</script>
+
+
+
   
   <style scoped>
   /* Estilos generales del sidebar */
