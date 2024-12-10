@@ -181,7 +181,7 @@ export default {
   methods: {
     async obtenerProductos() {
       try {
-        const response = await fetch(`http://127.0.0.1:${process.env.VUE_APP_PUERTO}/api/productos`);
+        const response = await fetch(`http://127.0.0.1:8000/api/productos`);
         if (!response.ok) throw new Error('Error al obtener productos');
         this.productos = await response.json();
       } catch (error) {
@@ -191,7 +191,7 @@ export default {
     },
     async obtenerCategorias() {
       try {
-        const response = await fetch(`http://127.0.0.1:${process.env.VUE_APP_PUERTO}/api/categoria`);
+        const response = await fetch(`http://127.0.0.1:8000/api/categoria`);
         if (!response.ok) throw new Error('Error al obtener categorías');
         this.categorias = await response.json();
       } catch (error) {
@@ -201,7 +201,7 @@ export default {
     },
     async obtenerProveedores() {
       try {
-        const response = await fetch(`http://127.0.0.1:${process.env.VUE_APP_PUERTO}/api/proveedores`);
+        const response = await fetch(`http://127.0.0.1:8000/api/proveedores`);
         if (!response.ok) throw new Error('Error al obtener proveedores');
         this.proveedores = await response.json();
       } catch (error) {
@@ -225,7 +225,7 @@ export default {
     },
     async cargarDatosProducto(codigo) {
       try {
-        const response = await fetch(`http://127.0.0.1:${process.env.VUE_APP_PUERTO}/api/productos/${codigo}`);
+        const response = await fetch(`http://127.0.0.1:8000/api/productos/${codigo}`);
         if (!response.ok) throw new Error('Error al obtener los datos del producto');
         this.productoSeleccionado = await response.json();
         this.isEditing = true;
@@ -237,7 +237,7 @@ export default {
     async actualizarProducto() {
       try {
         const idProducto = this.productoSeleccionado.codigo;
-        const response = await fetch(`http://127.0.0.1:${process.env.VUE_APP_PUERTO}/api/productos/${idProducto}`, {
+        const response = await fetch(`http://127.0.0.1:8000/api/productos/${idProducto}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(this.productoSeleccionado),
@@ -256,7 +256,7 @@ export default {
     },
     async eliminarProductoConfirmado() {
       try {
-        const response = await fetch(`http://127.0.0.1:${process.env.VUE_APP_PUERTO}/api/productos/${this.productoAEliminar}`, {
+        const response = await fetch(`http://127.0.0.1:8000/api/productos/${this.productoAEliminar}`, {
           method: 'DELETE',
         });
         if (!response.ok) throw new Error('Error al eliminar el producto');
@@ -274,7 +274,7 @@ export default {
     },
     async guardarProducto() {
       try {
-        const response = await fetch(`http://127.0.0.1:${process.env.VUE_APP_PUERTO}/api/productos`, {
+        const response = await fetch(`http://127.0.0.1:8000/api/productos`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(this.productoSeleccionado),

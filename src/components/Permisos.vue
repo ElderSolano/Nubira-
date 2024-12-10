@@ -91,8 +91,8 @@
         usuarioSeleccionado: null, // ID del usuario seleccionado
         rolSeleccionado: null, // Nombre del rol seleccionado
         mostrarModal: false, // Controla la visibilidad del modal
-        apiUsuarios: "http://127.0.0.1:8001/api/register", // Endpoint para obtener usuarios
-        apiAsignarRol: "http://127.0.0.1:8001/api/usuarios", // Endpoint para asignar roles
+        apiUsuarios: "http://127.0.0.1:8000/api/register", // Endpoint para obtener usuarios
+        apiAsignarRol: "http://127.0.0.1:8000/api/usuarios", // Endpoint para asignar roles
       };
     },
     mounted() {
