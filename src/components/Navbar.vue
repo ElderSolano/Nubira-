@@ -2,12 +2,12 @@
  <header>
       <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
-          <a class="navbar-brand ms-5" href="#">
+          <a class="navbar-brand ms-5" href="/">
             <img src="../assets/images/Version monocromatica 2 1.png" alt="Logo" height="70">
           </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
+    <span class="navbar-toggler-icon"></span>
+</button>
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
               <li class="nav-item">
@@ -60,5 +60,9 @@ export default {
 .navbar-nav {
   margin-right: 100px; 
   margin-left: 160px;
+}
+.navbar-toggler-icon {
+  background-color: white; /* Cambia el color del ícono */
+  border-radius: 2px; /* Opcional: un toque de estilo */
 }
 </style>

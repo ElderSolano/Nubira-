@@ -213,4 +213,50 @@ export default {
   transition: margin-left 0.3s;
   row-gap: 20px;
 }
+
+/* Ajustes para tamaños pequeños */
+@media (max-width: 768px) {
+  #dashboard-principal {
+    margin-left: 0; /* Quita margen del Sidenav en móviles */
+  }
+
+  .tarjeta-uniforme {
+    flex-direction: column; /* Cambia a diseño vertical */
+    align-items: flex-start; /* Alineación para contenido en vertical */
+    height: auto; /* Ajuste dinámico */
+    padding: 1.5rem;
+  }
+
+  .tarjeta-uniforme .card-body {
+    text-align: center; /* Centrar texto para móviles */
+  }
+
+  /* Ajustar imágenes dentro de tarjetas */
+  .imagen-uniforme {
+    max-height: 150px; /* Reducir altura para pantallas pequeñas */
+    margin-bottom: 1rem; /* Espacio entre imagen y contenido */
+  }
+
+  /* Espaciado entre filas en móviles */
+  #Tarjetas-1,
+  #Tarjetas-2 {
+    flex-direction: column; /* Una tarjeta por fila */
+    gap: 1rem; /* Espaciado entre tarjetas */
+  }
+}
+
+@media (max-width: 576px) {
+  /* Reducción de textos en pantallas muy pequeñas */
+  .tarjeta-uniforme h5 {
+    font-size: 1.2rem; /* Ajustar tamaño de título */
+  }
+
+  .tarjeta-uniforme p {
+    font-size: 0.9rem; /* Reducir descripción */
+  }
+
+  .imagen-uniforme {
+    max-height: 120px; /* Reducir aún más en móviles pequeños */
+  }
+}
 </style>

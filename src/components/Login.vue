@@ -135,4 +135,58 @@ export default {
   max-width: 400%; /* Se adapta al ancho */
   height: auto; /* Mantiene la proporción */
 }
+
+/* Para pantallas muy pequeñas (teléfonos, menos de 576px) */
+@media (max-width: 575.98px) {
+  .form-container {
+    padding: 1.5rem; /* Reduce el espaciado interno */
+    margin: 0 1rem; /* Añade margen horizontal */
+  }
+
+  .card-body {
+    text-align: center; /* Centra el contenido */
+  }
+
+  .img-fluid {
+    display: none; /* Oculta la imagen decorativa */
+  }
+}
+
+/* Para pantallas pequeñas (576px a 767px) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .form-container {
+    width: 100%; /* Ocupa todo el ancho */
+    padding: 2rem; /* Espaciado interno */
+  }
+
+  .img-fluid {
+    max-width: 60%; /* Ajusta la proporción de la imagen */
+    margin-top: 100%; /* Ajusta el margen superior */
+  }
+}
+
+/* Para pantallas medianas (768px a 991px) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .form-container {
+    width: 80%; /* Ajusta el ancho */
+  }
+
+  .img-fluid {
+    max-width: 80%; /* Reduce el tamaño de la imagen */
+    margin-top: 50%; /* Ajusta el margen superior */
+  }
+}
+
+/* Para pantallas grandes (992px y más) */
+@media (min-width: 992px) {
+  .form-container {
+    width: 90%; /* Ajusta el ancho en pantallas grandes */
+  }
+
+  .img-fluid {
+    max-width: 400%; /* Imagen en tamaño completo */
+    margin-left: 60%; /* Mantiene el margen izquierdo */
+    margin-top: 125%; /* Mantiene el margen superior */
+  }
+}
 </style>
