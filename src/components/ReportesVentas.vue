@@ -59,10 +59,18 @@ export default {
 .venta {
     width: 400px;
     margin-bottom: 20px;
-    border: 1px solid #ddd;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border: 2px solid rgb(90, 36, 234);
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: white;
+    color: rgb(90, 36, 234);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.venta:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
 .contenedor-de-ventas {
@@ -76,16 +84,32 @@ export default {
 .detalle {
     margin-top: 10px;
     padding: 10px;
-    background-color: #f9f9f9;
-    border-radius: 4px;
-    border: 1px solid #eee;
+    background-color: rgb(90, 36, 234, 0.1);
+    border-radius: 8px;
+    border: 1px solid rgb(90, 36, 234);
+    color: rgb(90, 36, 234);
 }
 
 h3, h4 {
     margin-bottom: 10px;
+    color: rgb(90, 36, 234);
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
+    color: rgb(90, 36, 234);
+    margin-bottom: 20px;
+    font-size: 2em;
+    font-weight: bold;
 }
 
 p {
     margin: 5px 0;
+    font-size: 1em;
+}
+
+p strong {
+    color: rgb(90, 36, 234);
 }
 </style>
