@@ -73,7 +73,7 @@
 
               <div class="mb-3">
                 <label for="codigo" class="form-label">Código</label>
-                <input type="text" class="form-control" id="codigo" v-model="productoSeleccionado.codigo" required />
+                <input type="text" class="form-control" id="codigo" v-model="productoSeleccionado.codigo" required :disabled="isEditing" />
               </div>
 
               <div class="mb-3">
@@ -155,7 +155,6 @@
 </template>
 
 <script>
-
 export default {
   data() {
     return {
@@ -210,7 +209,6 @@ export default {
       }
     },
     nuevoProducto() {
-      this.isEditing = false;
       this.productoSeleccionado = {
         nombre_producto: '',
         stock: 0,
@@ -222,69 +220,76 @@ export default {
         descripcion: '',
         id_proveedor: '',
       };
-    },
-    async cargarDatosProducto(codigo) {
-      try {
-        const response = await fetch(`http://127.0.0.1:8000/api/productos/${codigo}`);
-        if (!response.ok) throw new Error('Error al obtener los datos del producto');
-        this.productoSeleccionado = await response.json();
-        this.isEditing = true;
-      } catch (error) {
-        console.error(error);
-        alert('Error al obtener los datos del producto');
-      }
-    },
-    async actualizarProducto() {
-      try {
-        const idProducto = this.productoSeleccionado.codigo;
-        const response = await fetch(`http://127.0.0.1:8000/api/productos/${idProducto}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(this.productoSeleccionado),
-        });
-        if (!response.ok) throw new Error('Error al actualizar el producto');
-        await this.obtenerProductos();
-        alert('Producto actualizado con éxito');
-      } catch (error) {
-        console.error(error);
-        alert('Error al actualizar el producto');
-      }
-    },
-    confirmarEliminacion(codigo) {
-      this.productoAEliminar = codigo;
-      this.mostrarConfirmacion = true;
-    },
-    async eliminarProductoConfirmado() {
-      try {
-        const response = await fetch(`http://127.0.0.1:8000/api/productos/${this.productoAEliminar}`, {
-          method: 'DELETE',
-        });
-        if (!response.ok) throw new Error('Error al eliminar el producto');
-        await this.obtenerProductos();
-        this.cerrarConfirmacion();
-        alert('Producto eliminado con éxito');
-      } catch (error) {
-        console.error(error);
-        alert('Error al eliminar el producto');
-      }
-    },
-    cerrarConfirmacion() {
-      this.mostrarConfirmacion = false;
-      this.productoAEliminar = null;
+      this.isEditing = false;
     },
     async guardarProducto() {
       try {
         const response = await fetch(`http://127.0.0.1:8000/api/productos`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+          },
           body: JSON.stringify(this.productoSeleccionado),
         });
-        if (!response.ok) throw new Error('Error al guardar el producto');
-        await this.obtenerProductos();
-        alert('Producto creado con éxito');
+        if (!response.ok) throw new Error('Error al guardar producto');
+        this.obtenerProductos();
+        alert('Producto creado exitosamente');
       } catch (error) {
         console.error(error);
-        alert(`Error al crear producto: ${error.message}`);
+        alert('Error al guardar producto');
+      }
+    },
+    cargarDatosProducto(codigo) {
+      const producto = this.productos.find((prod) => prod.codigo === codigo);
+      if (producto) {
+        this.productoSeleccionado = { ...producto };
+        this.isEditing = true;
+      }
+    },
+    async actualizarProducto() {
+      try {
+        const response = await fetch(
+          `http://127.0.0.1:8000/api/productos/${this.productoSeleccionado.id}`,
+          {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(this.productoSeleccionado),
+          }
+        );
+        if (!response.ok) throw new Error('Error al actualizar producto');
+        this.obtenerProductos();
+        alert('Producto actualizado exitosamente');
+      } catch (error) {
+        console.error(error);
+        alert('Error al actualizar producto');
+      }
+    },
+    confirmarEliminacion(codigo) {
+      this.mostrarConfirmacion = true;
+      this.productoAEliminar = codigo;
+    },
+    cerrarConfirmacion() {
+      this.mostrarConfirmacion = false;
+      this.productoAEliminar = null;
+    },
+    async eliminarProductoConfirmado() {
+      try {
+        const response = await fetch(
+          `http://127.0.0.1:8000/api/productos/${this.productoAEliminar}`,
+          {
+            method: 'DELETE',
+          }
+        );
+        if (!response.ok) throw new Error('Error al eliminar producto');
+        this.obtenerProductos();
+        alert('Producto eliminado exitosamente');
+      } catch (error) {
+        console.error(error);
+        alert('Error al eliminar producto');
+      } finally {
+        this.cerrarConfirmacion();
       }
     },
   },
@@ -296,11 +301,22 @@ export default {
 };
 </script>
 
-<style>
-  *{
+<style scoped>
+.modal-header {
+  background-color: #f8f9fa;
+}
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+*{
     font-family: 'nunito';
   }
 </style>
+
+  
+
 
 
 
