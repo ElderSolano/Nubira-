@@ -33,18 +33,17 @@
                 </select>
             </div>
 
-            <!-- Fecha del Pedido (Fecha Actual por Defecto) -->
-
+            <!-- Fecha Dinámica -->
             <div class="mb-3">
-                <label for="fechaPedido" class="form-label">Fecha de Pedido</label>
-                <input type="date" class="form-control" id="fechaPedido" v-model="ficha.fechaPedido" :min="fechaActual"
+                <label :for="fechaDinamicaId" class="form-label">{{ etiquetaFechaDinamica }}</label>
+                <input type="date" class="form-control" :id="fechaDinamicaId" v-model="ficha.fechaPedido" :min="fechaActual"
                     required />
             </div>
 
-            <!-- Fecha Esperada -->
+            <!-- Fecha Esperada Dinámica -->
             <div class="mb-3">
-                <label for="fechaEsperada" class="form-label">Fecha Esperada</label>
-                <input type="date" class="form-control" id="fechaEsperada" v-model="ficha.fechaEsperada" required />
+                <label :for="fechaEsperadaId" class="form-label">{{ etiquetaFechaEsperada }}</label>
+                <input type="date" class="form-control" :id="fechaEsperadaId" v-model="ficha.fechaEsperada" required />
             </div>
 
             <!-- Comentarios -->
@@ -97,7 +96,6 @@ export default {
 
         // Función para obtener los proveedores desde el backend
         const obtenerProveedores = async () => {
-
             try {
                 const response = await axios.get('http://localhost:8000/api/proveedores');
                 proveedores.value = response.data; // Suponiendo que los proveedores vienen en response.data
@@ -113,11 +111,11 @@ export default {
                 if (ficha.value.tipoMovimiento == 'devolucion') {
                     router.push({
                         path: '/crear-ficha-producto-devolucion',
-                        query:{
+                        query: {
                             idProveedor: ficha.value.id_proveedor,
                             id_ficha_creada: id_ficha_creada.value
                         }
-                    })
+                    });
                 } else {
                     router.push({
                         path: '/crear-ficha-producto',
@@ -125,13 +123,12 @@ export default {
                             idProveedor: ficha.value.id_proveedor,
                             id_ficha_creada: id_ficha_creada.value
                         }
-                    })
+                    });
                 }
             }
-        }
+        };
 
         const crearFichaDeInventario = async () => {
-
             const cuerpoPeticion = {
                 "proveedor_id": ficha.value.id_proveedor,
                 "tipo_movimiento": ficha.value.tipoMovimiento,
@@ -139,16 +136,13 @@ export default {
                 "fecha_pedido": ficha.value.fechaPedido, //fecha de cuando llegó el pedido
                 "fecha_recepcion": ficha.value.fechaEsperada, //sera fecha de devolucion
                 "comentarios": ficha.value.comentarios
-            }
+            };
 
             const url = `http://localhost:8000/api/fichas-inventario`;
 
             try {
                 const response = await axios.post(url, cuerpoPeticion);
-                console.log(response)
                 id_ficha_creada.value = response.data.ficha.id;
-
-                console.log("el id de la ficha de inventario creada es: ", id_ficha_creada.value)
             } catch (error) {
                 if (error.response) {
                     console.error('Error de validación:', error.response.data); // Revisa qué campos fallaron
@@ -156,14 +150,33 @@ export default {
                     console.error('Error desconocido:', error);
                 }
             }
-        }
+        };
 
         // Llamar a la función al montar el componente
         onMounted(() => {
             obtenerProveedores();
         });
 
+        // Computed para etiquetas dinámicas
+        const etiquetaFechaDinamica = computed(() => {
+            return ficha.value.tipoMovimiento === 'devolucion'
+                ? 'Fecha en que se hace la devolución'
+                : 'Fecha de Pedido';
+        });
 
+        const etiquetaFechaEsperada = computed(() => {
+            return ficha.value.tipoMovimiento === 'devolucion'
+                ? 'Fecha máxima de devolución'
+                : 'Fecha Esperada';
+        });
+
+        const fechaDinamicaId = computed(() => {
+            return ficha.value.tipoMovimiento === 'devolucion' ? 'fechaDevolucion' : 'fechaPedido';
+        });
+
+        const fechaEsperadaId = computed(() => {
+            return ficha.value.tipoMovimiento === 'devolucion' ? 'fechaMaximaDevolucion' : 'fechaEsperada';
+        });
 
         // Computed para validar si todos los campos requeridos están llenos
         const camposCompletos = computed(() => {
@@ -180,6 +193,10 @@ export default {
             ficha,
             proveedores,
             fechaActual,
+            etiquetaFechaDinamica,
+            etiquetaFechaEsperada,
+            fechaDinamicaId,
+            fechaEsperadaId,
             camposCompletos,
             crearFichaDeInventario,
             manejarCreacionFicha
