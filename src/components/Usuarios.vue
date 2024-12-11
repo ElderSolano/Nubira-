@@ -33,12 +33,12 @@
       </tbody>
     </table>
 
-    <!-- Modal para agregar un nuevo usuario -->
+    <!-- Modal para agregar/editar un usuario -->
     <div v-if="mostrarModal" class="modal" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Crear Nuevo Usuario</h5>
+            <h5 class="modal-title">{{ modalTitulo }}</h5>
             <button type="button" class="close" @click="cerrarModal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -51,7 +51,7 @@
                   type="text"
                   class="form-control"
                   id="nombre"
-                  v-model="nuevoUsuario.name"
+                  v-model="usuarioSeleccionado.name"
                   required
                 />
               </div>
@@ -61,7 +61,7 @@
                   type="email"
                   class="form-control"
                   id="email"
-                  v-model="nuevoUsuario.email"
+                  v-model="usuarioSeleccionado.email"
                   required
                 />
               </div>
@@ -71,17 +71,7 @@
                   type="password"
                   class="form-control"
                   id="password"
-                  v-model="nuevoUsuario.password"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label for="verificarPassword">Verificar Contraseña</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  id="verificarPassword"
-                  v-model="verificarPassword"
+                  v-model="usuarioSeleccionado.password"
                   required
                 />
               </div>
@@ -101,22 +91,22 @@ export default {
   name: "Usuarios",
   data() {
     return {
-      usuarios: [], // Lista de usuarios
-      nuevoUsuario: {
+      usuarios: [],
+      usuarioSeleccionado: {
+        id: null,
         name: "",
         email: "",
         password: "",
       },
-      verificarPassword: "", // Para verificar la contraseña
-      mostrarModal: false, // Controla la visibilidad del modal
-      apiUrl: `http://127.0.0.1:8000/api/register`, // URL de la API
+      mostrarModal: false,
+      modalTitulo: "",
+      apiUrl: "http://127.0.0.1:8000/api/register",
     };
   },
   mounted() {
-    this.obtenerUsuarios(); // Llama la función para obtener los usuarios al montar el componente
+    this.obtenerUsuarios();
   },
   methods: {
-    // Obtener los usuarios desde la API
     async obtenerUsuarios() {
       try {
         const response = await axios.get(this.apiUrl);
@@ -125,39 +115,39 @@ export default {
         console.error("Error al obtener usuarios:", error);
       }
     },
-
-    // Mostrar el modal para crear un nuevo usuario
     crearUsuario() {
-      this.nuevoUsuario = {
+      this.usuarioSeleccionado = {
+        id: null,
         name: "",
         email: "",
         password: "",
       };
-      this.verificarPassword = "";
+      this.modalTitulo = "Crear Nuevo Usuario";
       this.mostrarModal = true;
     },
-
-    // Guardar el nuevo usuario
+    editarUsuario(usuario) {
+      this.usuarioSeleccionado = { ...usuario, password: "" };
+      this.modalTitulo = "Editar Usuario";
+      this.mostrarModal = true;
+    },
     async guardarUsuario() {
-      // Verificar que las contraseñas coincidan
-      if (this.nuevoUsuario.password !== this.verificarPassword) {
-        alert("Las contraseñas no coinciden.");
-        return;
-      }
-
       try {
-        // Enviar el nuevo usuario a la API
-        await axios.post(this.apiUrl, this.nuevoUsuario);
-        alert("Usuario creado exitosamente.");
-        this.obtenerUsuarios(); // Actualizar la lista de usuarios
-        this.cerrarModal(); // Cerrar el modal
+        if (this.usuarioSeleccionado.id) {
+          // Actualizar usuario existente
+          await axios.put(`${this.apiUrl}/${this.usuarioSeleccionado.id}`, this.usuarioSeleccionado);
+          alert("Usuario actualizado exitosamente.");
+        } else {
+          // Crear un nuevo usuario
+          await axios.post(this.apiUrl, this.usuarioSeleccionado);
+          alert("Usuario creado exitosamente.");
+        }
+        this.obtenerUsuarios();
+        this.cerrarModal();
       } catch (error) {
         console.error("Error al guardar el usuario:", error);
         alert("Hubo un error al guardar el usuario.");
       }
     },
-
-    // Cerrar el modal
     cerrarModal() {
       this.mostrarModal = false;
     },
@@ -191,3 +181,4 @@ button i {
   font-size: 16px;
 }
 </style>
+
