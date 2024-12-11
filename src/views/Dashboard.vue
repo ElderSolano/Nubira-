@@ -1,5 +1,5 @@
 <template>
-  <div id="dashboard-principal" class="col-9">
+  <div id="dashboard-principal" class="col-9" v-if="user.role === 'Admin'">
     <div class="row mt-3" id="Tarjetas-1">
       <!-- Tarjeta Ventas -->
       <div class="col-lg mb-lg-0 mb-4">
@@ -60,8 +60,8 @@
                       <i
                         class="fas fa-arrow-right text-sm ms-1"
                         aria-hidden="true"
-                      ></i>
-                    </a>
+                    ></i>
+                  </a>
                   </div>
                 </router-link>
               </div>
@@ -161,37 +161,29 @@
 <script>
 export default {
   name: "dashboard-default",
-  methods: {
-    async handleLogout() {
+  data() {
+    return {
+      user: {
+        role: "", // Inicializado vacío
+      },
+    };
+  },
+  created() {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
       try {
-        const response = await fetch('http://127.0.0.1:8001/api/logout', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('authToken')}`,
-          },
-        });
-
-        if (response.ok) {
-          console.log('Cierre de sesión exitoso');
-          localStorage.removeItem('authToken');
-          this.$router.push({ name: 'Login' });
-        } else {
-          const contentType = response.headers.get('content-type');
-          if (contentType && contentType.includes('application/json')) {
-            const data = await response.json();
-            console.error('Error al cerrar sesión:', data.message);
-          } else {
-            console.error('Error al cerrar sesión: Respuesta no es JSON');
-          }
-        }
+        const parsedUser = JSON.parse(storedUser);
+        this.user.role = parsedUser.role; // Asigna el rol del usuario
       } catch (error) {
-        console.error('Error en la solicitud de cierre de sesión:', error);
+        console.error("Error al parsear el usuario desde localStorage:", error);
       }
-    },
+    }
   },
 };
 </script>
+
+
+
 
 <style scoped>
 /* Estilo para las tarjetas */

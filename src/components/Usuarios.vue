@@ -109,7 +109,7 @@ export default {
       },
       verificarPassword: "", // Para verificar la contraseña
       mostrarModal: false, // Controla la visibilidad del modal
-      apiUrl: `http://127.0.0.1:8001/api/register`, // URL de la API
+      apiUrl: `http://127.0.0.1:8000/api/register`, // URL de la API
     };
   },
   mounted() {

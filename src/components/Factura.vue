@@ -50,6 +50,7 @@
       <section class="totales">
         <p><strong>Total:</strong> L {{ total.toFixed(2) }}</p>
         <p><strong>ISV (15%):</strong> L {{ isv.toFixed(2) }}</p>
+        <p><strong>Total Final:</strong> L {{ totalConImpuestos.toFixed(2) }}</p>
         <p><strong>Efectivo recibido:</strong> L {{ efectivoRecibido.toFixed(2) }}</p>
         <p><strong>Cambio:</strong> L {{ cambio.toFixed(2) }}</p>
       </section>
@@ -63,51 +64,23 @@
 
     <!-- Botones para imprimir y guardar -->
     <div class="actions">
-      <button @click="imprimirFactura(facturaRef)" class="btn-imprimir">Imprimir Factura</button>
-      <button @click="guardarFactura(facturaRef)" class="btn-guardar">Guardar Factura</button>
+      <button @click="imprimirFactura" class="btn-imprimir">Imprimir Factura</button>
+      <button @click="guardarFactura" class="btn-guardar">Guardar Factura</button>
     </div>
   </div>
 </template>
 
-
 <script>
 import { ref, computed } from "vue";
 import { useRoute } from 'vue-router';
+
 export default {
   name: "Factura",
   setup() {
     const route = useRoute();
 
-    // Asegúrate de que `data` esté disponible en `query`
-    const data = JSON.parse(route.query.data);  // Aquí se analiza correctamente la cadena JSON
-    /**
-     * la información se ve así:
-     * {
-     * productos: Array(1), 
-     * subtotal: 250, 
-     * isv: 37.5, 
-     * descuento: 0, 
-     * total: 287.5}
-        descuento: 0
-        isv: 37.5
-        productos: Array(1)0
-        : 
-        cantidad: 1
-        id_producto: 2
-        nombre: "COCa Cola 2 Litros"
-        precio: 250
-        [[Prototype]]
-        : 
-        Object
-        length
-        : 
-        1
-        [[Prototype]]
-        : 
-        Array(0)
-        subtotal: 250
-        total: 287.5
-     */
+    const data = JSON.parse(route.query.data); // Aquí se analiza correctamente la cadena JSON
+
     console.log(data);
 
     const fechaHora = ref(new Date().toLocaleString());
@@ -117,14 +90,7 @@ export default {
     const cliente = ref("Juan Pérez");
     const rtnCliente = ref("0801-9876-5432");
     const efectivoRecibido = ref(data.efectivo);
-
-    const productos = ref(data.productos)
-
-    //const productos = ref([
-    //  { nombre: "Producto A", cantidad: 2, precioUnitario: 150.0 },
-    //  { nombre: "Producto B", cantidad: 1, precioUnitario: 200.0 },
-    //  { nombre: "Producto C", cantidad: 3, precioUnitario: 100.0 },
-    //]);
+    const productos = ref(data.productos);
 
     // Computed properties
     const total = computed(() =>
@@ -135,11 +101,17 @@ export default {
     );
 
     const isv = computed(() => total.value * 0.15); // ISV del 15%
-    const cambio = computed(() => efectivoRecibido.value - (total.value + isv.value));
+    const totalConImpuestos = computed(() => total.value + isv.value); // Total con ISV incluido
+    const cambio = computed(() => efectivoRecibido.value - totalConImpuestos.value);
 
     // Métodos
-    const imprimirFactura = (facturaRef) => {
-      const printContent = facturaRef.value;
+    const imprimirFactura = () => {
+      const facturaRef = document.querySelector('.factura');
+      if (!facturaRef) {
+        console.error("La referencia a la factura no está disponible.");
+        return;
+      }
+      const printContent = facturaRef;
       const printWindow = window.open("", "_blank");
       printWindow.document.write(
         "<html><head><title>Factura</title><style>body{ margin:0; }</style></head><body>"
@@ -150,8 +122,13 @@ export default {
       printWindow.print();
     };
 
-    const guardarFactura = (facturaRef) => {
-      const content = facturaRef.value.outerHTML; // Extraer el contenido de la factura
+    const guardarFactura = () => {
+      const facturaRef = document.querySelector('.factura');
+      if (!facturaRef) {
+        console.error("La referencia a la factura no está disponible.");
+        return;
+      }
+      const content = facturaRef.outerHTML; // Extraer el contenido de la factura
       const blob = new Blob([content], { type: "text/html" }); // Crear un archivo HTML
       const url = URL.createObjectURL(blob);
 
@@ -165,9 +142,6 @@ export default {
       URL.revokeObjectURL(url);
     };
 
-    // Referencia para el contenido de la factura
-    const facturaRef = ref(null);
-
     return {
       fechaHora,
       numeroFactura,
@@ -179,15 +153,14 @@ export default {
       productos,
       total,
       isv,
+      totalConImpuestos,
       cambio,
       imprimirFactura,
       guardarFactura,
-      facturaRef,
     };
   },
 };
 </script>
-
 
 <style scoped>
 /* Mantengo tus estilos originales */
@@ -304,8 +277,7 @@ footer p {
     border: none;
   }
 
-  .btn-imprimir,
-  .btn-guardar {
+  .actions {
     display: none;
   }
 }

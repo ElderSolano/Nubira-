@@ -7,9 +7,13 @@
     <nav class="sidebar-nav">
       <ul>
         <li><router-link to="/dashboard" class="nav-link">Inicio</router-link></li>
-        <li><router-link to="/mantenimiento" class="nav-link">Mantenimiento</router-link></li>
+        <li v-if="user.role === 'Admin'">
+          <router-link to="/mantenimiento" class="nav-link">Mantenimiento</router-link>
+        </li>
         <li><router-link to="/ventas" class="nav-link">Ventas</router-link></li>
-        <li><router-link to="/inventario" class="nav-link">Inventario</router-link></li>
+        <li v-if="user.role === 'Admin'">
+          <router-link to="/inventario" class="nav-link">Inventario</router-link>
+        </li>
       </ul>
     </nav>
 
@@ -28,13 +32,16 @@ export default {
   name: "Sidebar",
   data() {
     return {
-      user: {}, // Inicializamos como un objeto vacío
+      user: {
+        role: "", // Inicializamos vacío
+        name: "", // Nombre del usuario
+      },
     };
   },
   methods: {
     async handleLogout() {
       try {
-        const response = await fetch('http://127.0.0.1:8001/api/logout', {
+        const response = await fetch('http://127.0.0.1:8000/api/logout', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -67,7 +74,8 @@ export default {
       try {
         const parsedUser = JSON.parse(storedUser); // Convertimos la cadena almacenada en un objeto
         this.user = {
-          name: parsedUser.name, // Asignamos solo la propiedad "name"
+          name: parsedUser.name, // Asignamos la propiedad "name"
+          role: parsedUser.role, // Asignamos la propiedad "role"
         };
       } catch (error) {
         console.error('Error al parsear el usuario desde localStorage:', error);
@@ -76,6 +84,7 @@ export default {
   },
 };
 </script>
+
 
 
 

@@ -307,7 +307,7 @@ export default {
   align-items: center;
   margin-top: 20px;
   padding: 10px;
-  background-color: #fef4f4;
+  background-color: rgb(90, 36, 234, 0.2);
   border: 1px solid #e4d3d3;
   border-radius: 8px;
   font-family: "Arial", sans-serif;
@@ -321,11 +321,11 @@ export default {
   border: 1px solid #e4d3d3;
   border-radius: 6px;
   margin-right: 10px;
-  background-color: #f9eaea;
+  background-color: white;
 }
 
 .total-item {
-  background-color: #f5e4e4;
+  background-color: white;
   border: 1px solid #d4baba;
   font-weight: bold;
 }
@@ -344,7 +344,7 @@ export default {
 
 .btn {
   padding: 10px 20px;
-  background-color: #6a0dad;
+  background-color: rgb(90, 36, 234);
   color: white;
   border: none;
   border-radius: 6px;
@@ -355,7 +355,8 @@ export default {
 }
 
 .btn:hover {
-  background-color: #9a5c5c;
+  background-color: rgba(245, 47, 0, 0.8);
+  color: white;
 }
 
 input {
@@ -376,7 +377,7 @@ input {
 }
 
 .table thead {
-  background-color: #dc3545;
+  background-color: rgb(90, 36, 234);
   color: white !important;
 }
 
