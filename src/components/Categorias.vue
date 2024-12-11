@@ -4,7 +4,7 @@
 
     <div class="d-flex justify-content-end mb-4">
       <button @click="nuevaCategoria" class="btn btn-primary mb-3">
-      Crear Producto 
+      Crear Categoria
       </button>
     </div>
     
