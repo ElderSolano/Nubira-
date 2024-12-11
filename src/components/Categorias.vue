@@ -4,10 +4,10 @@
 
     <div class="d-flex justify-content-end mb-4">
       <button @click="nuevaCategoria" class="btn btn-primary mb-3">
-      Crear Categoria
+        Crear Producto
       </button>
     </div>
-    
+
     <!-- Tabla de categorías -->
     <table class="table">
       <thead>
@@ -26,12 +26,12 @@
           <td>
             <!-- Botón para editar una categoría -->
             <button @click="editarCategoria(categoria)" class="btn btn-warning btn-sm">
-              <i class="fas fa-edit"></i> <!-- Ícono de editar -->
+              <i class="fas fa-edit"></i>
             </button>
 
             <!-- Botón para eliminar una categoría -->
             <button @click="confirmarEliminacion(categoria.id)" class="btn btn-danger btn-sm ml-2">
-              <i class="fas fa-trash"></i> <!-- Ícono de eliminar -->
+              <i class="fas fa-trash"></i>
             </button>
           </td>
         </tr>
@@ -95,142 +95,132 @@ export default {
   name: "Categorias",
   data() {
     return {
-      categorias: [], // Almacena las categorías
-      categoriaSeleccionada: null, // Almacena la categoría seleccionada para edición
-      mostrarModal: false, // Controla la visibilidad del modal de edición
-      mostrarConfirmacion: false, // Controla la visibilidad del modal de confirmación
-      categoriaAEliminar: null, // Almacena la categoría que se va a eliminar
-      apiUrl: "http://127.0.0.1:8000/api/categoria", // URL de la API
-      usuarioLogueado: 1 // ID del usuario logueado
+      categorias: [],
+      categoriaSeleccionada: null,
+      mostrarModal: false,
+      mostrarConfirmacion: false,
+      categoriaAEliminar: null,
+      apiUrl: "http://127.0.0.1:8000/api/categoria",
     };
   },
   mounted() {
-    this.obtenerCategorias(); // Llama la función para obtener categorías al montar el componente
+    this.obtenerCategorias();
   },
   methods: {
-    // Obtener las categorías desde la API
     async obtenerCategorias() {
       try {
-        const token = localStorage.getItem('authToken'); // Obtén el token del localStorage
-
-        if (!token) {
-          throw new Error("No hay token de autenticación disponible.");
-        }
-
+        const token = localStorage.getItem('authToken'); // Obtén el token de localStorage
         const response = await axios.get(this.apiUrl, {
           headers: {
-            Authorization: `Bearer ${token}`, // Pasa el token en las cabeceras
+            Authorization: `Bearer ${token}`,
           },
         });
-
-        this.categorias = response.data; // Asigna la respuesta a la variable categorias
+        this.categorias = response.data;
       } catch (error) {
         console.error("Error al obtener categorías:", error);
-        alert("No se pudieron cargar las categorías. Verifica tu sesión.");
       }
     },
 
-    // Mostrar el modal para crear una nueva categoría
     nuevaCategoria() {
-      this.categoriaSeleccionada = { 
-        nombre_categoria: '', 
-        descripcion_categoria: '', 
-        created_by: this.usuarioLogueado, // Asigna el id del usuario logueado
-        updated_by: null, 
-        deleted_by: null
+      this.categoriaSeleccionada = {
+        nombre_categoria: "",
+        descripcion_categoria: "",
       };
-      this.mostrarModal = true; // Mostrar el modal
+      this.mostrarModal = true;
     },
 
-    // Mostrar el modal para editar una categoría
     editarCategoria(categoria) {
-      this.categoriaSeleccionada = { 
-        ...categoria, 
-        updated_by: this.usuarioLogueado // Asigna el id del usuario logueado
-      };
-      this.mostrarModal = true; // Mostrar el modal
+      this.categoriaSeleccionada = { ...categoria };
+      this.mostrarModal = true;
     },
 
-    // Guardar la nueva categoría o actualizar una existente
     async guardarEdicion() {
       try {
-        const token = localStorage.getItem('authToken'); // Obtén el token del localStorage
-
-        if (!token) {
-          throw new Error("No hay token de autenticación disponible.");
-        }
-
+        const token = localStorage.getItem('authToken');
         if (this.categoriaSeleccionada.id) {
-          // Si la categoría tiene un ID, se está editando
           await axios.put(
             `${this.apiUrl}/${this.categoriaSeleccionada.id}`,
             this.categoriaSeleccionada,
             {
               headers: {
-                Authorization: `Bearer ${token}`, // Pasa el token
+                Authorization: `Bearer ${token}`,
               },
             }
           );
-          console.log("Categoría actualizada exitosamente");
         } else {
-          // Si no tiene un ID, es una nueva categoría
           await axios.post(this.apiUrl, this.categoriaSeleccionada, {
             headers: {
-              Authorization: `Bearer ${token}`, // Pasa el token
+              Authorization: `Bearer ${token}`,
             },
           });
-          console.log("Categoría creada exitosamente");
         }
-        this.obtenerCategorias(); // Actualizar la lista de categorías después de editar o crear
-        this.cerrarModal(); // Cerrar el modal
+        this.obtenerCategorias();
+        this.cerrarModal();
       } catch (error) {
         console.error("Error al guardar la categoría:", error);
       }
     },
 
-    // Confirmar la eliminación de la categoría
     confirmarEliminacion(id) {
-      this.categoriaAEliminar = id; // Almacenar el id de la categoría a eliminar
-      this.mostrarConfirmacion = true; // Mostrar el modal de confirmación
+      this.categoriaAEliminar = id;
+      this.mostrarConfirmacion = true;
     },
 
-    // Eliminar la categoría confirmada
     async eliminarCategoriaConfirmada() {
       try {
-        const token = localStorage.getItem('authToken'); // Obtén el token del localStorage
-
-        if (!token) {
-          throw new Error("No hay token de autenticación disponible.");
-        }
-
+        const token = localStorage.getItem('authToken');
         await axios.delete(`${this.apiUrl}/${this.categoriaAEliminar}`, {
           headers: {
-            Authorization: `Bearer ${token}`, // Pasa el token
+            Authorization: `Bearer ${token}`,
           },
         });
-        console.log("Categoría eliminada exitosamente");
-        this.obtenerCategorias(); // Actualizar la lista de categorías
-        this.cerrarConfirmacion(); // Cerrar el modal de confirmación
+        this.obtenerCategorias();
+        this.cerrarConfirmacion();
       } catch (error) {
         console.error("Error al eliminar la categoría:", error);
       }
     },
 
-    // Cerrar el modal de confirmación
     cerrarConfirmacion() {
       this.mostrarConfirmacion = false;
       this.categoriaAEliminar = null;
     },
 
-    // Cerrar el modal de creación/edición
     cerrarModal() {
       this.mostrarModal = false;
       this.categoriaSeleccionada = null;
-    }
-  }
+    },
+  },
 };
 </script>
 
+<style scoped>
+/* Sin cambios */
+.modal {
+  display: block;
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.modal-dialog {
+  margin-top: 100px;
+}
+
+.modal-content {
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+button i {
+  font-size: 16px;
+}
+</style>
 
 
 
