@@ -157,10 +157,10 @@
     </div>
   </div>
 
-<div id="dashboard-cajero" class="col-9" v-else-if="user.role === 'Cajero'">
+<div id="dashboard-cajero" class="col-8 " v-else-if="user.role === 'Cajero'">
   <div class="row mt-3">
     <div class="col-12">
-      <div class="alert alert-primary" role="alert">
+      <div class="alert " role="alert">
         Bienvenido, {{ user.name }}. Usted está conectado como cajero. ¡Gracias por su trabajo en el negocio!
       </div>
       <img class="imagen-cajero" src="../assets/images/Cajero.png" alt="cajero">
@@ -226,7 +226,37 @@ export default {
   font-family: 'Nunito' !important;
 }
 
+/* Estilos solo para el div de cajero */
+#dashboard-cajero {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: white;
+  padding: 5px;
+  border-radius: 15px;
+  border: 2px solid rgb(70, 20, 200);
+  color: rgb(70, 20, 200); 
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-left: 16%;
+  margin-top: 3%;
+}
+
+#dashboard-cajero .alert {
+  background-color: rgb(70, 20, 200); 
+  color: white; 
+  border-radius: 8px;
+}
+
 .imagen-cajero {
-  width: 50%;
+  width: 55%;
+  border-radius: 15px;
+  transition: transform 0.3s ease;
+}
+
+.imagen-cajero:hover {
+  transform: scale(1.05); 
+  cursor: pointer;
 }
 </style>
