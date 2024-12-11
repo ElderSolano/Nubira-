@@ -9,13 +9,12 @@
                     <th>Precio compra</th>
                     <th>Total a pagar</th>
                     <th>Lote</th>
-                    <th>Fecha vencimiento</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="(producto, index) in productos" :key="index">
                     <td>{{ producto.id }}</td>
-                    <td>{{ producto.producto_id }}</td>
+                    <td>{{ producto.producto.nombre_producto }}</td>
                     <td> {{ producto.cantidad }} </td>
                     <td> L. {{ producto.precio_compra }} </td>
                     <td> L. {{ producto.cantidad * producto.precio_compra }} </td>
@@ -54,6 +53,7 @@ export default {
                 if (response.data.codigoResultado === 1) {
                     this.productos = response.data.data;  // Asignamos los productos
                     this.message = response.data.message;  // Asignamos el mensaje
+                    console.log(this.productos);
                 } else {
                     this.message = 'No se encontraron productos para esta ficha de inventario.';
                 }

@@ -233,7 +233,7 @@ export default {
 
             console.log("Form value segunda vez", form.value)
             try {
-                const url = `http://localhost:${process.env.VUE_APP_PUERTO}/api/ficha-inventario-procesado/${id}`;
+                const url = `http://localhost:8000/api/ficha-inventario-procesado/${id}`;
                 const response = await axios.put(url, form.value);
                 console.log(response)
                 if (response.status === 200) {
@@ -252,7 +252,7 @@ export default {
         const procesarDevolucion = async (id) => {
             console.log(id);
             try {
-                const url = `http://localhost:${process.env.VUE_APP_PUERTO}/api/ficha-inventario-procesar-devolucion/${id}`
+                const url = `http://localhost:8000/api/ficha-inventario-procesar-devolucion/${id}`
 
                 const response = await axios.put(url);
                 alert(response.data.message);
@@ -419,5 +419,9 @@ export default {
 .card-footer {
     padding: 0 !important;
     margin-bottom: 10px;
+}
+
+*{
+    font-family: 'nunito';
 }
 </style>

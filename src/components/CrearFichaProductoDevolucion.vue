@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue';
 import { useRouter } from "vue-router";
 import axios from 'axios';
+import FichasProductos from './FichasProductos.vue';
 
 export default {
   name: 'CrearFichaProductoDevolucion',
@@ -15,10 +16,11 @@ export default {
     // Obtener las fichas de productos de fichas de inventario procesadas
     const obtenerFichasProductos = async () => {
       try {
-        const url = `http://localhost:${process.env.VUE_APP_PUERTO}/api/fichas-producto-procesadas/${props.idProveedor}/para-devolver`;
+        const url = `http://localhost:8000/api/fichas-producto-procesadas/${props.idProveedor}/para-devolver`;
         const response = await axios.get(url);
         if (response.data.codigoResultado === 1) {
           fichasProductos.value = response.data.fichas_productos;
+          console.log(fichasProductos.value)
         } else {
           mensaje.value = 'No se encontraron productos para devolver.';
         }
@@ -60,7 +62,7 @@ export default {
           return;
         }
 
-        const url = `http://localhost:${process.env.VUE_APP_PUERTO}/api/ficha-producto`;
+        const url = `http://localhost:8000/api/ficha-producto`;
         const payload = {
           ficha_inventario_id: fichaInventarioId,
           productos: productosSeleccionados.value,
@@ -104,7 +106,7 @@ export default {
             @change="actualizarSeleccion(fichaProducto)"
           />
           <p>
-            Producto ID: {{ fichaProducto.producto_id }} - Cantidad:
+            Producto ID: {{ fichaProducto.producto.nombre_producto }} - Cantidad:
             {{ fichaProducto.cantidad }} - Precio:
             {{ fichaProducto.precio_compra }} - Lote: {{ fichaProducto.lote }}
           </p>
