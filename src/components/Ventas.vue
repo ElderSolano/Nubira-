@@ -157,7 +157,7 @@ export default {
       if (searchQuery.value.trim() !== "") {
         try {
           const response = await axios.get(
-            `http://127.0.0.1:${process.env.VUE_APP_PUERTO}/api/productos/${searchQuery.value}`
+            `http://127.0.0.1:8000/api/productos/${searchQuery.value}`
           );
           const data = response.data.data;
 
@@ -228,7 +228,7 @@ export default {
         };
 
         try {
-          const response = await axios.post(`http://127.0.0.1:${process.env.VUE_APP_PUERTO}/api/ventas`, data);
+          const response = await axios.post(`http://127.0.0.1:8000/api/ventas`, data);
           console.log("Venta registrada exitosamente:", response.data);
 
           productos.value = [];
