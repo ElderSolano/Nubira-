@@ -107,6 +107,7 @@ h2 {
 p {
     margin: 5px 0;
     font-size: 1em;
+    text-align: left;
 }
 
 p strong {
