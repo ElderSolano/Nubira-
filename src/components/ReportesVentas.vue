@@ -1,27 +1,22 @@
 <template>
     <div>
         <h2>Ventas Realizadas</h2>
-
-        <div class="contenedor-de-ventas" >
+        <div class="contenedor-de-ventas">
             <div v-for="venta in ventas" :key="venta.id" class="venta">
-            <div>
-                <h3>Venta ID: {{ venta.id }}</h3>
-                <p><strong>Fecha de Venta:</strong> {{ venta.fecha_venta }}</p>
+                <h3>Venta #: {{ venta.id }}</h3>
+                <p><strong>Fecha:</strong> {{ venta.fecha_venta }}</p>
                 <p><strong>Subtotal:</strong> {{ venta.subtotal }}</p>
                 <p><strong>ISV:</strong> {{ venta.isv }}</p>
                 <p><strong>Descuento:</strong> {{ venta.descuento }}</p>
                 <p><strong>Total:</strong> {{ venta.total }}</p>
-            </div>
-            <div>
+
                 <h4>Detalles de la Venta:</h4>
                 <div v-for="detalle in venta.detalles" :key="detalle.id" class="detalle">
-                    <p><strong>Producto ID:</strong> {{ detalle.producto_id }}</p>
+                    <p><strong>Producto:</strong> {{ detalle.producto.nombre_producto }}</p>
                     <p><strong>Cantidad:</strong> {{ detalle.cantidad }}</p>
                     <p><strong>Precio Unitario:</strong> {{ detalle.precio_unitario }}</p>
-                    <p><strong>Subtotal:</strong> {{ detalle.subtotal }}</p>
                 </div>
             </div>
-        </div>
         </div>
     </div>
 </template>
@@ -40,7 +35,7 @@ export default {
                 const response = await axios.get('http://localhost:8000/api/ventas-detalles');
                 if (Array.isArray(response.data)) {
                     ventas.value = response.data;
-                    console.log(ventas.value);
+                    console.log("Las ventas son:", ventas.value);
                 } else {
                     console.error("Los datos no son un arreglo.");
                 }
@@ -66,6 +61,8 @@ export default {
     margin-bottom: 20px;
     border: 1px solid #ddd;
     padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .contenedor-de-ventas {
@@ -78,12 +75,13 @@ export default {
 
 .detalle {
     margin-top: 10px;
-    padding: 5px;
+    padding: 10px;
     background-color: #f9f9f9;
+    border-radius: 4px;
+    border: 1px solid #eee;
 }
 
-h3,
-h4 {
+h3, h4 {
     margin-bottom: 10px;
 }
 
