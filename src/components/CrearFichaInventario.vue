@@ -141,7 +141,7 @@ export default {
                 "comentarios": ficha.value.comentarios
             }
 
-            const url = `http://localhost:${process.env.VUE_APP_PUERTO}/api/fichas-inventario`;
+            const url = `http://localhost:8000/api/fichas-inventario`;
 
             try {
                 const response = await axios.post(url, cuerpoPeticion);

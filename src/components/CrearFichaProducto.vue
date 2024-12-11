@@ -1,6 +1,6 @@
 <template>
     <div class="container mt-4">
-        <h2>Crear Ficha de Inventario</h2>
+        <h2>Crear Ficha de Producto</h2>
         <form @submit.prevent="crearFicha">
             <!-- Botón para agregar nuevo producto -->
             <button type="button" class="btn btn-primary mb-3" @click="agregarProducto">Agregar Producto</button>
@@ -13,7 +13,6 @@
                         <th>Cantidad</th>
                         <th>Precio Compra</th>
                         <th>Lote</th>
-                        <th>Fecha de Vencimiento</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -33,8 +32,6 @@
                         </td>
                         <td><input type="number" class="form-control" v-model="producto.precio_compra" readonly /></td>
                         <td><input type="text" class="form-control" v-model="producto.lote" required /></td>
-                        <td><input type="date" class="form-control" v-model="producto.fecha_vencimiento" required />
-                        </td>
                         <td><button type="button" class="btn btn-danger"
                                 @click="eliminarProducto(index)">Eliminar</button></td>
                     </tr>

@@ -156,6 +156,18 @@
       </div>
     </div>
   </div>
+
+<div id="dashboard-cajero" class="col-9" v-else-if="user.role === 'Cajero'">
+  <div class="row mt-3">
+    <div class="col-12">
+      <div class="alert alert-primary" role="alert">
+        Bienvenido, {{ user.name }}. Usted está conectado como cajero. ¡Gracias por su trabajo en el negocio!
+      </div>
+      <img class="imagen-cajero" src="../assets/images/Cajero.png" alt="cajero">
+    </div>
+  </div>
+</div>
+
 </template>
 
 <script>
@@ -212,5 +224,9 @@ export default {
 
 *{
   font-family: 'Nunito' !important;
+}
+
+.imagen-cajero {
+  width: 50%;
 }
 </style>

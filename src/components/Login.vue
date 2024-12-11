@@ -68,7 +68,6 @@ export default {
     },
     async handleLogin() {
       console.log("Cayó dentro del login")
-      console.log(process.env.VUE_APP_PUERTO)
       try {
         
         const response = await fetch(`http://localhost:8000/api/login`, {
