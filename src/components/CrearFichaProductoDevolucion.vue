@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue';
 import { useRouter } from "vue-router";
 import axios from 'axios';
-import FichasProductos from './FichasProductos.vue';
+
 
 export default {
   name: 'CrearFichaProductoDevolucion',
@@ -122,18 +122,18 @@ export default {
 
 
 <style>
+/* Estilo de los productos devueltos */
 .productos-devueltos {
-    display: flex;
-    align-items: center; /* Centra verticalmente el contenido del label */
-    padding: 15px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    transition: box-shadow 0.3s ease, background-color 0.3s ease;
-    min-width: 250px; /* Define un ancho mínimo para los labels */
-    max-width: 300px; /* Define un ancho máximo para mantener el diseño */
-    flex: 1; /* Permite que los labels ocupen espacio proporcional */
-  }
+  display: flex;
+  align-items: center; 
+  border: 1px solid #ccc;
+  border-radius: 12px; 
+  background-color: #f9f9f9;
+  transition: box-shadow 0.3s ease, background-color 0.3s ease;
+  min-width: 250px; 
+  max-width: 300px; 
+  flex: 1; 
+}
 
 .productos-devueltos:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -142,8 +142,7 @@ export default {
 
 .productos-devueltos input[type="checkbox"] {
   margin-right: 15px;
-  transform: scale(1.2);
-  /* Tamaño del checkbox */
+  transform: scale(1.2); 
   cursor: pointer;
 }
 
@@ -154,7 +153,7 @@ export default {
   color: #333;
 }
 
-/* Espaciado general y alineación */
+/* Estilo del contenedor de los productos */
 .contenedor-productos {
   display: flex;
   flex-direction: row;
@@ -162,36 +161,42 @@ export default {
   gap: 20px;
   width: auto;
   flex-wrap: wrap;
+  justify-content: center; 
 }
 
 /* Estilo del botón */
-button[type="submit"] {
+button {
   padding: 10px 20px;
   font-size: 1rem;
   color: white;
-  background-color: #007bff;
-  border: none;
-  border-radius: 5px;
+  background-color: rgb(70, 20, 200); 
+  border: 2px solid rgb(70, 20, 200); 
+  border-radius: 12px !important; 
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  text-align: center;
+  margin-top: 20px; 
 }
 
-button[type="submit"]:hover {
-  background-color: #0056b3;
+button:hover {
+  background-color: rgb(245, 47, 0);
+  color: white; 
+  border-color: rgb(245, 47, 0);
+  border-radius: 12px;
 }
 
 /* Estilos responsivos */
 @media (max-width: 768px) {
   .productos-devueltos {
     padding: 10px;
-    border-radius: 6px;
+    border-radius: 10px; 
   }
 
   .productos-devueltos p {
     font-size: 0.9rem;
   }
 
-  button[type="submit"] {
+  button {
     font-size: 0.9rem;
     padding: 8px 16px;
   }
@@ -206,7 +211,7 @@ button[type="submit"]:hover {
     font-size: 0.8rem;
   }
 
-  button[type="submit"] {
+  button {
     font-size: 0.8rem;
     padding: 6px 12px;
   }
