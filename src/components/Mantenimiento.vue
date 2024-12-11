@@ -172,4 +172,8 @@ export default {
     margin-bottom: 15px;
   }
 }
+
+*{
+  font-family: 'nunito';
+}
 </style>

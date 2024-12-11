@@ -110,6 +110,10 @@
     text-decoration: none;
     color: inherit;
 }
+
+*{
+    font-family: 'nunito';
+}
 </style>
 
 <!--Separacion-->
@@ -130,18 +134,6 @@ export default {
                     image: require("../assets/images/Ficha inventario.jpg"),
                     route: "/mantenimiento/inventario/fichasinventario",
                 },
-                {
-                    title: "Fichas de productos",
-                    description: "Administra las fichas tus productos y controla su stock",
-                    image: require("../assets/images/Ficha producto.jpg"),
-                    route: "/fichasProductos/:id"
-                },
-                {
-                    title: "Inventario Disponible",
-                    description: "Visualiza y añade los productos que estarán disponibles para vender en tu mercadito",
-                    image: require("../assets/images/Inventario_disponible.jpg"),
-                    route: "/InventarioDisponible"
-                }
             ]
         }
     },
